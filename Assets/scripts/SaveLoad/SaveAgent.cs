@@ -66,7 +66,7 @@ public class SaveAgent : MonoBehaviour
                 agent.isArrive = data.isArrive;
                 agent.isCohesion = data.isCohesion;
                 agent.isCollector = data.isCollector;
-                agent.copperInv = data.reourcesInv;
+                //agent.copperInv = data.reourcesInv;
                 agent.resourcesCarryLimt = data.resourcesCarryLimt;
                 agent.rank = data.type;
                 agent.maxForce = data.maxForce;
@@ -77,7 +77,7 @@ public class SaveAgent : MonoBehaviour
                 agent.ePerception = data.ePerception;
                 
                 agent.viewAngle = data.viewAngle;
-                agent.separationDistance = data.separationDistance;
+                //agent.separationDistance = data.separationDistance;
                 agent.decayCoefficient = data.decayCoefficient;
                 agent.alignDist = data.alignDist;
                 agent.isLeader = data.isLeader;

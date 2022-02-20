@@ -48,7 +48,7 @@ public class AgentData
         isArrive = agent.isArrive;
         isCohesion = agent.isCohesion;
         isCollector = agent.isCollector;
-        reourcesInv = agent.copperInv;
+        //reourcesInv = agent.copperInv;
         maxForce = agent.maxForce;
         maxVel = agent.maxVel;
         mass = agent.mass;
@@ -57,7 +57,7 @@ public class AgentData
         ePerception = agent.ePerception;
         
         viewAngle = agent.viewAngle;
-        separationDistance = agent.separationDistance;
+        //separationDistance = agent.separationDistance;
         decayCoefficient = agent.decayCoefficient;
         alignDist = agent.alignDist;
         hasLeader = agent.hasLeader;

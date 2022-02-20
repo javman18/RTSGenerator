@@ -84,6 +84,7 @@ public class CameraMovement : MonoBehaviour
         float newSize = cam.orthographicSize - zoomSpeed;
         Camera childCam = cam.transform.GetChild(0).gameObject.GetComponent<Camera>();
         cam.orthographicSize = Mathf.Clamp(newSize, minCamSize, maxCamSize);
+        
         childCam.orthographicSize = Mathf.Clamp(newSize, minCamSize, maxCamSize);
         cam.transform.position = ClampCam(cam.transform.position);
 
@@ -112,5 +113,20 @@ public class CameraMovement : MonoBehaviour
         return new Vector3(newX, newY, targetPos.z);
 
     }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if(collision.gameObject.layer == LayerMask.NameToLayer("Walls"))
+    //    {
+    //        collision.gameObject.SetActive(true);
+    //    }
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.layer == LayerMask.NameToLayer("Walls"))
+    //    {
+    //        collision.gameObject.SetActive(false);
+    //    }
+    //}
 
 }

@@ -34,7 +34,7 @@ public class Map<T>
             }
         }
 
-        bool seeMap = true;
+        bool seeMap = false;
         if (seeMap)
         {
             for (int x = 0; x < mapArr.GetLength(0); x++)

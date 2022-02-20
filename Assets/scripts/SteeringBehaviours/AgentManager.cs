@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AgentManager : SteerinBehaviours
 {
+    [Header ("Behaviors")]
     public bool isSeek;
     public bool isFlee;
     public bool isPursue;
@@ -13,43 +14,48 @@ public class AgentManager : SteerinBehaviours
     public bool isCohesion;
     public bool isCollector;
     public bool isTitan;
-    public int copperInv = 0;
-    public int metalInv = 0;
-    public int scrapsInv = 0;
-    public int inventory = 0;
+    private int copperInv = 0;
+    private int metalInv = 0;
+    private int scrapsInv = 0;
+    private int inventory = 0;
+    [Header("Capacidad de carga")]
     public int resourcesCarryLimt = 1;
-    public float nearestResource = Mathf.Infinity;
-    public Node closestResource = null;
-    public float secondNearest = Mathf.Infinity;
-    public float shootingRaange;
+    private float nearestResource = Mathf.Infinity;
+    private Node closestResource = null;
+    private float secondNearest = Mathf.Infinity;
+    
     GameObject wall;
-    public Node nextClosest = null;
+    private Node nextClosest = null;
     PathAgent pAgent;
     public bool hasLeader;
     public bool isLeader;
     public int rank;
-    public GameObject[] leaders;
+    private GameObject[] leaders;
     public int squad;
     public int team;
     GameObject fogOfWar;
-    public GameObject bullet;
-    public GameObject firePoint;
-    bool canShoot = true;
+    private GameObject bullet;
+    private GameObject firePoint;
+    private bool canShoot = true;
+    [Header("Bala")]
+    public bool isShooter;
+    public float shootingRaange;
     public float startTimeBtwShots=0.1f;
     public float bulletForce = 30;
     public int ammo = 50;
+    public float bulletDamage;
     public GameObject sg;
-    public bool isFollowing;
+    private bool isFollowing;
     public Animator anim;
     AgentManager[] agents;
     bool meleeAtack = true;
+    [Header("Cuerpo a Cuerpo")]
     public float attackSize = 0.5f;
     public float attackRange = 0.5f;
     public float attackTime = 0.5f;
     public bool isAtacker;
-    public bool isShooter;
     public float meleeDamage;
-    public float bulletDamage;
+    
     GameObject tmpBullet;
     bool isAgentMoving = false;
     public LayerMask agentsLayers;
@@ -58,8 +64,8 @@ public class AgentManager : SteerinBehaviours
     bool isShooting = false;
     public float maxScale = 15f;
     public float healthAmount = 150;
-    public bool isLeaderAlive;
-    public float fleeTime;
+    private bool isLeaderAlive;
+    private float fleeTime;
     bool startTime = false;
     bool isFloking;
     bool wallHitted;
@@ -199,7 +205,7 @@ public class AgentManager : SteerinBehaviours
         {
            gameObject.SetActive(false);
         }
-        DetectWall();
+        //DetectWall();
        
 
     }
@@ -257,14 +263,25 @@ public class AgentManager : SteerinBehaviours
                     if (isCollector)
                     {
                         isCollecting = false;
-                        
+                        Flee(closestEnemy.transform.position);
                     }
-                    Flee(closestEnemy.transform.position);
+                    
                 }
             }
             else if (isCollector)
             {
                 isCollecting = true;
+            }
+            if (isShooter && isLeaderAlive == false && !isPursue && !isLeader && sg.activeInHierarchy == false ||
+            isAtacker && isLeaderAlive == false && !isLeader && sg.activeInHierarchy == false)
+            {
+                if (closestEnemy != null)
+                {
+                    if (!closestEnemy.isCollector)
+                        Flee(closestEnemy.transform.position);
+                }
+
+                Flocking();
             }
 
         }
@@ -278,12 +295,7 @@ public class AgentManager : SteerinBehaviours
             }
             
         }
-        if (isArrive)
-        {
-            //Flocking();
-            Arrive(mousePos);
-            // CalcSteerig(steer);
-        }
+        
         if (isPursue || isPursue && isShooter && closestEnemy.isLeaderAlive == false && !closestEnemy.isLeader)
         {
             if (closestEnemy != null)
@@ -420,7 +432,7 @@ public class AgentManager : SteerinBehaviours
         {
             nodeSpriteS = closestStorage.GetNodeObject();
 
-            Debug.DrawLine(this.transform.position, p.GetMap().GetPosition(closestStorage.x + 0.5f, closestStorage.y + 0.5f), Color.red);
+           // Debug.DrawLine(this.transform.position, p.GetMap().GetPosition(closestStorage.x + 0.5f, closestStorage.y + 0.5f), Color.red);
         }
         if (nodeSpriteS == Node.NodeObject.Box)
         {
@@ -486,8 +498,8 @@ public class AgentManager : SteerinBehaviours
             if (nodeSprite == Node.NodeObject.Wall )
             {
                 Vector3 pos = p.GetMap().GetPosition(closestWall.x, closestWall.y);
-            Debug.DrawLine(new Vector3(transform.position.x + 15, transform.position.y), new Vector3(pos.x + 10, pos.y));
-            if (transform.position.x + (mass*15f) > pos.x && pos.x + 10f > transform.position.x - (mass * 15f) && transform.position.y + (mass * 15f) > pos.y && pos.y + 10f > transform.position.y - (mass * 15f))
+            ///Debug.DrawLine(new Vector3(transform.position.x + 15, transform.position.y), new Vector3(pos.x + 10, pos.y));
+                if (transform.position.x + (mass*15f) > pos.x && pos.x + 10f > transform.position.x - (mass * 15f) && transform.position.y + (mass * 15f) > pos.y && pos.y + 10f > transform.position.y - (mass * 15f))
                 {
 
                     
@@ -535,17 +547,7 @@ public class AgentManager : SteerinBehaviours
         {
             ShootBehavior();
         }
-        if (isShooter  && isLeaderAlive == false && !isLeader && sg.activeInHierarchy == false ||
-            isAtacker && isLeaderAlive == false && !isLeader && sg.activeInHierarchy == false)
-        {
-            if (closestEnemy != null)
-            {
-                if(!closestEnemy.isCollector)
-                    Flee(closestEnemy.transform.position);
-            }
-            
-            Flocking();
-        }
+        
     }
     public void Attack()
     {
@@ -634,74 +636,21 @@ public class AgentManager : SteerinBehaviours
     }
     void DetectWall()
     {
-        //Vector2 avoidanceForce = Vector2.zero;
-        //Collider2D[] wallsColl = Physics2D.OverlapCircleAll(transform.position, 60f, wallsLayer);
-        //GameObject closestLeader = GetClosestLeader(leaders);
-        //foreach (Collider2D wall in wallsColl)
-        //{
-           
-        //    if (wall.IsTouching(this.GetComponent<Collider2D>()))
-        //    {
-        //        avoidanceForce = Vector2.Reflect(vel, steering);
-        //        Debug.Log("wall hitted");
-        //        wallHitted = true;
-        //        //Wander();
-        //    } 
-        //    if(avoidanceForce != Vector2.zero)
-        //    {
-        //        Vector2 desired = avoidanceForce.normalized * maxVel;
-        //        steering = desired - vel;
-        //    }
-           
-        //}
-        float nearetWall = Mathf.Infinity;
-        
-        GameObject closestwall = null;
-      
-        foreach (GameObject wall in TileMap.wallsList)
-        {
-            
-           float distance = (wall.transform.position- transform.position).sqrMagnitude;
 
-            if (distance < nearetWall)
-            {
-                    
+        Vector3[] rayVec = new Vector3[10];
+        rayVec[0] = vel;
+        rayVec[0].Normalize();
+        rayVec[0] *= rayLength;
+        float rayOrient = Mathf.Atan2(vel.y, vel.x);
+        float rightRayO = rayOrient + (20f * Mathf.Deg2Rad);
+        float leftRayO = rayOrient - (20f * Mathf.Rad2Deg);
+        rayVec[1] = Quaternion.AngleAxis(60f, Vector3.forward) * transform.right;
+        rayVec[1].Normalize();
+        rayVec[1] *= rayLength;
 
-                nearetWall = distance;
-                closestwall = wall;
-                    
-            }
-            
-        }
-        
-        if (closestwall != null)
-        {
-            Debug.DrawLine(new Vector3(transform.position.x, transform.position.y), closestwall.transform.position);
-            float d = (closestwall.transform.position - transform.position).sqrMagnitude;
-            if (d <= 60f)
-            {
-                Flee(closestwall.transform.position);
-
-            }
-
-            // Debug.DrawLine(this.transform.position, p.GetMap().GetPosition(closestResource.x + 0.5f, closestResource.y + 0.5f), Color.red);
-        }
-        
-
-        //Vector3[] rayVec = new Vector3[10];
-        //rayVec[0] = vel;
-        //rayVec[0].Normalize();
-        //rayVec[0] *= rayLength;
-        //float rayOrient = Mathf.Atan2(vel.y, vel.x);
-        //float rightRayO = rayOrient + (20f * Mathf.Deg2Rad);
-        //float leftRayO = rayOrient - (20f * Mathf.Rad2Deg);
-        //rayVec[1] = Quaternion.AngleAxis(60f, Vector3.forward) * transform.right;
-        //rayVec[1].Normalize();
-        //rayVec[1] *= rayLength;
-
-        //rayVec[2] = Quaternion.AngleAxis(120f, Vector3.forward) * transform.right;
-        //rayVec[2].Normalize();
-        //rayVec[2] *= rayLength;
+        rayVec[2] = Quaternion.AngleAxis(120f, Vector3.forward) * transform.right;
+        rayVec[2].Normalize();
+        rayVec[2] *= rayLength;
 
         //rayVec[3] = Quaternion.AngleAxis(150f, Vector3.forward) * transform.right;
         //rayVec[3].Normalize();
@@ -732,35 +681,32 @@ public class AgentManager : SteerinBehaviours
         //rayVec[9].Normalize();
         //rayVec[9] *= rayLength;
 
-        //Debug.DrawRay(transform.position, rayVec[0], Color.blue);
-        //Debug.DrawRay(transform.position, rayVec[1], Color.red);
-        //Debug.DrawRay(transform.position, rayVec[2], Color.black);
-        //Debug.DrawRay(transform.position, rayVec[3], Color.blue);
-        //Debug.DrawRay(transform.position, rayVec[4], Color.red);
-        //Debug.DrawRay(transform.position, rayVec[5], Color.black);
-        //Debug.DrawRay(transform.position, rayVec[6], Color.blue);
-        //Debug.DrawRay(transform.position, rayVec[7], Color.red);
-        //Debug.DrawRay(transform.position, rayVec[8], Color.black);
-        //Debug.DrawRay(transform.position, rayVec[9], Color.black);
-        //AgentManager friend = GetClosestFriend(agents);
-        //for (int i = 0; i < rayVec.Length; i++)
-        //{
-        //    RaycastHit2D hit = Physics2D.Raycast(transform.position, rayVec[i], rayLength);
-        //    if (hit.collider != null)
-        //    {
-        //        if (hit.collider.gameObject.CompareTag("Wall"))
-        //        {
-        //            Debug.Log("wall hitted");
-        //            isFollowing = false;
-        //            pAgent.SetTarget(friend.transform.position);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        isFollowing = true;
-        //    }
+        Debug.DrawRay(transform.position, rayVec[0], Color.blue);
+        Debug.DrawRay(transform.position, rayVec[1], Color.red);
+        Debug.DrawRay(transform.position, rayVec[2], Color.black);
+        Debug.DrawRay(transform.position, rayVec[3], Color.blue);
+        Debug.DrawRay(transform.position, rayVec[4], Color.red);
+        Debug.DrawRay(transform.position, rayVec[5], Color.black);
+        Debug.DrawRay(transform.position, rayVec[6], Color.blue);
+        Debug.DrawRay(transform.position, rayVec[7], Color.red);
+        Debug.DrawRay(transform.position, rayVec[8], Color.black);
+        Debug.DrawRay(transform.position, rayVec[9], Color.black);
+        AgentManager friend = GetClosestFriend(agents);
+        for (int i = 0; i < rayVec.Length; i++)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, rayVec[i], rayLength);
+            if (hit.collider != null)
+            {
+                if (hit.collider.gameObject.CompareTag("Wall"))
+                {
+                    Debug.Log("wall hitted");
+                    //isFollowing = false;
+                    Flee(hit.collider.transform.position);
+                }
+            }
+            
 
-        //}
+        }
 
     }
 
@@ -788,11 +734,14 @@ public class AgentManager : SteerinBehaviours
             
             if (closestLeader.GetComponent<AgentManager>().isAgentMoving && sg.activeInHierarchy == false)
             {
+
                 LeaderFollow(closestLeader);
+                DetectWall();
             }
             else if(Vector2.Distance(transform.position, closestLeader.transform.position) > 30 && !isTitan && isFollowing && sg.activeInHierarchy == false)
             {
                 Arrive(closestLeader.transform.position);
+                DetectWall();
             }
             if(Vector2.Distance(transform.position, closestLeader.transform.position) > 100 && isTitan && isFollowing && sg.activeInHierarchy == false)
             {

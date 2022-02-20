@@ -26,6 +26,7 @@ public class TileMap : MonoBehaviour
     public GameObject copper;
     public GameObject metal;
     public GameObject box;
+    Camera cam;
     private void Awake()
     {
         walls = new List<Node>();
@@ -39,6 +40,7 @@ public class TileMap : MonoBehaviour
         ObjectPool.Instance.SetPooledObjects(srapsList, scraps, 500);
         ObjectPool.Instance.SetPooledObjects(copperList, copper, 500);
         ObjectPool.Instance.SetPooledObjects(metalList, metal, 500);
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
     
     public void setMap(Pathfinding path, Map<Node> map)
@@ -67,6 +69,7 @@ public class TileMap : MonoBehaviour
             updateTiles = false;
             UpdateTiles();
         }
+        
     }
 
     private void UpdateTiles()

@@ -207,6 +207,7 @@ public class CustomWindow : EditorWindow
                 TagLayerManager.CreateLayer("Walls");
                 TagLayerManager.CreateLayer("FogOfWarMain");
                 TagLayerManager.CreateLayer("FogOfWarSecondary");
+                TagLayerManager.CreateLayer("hb");
                 TagLayerManager.CreateTag("Agent");
                 TagLayerManager.CreateTag("tile");
                 TagLayerManager.CreateTag("FogOfWar");
