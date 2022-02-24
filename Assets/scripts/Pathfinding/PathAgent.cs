@@ -55,8 +55,8 @@ public class PathAgent : MonoBehaviour
                 //transform.rotation = Quaternion.Euler(0f, 0f, angle - 90);
                 //transform.position = transform.position + (Vector3)dir * speed * Time.deltaTime;
                 agent.Seek(targerPos);
-                //Vector2 seek = agent.Arrive(targerPos);
-                //agent.Flocking(seek);
+                
+                
 
             }
             else
@@ -64,7 +64,7 @@ public class PathAgent : MonoBehaviour
                 currentIndex++;
                 if (currentIndex >= path.Count)
                 {
-                    Debug.Log("se detuvo");
+                    //Debug.Log("se detuvo");
                     pathFindig2Pressed = false;
                     path = null;
                     currentIndex = 0;

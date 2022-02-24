@@ -35,11 +35,12 @@ public class SteerinBehaviours : MonoBehaviour
     public float leaderBD = 30;
     public Vector2 steering;
 
-    public float rayLength = 20f;
+    public float rayLength = 40;
+    private Dictionary<int, List<Vector2>> groups;
     public void Awake()
     {
         vel = Vector2.zero;
-        
+        groups = new Dictionary<int, List<Vector2>>();
     }
     private void Update()
     {
@@ -391,7 +392,7 @@ public class SteerinBehaviours : MonoBehaviour
     }
     public void SetSteeringWeight(Vector2 steering, float weight)
     {
-        this.steering += steering * weight;
+        this.vel += steering * weight;
     }
     
 }

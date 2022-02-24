@@ -22,15 +22,12 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
-    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.IK.Runtime.dll:
     - UnityEditor.U2D.IK.IKEditorManagerHelper
     Unity.2D.Sprite.Editor.dll:
     - UnityEditor.U2D.Sprites.SpriteEditorWindow
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
-    - UnityEditor.Tilemaps.GridPaletteBrushes
-    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
@@ -304,7 +301,7 @@ ScriptsOnlyBuild:
     className: Shadow
   - hash:
       serializedVersion: 2
-      Hash: 8d28ced158015a667e2ce432005c37b9
+      Hash: 5fdbf3773e7454ae4559bca7acfbbe75
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SaveAgent
@@ -352,7 +349,7 @@ ScriptsOnlyBuild:
     className: CinemachinePixelPerfect
   - hash:
       serializedVersion: 2
-      Hash: 1eef90839047556304022ce403437244
+      Hash: f26b26b52ff97f0b0b8e0827d2903ef7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: AgentManager
@@ -796,7 +793,7 @@ ScriptsOnlyBuild:
     className: TileMap
   - hash:
       serializedVersion: 2
-      Hash: f108d7405603280516f4f34eb661e680
+      Hash: 66bdfc87c5cda6ce629ac5471df2ef7b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SteerinBehaviours

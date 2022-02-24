@@ -51,7 +51,7 @@ public class AgentManager : SteerinBehaviours
     bool meleeAtack = true;
     [Header("Cuerpo a Cuerpo")]
     public float attackSize = 0.5f;
-    public float attackRange = 0.5f;
+    public float attackRange = 15f;
     public float attackTime = 0.5f;
     public bool isAtacker;
     public float meleeDamage;
@@ -77,6 +77,7 @@ public class AgentManager : SteerinBehaviours
     bool showlifebar = true;
     float maxHP;
     GameObject hpb;
+    CircleCollider2D attackCol;
     void Start()
     {
         bullets = new List<GameObject>();
@@ -96,7 +97,7 @@ public class AgentManager : SteerinBehaviours
         wallsLayer = LayerMask.GetMask("Walls");
         InitAgentObjects();
         fogOfWar = GameObject.Find("fogofwarcanvas");
-        SaveAgent.agents.Add(this);
+        SaveAgent.agentsP.Add(this);
         pAgent = GetComponent<PathAgent>();
         Awake();
         SetSelected(false);
@@ -216,7 +217,12 @@ public class AgentManager : SteerinBehaviours
     }
     private void OnDestroy()
     {
-        SaveAgent.agents.Remove(this);
+        SaveAgent.agentsP.Remove(this);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
     public void SetBehaviors()
@@ -363,12 +369,13 @@ public class AgentManager : SteerinBehaviours
             {
                
                 closestResource.SetNodeObject(Node.NodeObject.None);
-                closestResource.isResource = false;
+                //closestResource.isResource = false;
                 metalInv++;
                 inventory++;
             }
             if (inventory < resourcesCarryLimt)
             {
+
                 Arrive(p.GetMap().GetPosition(closestResource.x + .5f, closestResource.y));
             }
 
@@ -379,7 +386,7 @@ public class AgentManager : SteerinBehaviours
             {
 
                 closestResource.SetNodeObject(Node.NodeObject.None);
-                closestResource.isResource = false;
+                //closestResource.isResource = false;
                 scrapsInv++;
                 inventory++;
             }
@@ -394,7 +401,7 @@ public class AgentManager : SteerinBehaviours
             {
 
                 closestResource.SetNodeObject(Node.NodeObject.None);
-                closestResource.isResource = false;
+                //closestResource.isResource = false;
                 copperInv++;
                 inventory++;
             }
@@ -531,7 +538,7 @@ public class AgentManager : SteerinBehaviours
             }
             
         }
-        if (isAtacker && sg.activeInHierarchy == false  && isLeaderAlive == true || isLeader && isAtacker)
+        if (isAtacker && sg.activeInHierarchy == false  && isLeaderAlive == true || isLeader && isAtacker || isAtacker && squad == 0)
         {
             Attack();
         }
@@ -556,11 +563,15 @@ public class AgentManager : SteerinBehaviours
 
         if (closest != null)
         {
-            if (ammo <= 0 && Vector2.Distance(transform.position, closest.transform.position) > 10 && closest.GetComponent<AgentManager>().team != team
-                && isAtacker)
+            if (ammo <= 0 && Vector2.Distance(transform.position, closest.transform.position) > 10 && closest.GetComponent<AgentManager>().team != team)
             {
-                Arrive(closest.transform.position);
-
+                if (isArrive)
+                {
+                    Arrive(closest.transform.position);
+                }else if (isSeek)
+                {
+                    Seek(closest.transform.position);
+                }
             }
 
             if ((transform.position - closest.transform.position).magnitude <= attackRange && closest.isTitan == false)
@@ -569,30 +580,39 @@ public class AgentManager : SteerinBehaviours
                 if (meleeAtack)
                 {
                     isAttacking = true;
+                    attackCol.enabled = true;
+                    anim.SetTrigger("Attack");
                     closest.agentsLayers = LayerMask.GetMask("Agents");
                     StartCoroutine("AttackTime");
-                    anim.SetTrigger("Attack");
+                    
                     Vector2 direction = closest.transform.position - transform.position;
                     float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                     transform.rotation = Quaternion.Euler(0f, 0f, angle - 90);
                     Quaternion neededRotation = Quaternion.LookRotation(direction);
                     Quaternion.RotateTowards(transform.rotation, neededRotation, Time.deltaTime * 10f);
-                    Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(firePoint.transform.position, attackSize, closest.agentsLayers);
-                    foreach(Collider2D enemy in hitEnemies)
+                    
+                    if (attackCol.IsTouching(closest.GetComponent<BoxCollider2D>()))
                     {
-                        if (enemy != null)
-                        {
-                            if (enemy.GetComponent<AgentManager>().team != team&& enemy.GetComponent<AgentManager>().isTitan == false)
-                            {
-                                healthAmount -= meleeDamage;
-                                //Debug.Log(enemy.name + "hitted");
-
-                            }
-                        }
+                        Debug.Log("Pelea");
+                        closest.healthAmount -= meleeDamage;
                     }
+                    //Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(firePoint.transform.position, attackSize, closest.agentsLayers);
+                    //foreach(Collider2D enemy in hitEnemies)
+                    //{
+                    //    if (enemy != null)
+                    //    {
+                    //        if (enemy.GetComponent<AgentManager>().team != team&& enemy.GetComponent<AgentManager>().isTitan == false)
+                    //        {
+                    //            
+                    //            //Debug.Log(enemy.name + "hitted");
+
+                    //        }
+                    //    }
+                    //}
                 }
                 else
                 {
+                    //attackCol.enabled = false;
                     isAttacking = false;
                 }
 
@@ -641,9 +661,7 @@ public class AgentManager : SteerinBehaviours
         rayVec[0] = vel;
         rayVec[0].Normalize();
         rayVec[0] *= rayLength;
-        float rayOrient = Mathf.Atan2(vel.y, vel.x);
-        float rightRayO = rayOrient + (20f * Mathf.Deg2Rad);
-        float leftRayO = rayOrient - (20f * Mathf.Rad2Deg);
+       
         rayVec[1] = Quaternion.AngleAxis(60f, Vector3.forward) * transform.right;
         rayVec[1].Normalize();
         rayVec[1] *= rayLength;
@@ -684,13 +702,6 @@ public class AgentManager : SteerinBehaviours
         Debug.DrawRay(transform.position, rayVec[0], Color.blue);
         Debug.DrawRay(transform.position, rayVec[1], Color.red);
         Debug.DrawRay(transform.position, rayVec[2], Color.black);
-        Debug.DrawRay(transform.position, rayVec[3], Color.blue);
-        Debug.DrawRay(transform.position, rayVec[4], Color.red);
-        Debug.DrawRay(transform.position, rayVec[5], Color.black);
-        Debug.DrawRay(transform.position, rayVec[6], Color.blue);
-        Debug.DrawRay(transform.position, rayVec[7], Color.red);
-        Debug.DrawRay(transform.position, rayVec[8], Color.black);
-        Debug.DrawRay(transform.position, rayVec[9], Color.black);
         AgentManager friend = GetClosestFriend(agents);
         for (int i = 0; i < rayVec.Length; i++)
         {
@@ -864,6 +875,13 @@ public class AgentManager : SteerinBehaviours
         {
             ObjectPool.Instance.SetPooledObjects(bullets, bullet, 50);
             
+        }
+        if (isAtacker)
+        {
+            attackCol = gameObject.AddComponent<CircleCollider2D>();
+            attackCol.offset = new Vector2(0.46f, 2.12f);
+            attackCol.radius = 1.18f;
+            attackCol.isTrigger = true;
         }
         //this.bullet.transform.localScale = new Vector3(1f, 1f, 1f);
         this.transform.localScale = new Vector3(mass * maxScale, mass * maxScale, 0f);

@@ -15,8 +15,11 @@ MonoBehaviour:
   SimpleSelectedItems:
     m_Keys:
     - Assets/Editor/CustomWindow.cs
+    - Assets/Resources/Agents/attacker.prefab
+    - Assets/Resources/Agents/attacker.prefab.meta
     - Assets/Resources/Agents/carl.prefab
     - Assets/Resources/Agents/john.prefab
+    - Assets/Resources/Agents/kevin.prefab
     - Assets/Resources/Animation/carl.controller
     - Assets/Resources/Animation/carl.controller.meta
     - Assets/Resources/Animation/carl_idle.anim
@@ -29,6 +32,7 @@ MonoBehaviour:
     - Assets/Resources/GameHelpers/HealthBar.prefab.meta
     - Assets/Resources/GameHelpers/SpriteDrawer.cs
     - Assets/Resources/GameHelpers/SpriteDrawer.cs.meta
+    - Assets/Resources/GameHelpers/terrain.prefab
     - Assets/Resources/Tiles/box.prefab
     - Assets/Resources/Tiles/copper.prefab
     - Assets/Resources/Tiles/metal.prefab
@@ -48,9 +52,12 @@ MonoBehaviour:
     - Assets/scripts/Pathfinding/Map.cs
     - Assets/scripts/Pathfinding/MapGenerator.cs
     - Assets/scripts/Pathfinding/Node.cs
+    - Assets/scripts/Pathfinding/PathAgent.cs
     - Assets/scripts/Pathfinding/Pathfinding.cs
     - Assets/scripts/Pathfinding/TileMap.cs
+    - Assets/scripts/RTScontrollers/DropDown.cs
     - Assets/scripts/RTScontrollers/RTSManager.cs
+    - Assets/scripts/RTScontrollers/UnitSelection.cs
     - Assets/scripts/SaveLoad/AgentData.cs
     - Assets/scripts/SaveLoad/SaveAgent.cs
     - Assets/scripts/SteeringBehaviours/AgentManager.cs
@@ -58,7 +65,7 @@ MonoBehaviour:
     - Assets/scripts/SteeringBehaviours/SteerinBehaviours.cs
     - ProjectSettings/TagManager.asset
     - 
-    m_Values: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    m_Values: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 

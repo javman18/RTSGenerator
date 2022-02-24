@@ -187,7 +187,7 @@ MonoBehaviour:
   isCohesion: 0
   isCollector: 1
   isTitan: 0
-  resourcesCarryLimt: 4
+  resourcesCarryLimt: 1
   hasLeader: 0
   isLeader: 0
   rank: 0

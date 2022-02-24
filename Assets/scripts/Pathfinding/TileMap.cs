@@ -27,6 +27,11 @@ public class TileMap : MonoBehaviour
     public GameObject metal;
     public GameObject box;
     Camera cam;
+    public static int wallCount = 500;
+    public static int scrapsCount = 500;
+    public static int copperCount = 500;
+    public static int metalCount = 500;
+   
     private void Awake()
     {
         walls = new List<Node>();
@@ -94,21 +99,23 @@ public class TileMap : MonoBehaviour
                             if (wall.transform.position.x == pos.x && wall.transform.position.y == pos.y)
                             {
                                 //Debug.Log(pos.x + "," + pos.y + "," + c.offset.x + "," + c.offset.y);
+
+                                wallCount++;
                                 wall.SetActive(false);
                             }
                         }
-
+                        node.notWall = true;
                     }
                     if (node.isResource)
                     {
-                        DeleteResource(srapsList, x, y);
-                        DeleteResource(copperList, x, y);
-                        DeleteResource(metalList, x, y);
-
+                        DeleteResource(srapsList, x, y, scrapsCount);
+                        DeleteResource(copperList, x, y, copperCount);
+                        DeleteResource(metalList, x, y, metalCount);
+                        node.isResource = false;
                     }
-                    node.notWall = true;
                     
-                    node.isResource = false;
+                    
+                    
                     node.isStorage = false;
                     node.isAlive = false;
 
@@ -124,6 +131,7 @@ public class TileMap : MonoBehaviour
                         {
                             tmpWall.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
                             tmpWall.transform.tag = "Wall";
+                            wallCount--;
                             tmpWall.SetActive(true);
                         }
                             
@@ -149,6 +157,7 @@ public class TileMap : MonoBehaviour
                         {
                             tmpScrap.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
                             tmpScrap.transform.tag = "Resource";
+                            scrapsCount--;
                             tmpScrap.SetActive(true);
                         }
                         
@@ -168,6 +177,7 @@ public class TileMap : MonoBehaviour
                         {
                             tmpMetal.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
                             tmpMetal.transform.tag = "Resource";
+                            metalCount--;
                             tmpMetal.SetActive(true);
                         }
                         resources.Add(node);
@@ -189,6 +199,7 @@ public class TileMap : MonoBehaviour
                         {
                             tmpCopper.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
                             tmpCopper.transform.tag = "Resource";
+                            copperCount--;
                             tmpCopper.SetActive(true);
                         }
                         resources.Add(node);
@@ -230,7 +241,7 @@ public class TileMap : MonoBehaviour
         }
 
     }
-    public void DeleteResource(List<GameObject> resources, int x, int y)
+    public void DeleteResource(List<GameObject> resources, int x, int y, int count)
     {
         Vector3 pos = map.GetPosition(x + 0.5f, y + 0.5f);
         foreach (GameObject resource in resources)
@@ -238,6 +249,7 @@ public class TileMap : MonoBehaviour
             if (resource.transform.position.x == pos.x && resource.transform.position.y == pos.y)
             {
                 //Debug.Log(pos.x + "," + pos.y + "," + c.offset.x + "," + c.offset.y);
+                count++;
                 resource.SetActive(false);
             }
         }

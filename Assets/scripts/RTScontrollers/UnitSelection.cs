@@ -42,10 +42,13 @@ public class UnitSelection : MonoBehaviour
             foreach (Collider2D collider2D in agentCols)
             {
                 AgentManager agent = collider2D.GetComponent<AgentManager>();
-                if(agent != null)
+                if (collider2D is BoxCollider2D)
                 {
-                    agent.SetSelected(true);
-                    selectedAgents.Add(agent);
+                    if (agent != null)
+                    {
+                        agent.SetSelected(true);
+                        selectedAgents.Add(agent);
+                    }
                 }
             }
         }
