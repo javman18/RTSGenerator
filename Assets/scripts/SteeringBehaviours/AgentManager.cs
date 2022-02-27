@@ -97,7 +97,7 @@ public class AgentManager : SteerinBehaviours
         wallsLayer = LayerMask.GetMask("Walls");
         InitAgentObjects();
         fogOfWar = GameObject.Find("fogofwarcanvas");
-        SaveAgent.agentsP.Add(this);
+        //SaveAgent.agentsP.Add(this);
         pAgent = GetComponent<PathAgent>();
         Awake();
         SetSelected(false);
@@ -217,7 +217,7 @@ public class AgentManager : SteerinBehaviours
     }
     private void OnDestroy()
     {
-        SaveAgent.agentsP.Remove(this);
+        //SaveAgent.agentsP.Remove(this);
     }
 
     private void OnDrawGizmosSelected()
@@ -242,24 +242,24 @@ public class AgentManager : SteerinBehaviours
         {
             //Wander();
         }
-        if (isSeek)
-        {
+        //if (isSeek)
+        //{
 
-            if (d < seekPerception && d>shootingRaange)
-            {
-                if (closestEnemy != null)
-                {
+        //    if (d < seekPerception && d>shootingRaange)
+        //    {
+        //        if (closestEnemy != null)
+        //        {
                    
-                    SetSteeringWeight(Seek(closestEnemy.transform.position), 1);
-                    Wander();
-                }
+        //            SetSteeringWeight(Seek(closestEnemy.transform.position), 1);
+        //            Wander();
+        //        }
 
-            }
-            else
-            {
-                pAgent.enabled = true;
-            }
-        }
+        //    }
+        //    else
+        //    {
+        //        pAgent.enabled = true;
+        //    }
+        //}
         if (isFlee)
         {
             if (d < fleePerception && sg.activeInHierarchy == false)
@@ -596,19 +596,7 @@ public class AgentManager : SteerinBehaviours
                         Debug.Log("Pelea");
                         closest.healthAmount -= meleeDamage;
                     }
-                    //Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(firePoint.transform.position, attackSize, closest.agentsLayers);
-                    //foreach(Collider2D enemy in hitEnemies)
-                    //{
-                    //    if (enemy != null)
-                    //    {
-                    //        if (enemy.GetComponent<AgentManager>().team != team&& enemy.GetComponent<AgentManager>().isTitan == false)
-                    //        {
-                    //            
-                    //            //Debug.Log(enemy.name + "hitted");
-
-                    //        }
-                    //    }
-                    //}
+                    
                 }
                 else
                 {
@@ -657,7 +645,7 @@ public class AgentManager : SteerinBehaviours
     void DetectWall()
     {
 
-        Vector3[] rayVec = new Vector3[10];
+        Vector3[] rayVec = new Vector3[3];
         rayVec[0] = vel;
         rayVec[0].Normalize();
         rayVec[0] *= rayLength;
@@ -702,7 +690,7 @@ public class AgentManager : SteerinBehaviours
         Debug.DrawRay(transform.position, rayVec[0], Color.blue);
         Debug.DrawRay(transform.position, rayVec[1], Color.red);
         Debug.DrawRay(transform.position, rayVec[2], Color.black);
-        AgentManager friend = GetClosestFriend(agents);
+       
         for (int i = 0; i < rayVec.Length; i++)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, rayVec[i], rayLength);

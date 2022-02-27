@@ -39,6 +39,17 @@ public class AgentData
     public int rank;
     public int team;
     public int leaderID;
+    public float rateOfFire;
+    public float bulletSpeed;
+    public float shootingRange;
+    public int ammo;
+    public float damage;
+    public float healthAmount;
+    public float meeleDamage;
+
+    public int resourceLimit;
+
+    public bool isShooter;
     public AgentData(AgentManager agent)
     {
         isSeek = agent.isSeek;
@@ -46,7 +57,7 @@ public class AgentData
         isPursue = agent.isPursue;
         isEvade = agent.isEvade;
         isArrive = agent.isArrive;
-        isCohesion = agent.isCohesion;
+        //isCohesion = agent.isCohesion;
         isCollector = agent.isCollector;
         //reourcesInv = agent.copperInv;
         maxForce = agent.maxForce;
@@ -54,26 +65,38 @@ public class AgentData
         mass = agent.mass;
         seekPerception = agent.seekPerception;
         fleePerception = agent.fleePerception;
-        ePerception = agent.ePerception;
+        //ePerception = agent.ePerception;
         
-        viewAngle = agent.viewAngle;
+        //viewAngle = agent.viewAngle;
         //separationDistance = agent.separationDistance;
-        decayCoefficient = agent.decayCoefficient;
-        alignDist = agent.alignDist;
-        hasLeader = agent.hasLeader;
-        isLeader = agent.isLeader;
+        //decayCoefficient = agent.decayCoefficient;
+        //alignDist = agent.alignDist;
+        //hasLeader = agent.hasLeader;
+        //isLeader = agent.isLeader;
         rank = agent.rank;
         team = agent.team;
-        alignmentWeight = agent.alignmentWeight;
-        separationWeigh = agent.separationWeigh;
-        cohesionWeight = agent.cohesionWeight;
+        //alignmentWeight = agent.alignmentWeight;
+        //separationWeigh = agent.separationWeigh;
+        //cohesionWeight = agent.cohesionWeight;
         resourcesCarryLimt = agent.resourcesCarryLimt;
-        type = agent.rank;
+        //type = agent.rank;
         Vector2 agentPos = agent.transform.position;
-        position = new float[2];
-        position[0] = agent.transform.position.x;
-        position[1] = agent.transform.position.y;
+        //position = new float[2];
+        //position[0] = agent.transform.position.x;
+        //position[1] = agent.transform.position.y;
         leaderID = agent.squad;
+
+        rateOfFire = agent.startTimeBtwShots;
+        bulletSpeed = agent.bulletForce;
+        shootingRange = agent.shootingRaange;
+        ammo = agent.ammo;
+        damage = agent.bulletDamage;
+
+        meeleDamage = agent.meleeDamage;
+        healthAmount = agent.healthAmount;
+        //resourceLimit = agent.resourcesCarryLimt;
+
+        isShooter = agent.isShooter;
     }
 
 
