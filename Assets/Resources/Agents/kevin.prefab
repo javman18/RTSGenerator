@@ -195,10 +195,10 @@ MonoBehaviour:
   team: 1
   isShooter: 0
   shootingRaange: 100
-  startTimeBtwShots: 0.1
-  bulletForce: 500
-  ammo: 0
-  bulletDamage: 0
+  startTimeBtwShots: 0.2
+  bulletForce: 100
+  ammo: 500
+  bulletDamage: 50
   sg: {fileID: 0}
   anim: {fileID: 0}
   attackSize: 5

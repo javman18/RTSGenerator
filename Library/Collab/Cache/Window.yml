@@ -15,17 +15,31 @@ MonoBehaviour:
   SimpleSelectedItems:
     m_Keys:
     - Assets/Editor/CustomWindow.cs
+    - Assets/Resources/Agents/Eljefe.prefab
     - Assets/Resources/Agents/attacker.prefab
     - Assets/Resources/Agents/attacker.prefab.meta
     - Assets/Resources/Agents/carl.prefab
+    - Assets/Resources/Agents/hunter.prefab
+    - Assets/Resources/Agents/jim.prefab
     - Assets/Resources/Agents/john.prefab
     - Assets/Resources/Agents/kevin.prefab
+    - Assets/Resources/Agents/lolo.prefab
+    - Assets/Resources/Agents/lucas.prefab
+    - Assets/Resources/Agents/mike.prefab
+    - Assets/Resources/Animation/attacker.controller
+    - Assets/Resources/Animation/attacker.controller.meta
     - Assets/Resources/Animation/carl.controller
     - Assets/Resources/Animation/carl.controller.meta
     - Assets/Resources/Animation/carl_idle.anim
     - Assets/Resources/Animation/carl_idle.anim.meta
     - Assets/Resources/Animation/carl_walk.anim
     - Assets/Resources/Animation/carl_walk.anim.meta
+    - Assets/Resources/Animation/idle_a.anim
+    - Assets/Resources/Animation/idle_a.anim.meta
+    - Assets/Resources/Animation/melee_a.anim
+    - Assets/Resources/Animation/melee_a.anim.meta
+    - Assets/Resources/Animation/walk_a.anim
+    - Assets/Resources/Animation/walk_a.anim.meta
     - Assets/Resources/GameHelpers/HealhBar.cs
     - Assets/Resources/GameHelpers/HealhBar.cs.meta
     - Assets/Resources/GameHelpers/HealthBar.prefab
@@ -33,6 +47,8 @@ MonoBehaviour:
     - Assets/Resources/GameHelpers/SpriteDrawer.cs
     - Assets/Resources/GameHelpers/SpriteDrawer.cs.meta
     - Assets/Resources/GameHelpers/terrain.prefab
+    - Assets/Resources/Tiles/Spawn.prefab
+    - Assets/Resources/Tiles/Spawn.prefab.meta
     - Assets/Resources/Tiles/box.prefab
     - Assets/Resources/Tiles/copper.prefab
     - Assets/Resources/Tiles/metal.prefab
@@ -48,6 +64,8 @@ MonoBehaviour:
     - Assets/Saves/f_3.txt
     - Assets/Saves/f_3.txt.meta
     - Assets/Scenes/Test.unity
+    - Assets/Spawn.cs
+    - Assets/Spawn.cs.meta
     - Assets/scripts/Camera/CameraMovement.cs
     - Assets/scripts/Pathfinding/Map.cs
     - Assets/scripts/Pathfinding/MapGenerator.cs
@@ -65,7 +83,7 @@ MonoBehaviour:
     - Assets/scripts/SteeringBehaviours/SteerinBehaviours.cs
     - ProjectSettings/TagManager.asset
     - 
-    m_Values: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    m_Values: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 

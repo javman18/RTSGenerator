@@ -169,14 +169,7 @@ MonoBehaviour:
   seekPerception: 300
   fleePerception: 0
   ePerception: 30
-  pTarget: {fileID: 0}
-  eTarget: {fileID: 0}
-  fleeTarget: {fileID: 0}
-  seekTarget: {fileID: 0}
-  slowRadius: 0
-  targets: []
   viewAngle: 60
-  separationDistance: 40
   decayCoefficient: -25
   alignDist: 8
   maxSeparation: 0
@@ -185,6 +178,7 @@ MonoBehaviour:
   cohesionWeight: 1.5
   leaderBD: 30
   steering: {x: 0, y: 0}
+  rayLength: 20
   isSeek: 0
   isFlee: 0
   isPursue: 1
@@ -193,33 +187,35 @@ MonoBehaviour:
   isCohesion: 0
   isCollector: 0
   isTitan: 0
-  reourcesInv: 0
   resourcesCarryLimt: 1
-  nearestResource: Infinity
-  secondNearest: Infinity
-  shootingRaange: 100
   hasLeader: 0
   isLeader: 0
   rank: 1
-  leaders: []
-  leaderID: 1
+  squad: 0
   team: 1
-  isLeaderMoving: 0
-  bullet: {fileID: 0}
-  firePoint: {fileID: 0}
-  canShoot: 1
-  startTimeBtwShots: 0.1
+  isShooter: 0
+  shootingRaange: 100
+  startTimeBtwShots: 0.2
   bulletForce: 100
-  ammo: 200
-  isFollowing: 0
+  ammo: 500
+  bulletDamage: 50
+  sg: {fileID: 0}
   anim: {fileID: 0}
-  meleeAtack: 0
   attackSize: 0.5
   attackRange: 0.5
   attackTime: 0.5
   isAtacker: 0
   meleeDamage: 0
-  bulletDamage: 0
+  agentsLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  wallsLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  maxScale: 15
+  healthAmount: 150
+  bullets: []
+  objectToPool: {fileID: 0}
 --- !u!95 &4702332082619731684
 Animator:
   serializedVersion: 3

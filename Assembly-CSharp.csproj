@@ -70,16 +70,17 @@
     <Compile Include="Assets\scripts\SteeringBehaviours\Bullet.cs" />
     <Compile Include="Assets\scripts\SaveLoad\AgentData.cs" />
     <Compile Include="Assets\scripts\SteeringBehaviours\ObjectPool.cs" />
+    <Compile Include="Assets\Resources\GameHelpers\HealhBar.cs" />
     <Compile Include="Assets\scripts\Pathfinding\Node.cs" />
     <Compile Include="Assets\scripts\Pathfinding\Pathfinding.cs" />
+    <Compile Include="Assets\Resources\GameHelpers\SpriteDrawer.cs" />
     <Compile Include="Assets\scripts\Pathfinding\Map.cs" />
     <Compile Include="Assets\scripts\RTScontrollers\Player.cs" />
     <Compile Include="Assets\scripts\Pathfinding\PathRequestManager.cs" />
     <Compile Include="Assets\scripts\RTScontrollers\UnitSelection.cs" />
     <Compile Include="Assets\scripts\Pathfinding\TileMap.cs" />
     <Compile Include="Assets\scripts\SteeringBehaviours\SteerinBehaviours.cs" />
-    <Compile Include="Assets\Resources\GameHelpers\HealhBar.cs" />
-    <Compile Include="Assets\Resources\GameHelpers\SpriteDrawer.cs" />
+    <Compile Include="Assets\Spawn.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Saves\path3A_4.txt" />

@@ -10,6 +10,7 @@ public class AgentData
     public bool isPursue;
     public bool isEvade;
     public bool isArrive;
+    public bool isTitan;
     public bool isCohesion;
     public bool isCollector;
     public int reourcesInv = 0;
@@ -46,7 +47,7 @@ public class AgentData
     public float damage;
     public float healthAmount;
     public float meeleDamage;
-
+    public bool isAttacker;
     public int resourceLimit;
 
     public bool isShooter;
@@ -57,45 +58,25 @@ public class AgentData
         isPursue = agent.isPursue;
         isEvade = agent.isEvade;
         isArrive = agent.isArrive;
-        //isCohesion = agent.isCohesion;
+        isAttacker = agent.isAtacker;
         isCollector = agent.isCollector;
-        //reourcesInv = agent.copperInv;
         maxForce = agent.maxForce;
         maxVel = agent.maxVel;
         mass = agent.mass;
         seekPerception = agent.seekPerception;
         fleePerception = agent.fleePerception;
-        //ePerception = agent.ePerception;
-        
-        //viewAngle = agent.viewAngle;
-        //separationDistance = agent.separationDistance;
-        //decayCoefficient = agent.decayCoefficient;
-        //alignDist = agent.alignDist;
-        //hasLeader = agent.hasLeader;
-        //isLeader = agent.isLeader;
+        isTitan = agent.isTitan;
         rank = agent.rank;
         team = agent.team;
-        //alignmentWeight = agent.alignmentWeight;
-        //separationWeigh = agent.separationWeigh;
-        //cohesionWeight = agent.cohesionWeight;
         resourcesCarryLimt = agent.resourcesCarryLimt;
-        //type = agent.rank;
-        Vector2 agentPos = agent.transform.position;
-        //position = new float[2];
-        //position[0] = agent.transform.position.x;
-        //position[1] = agent.transform.position.y;
         leaderID = agent.squad;
-
         rateOfFire = agent.startTimeBtwShots;
         bulletSpeed = agent.bulletForce;
         shootingRange = agent.shootingRaange;
         ammo = agent.ammo;
         damage = agent.bulletDamage;
-
         meeleDamage = agent.meleeDamage;
         healthAmount = agent.healthAmount;
-        //resourceLimit = agent.resourcesCarryLimt;
-
         isShooter = agent.isShooter;
     }
 

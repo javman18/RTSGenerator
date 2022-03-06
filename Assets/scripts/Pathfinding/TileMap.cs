@@ -21,16 +21,20 @@ public class TileMap : MonoBehaviour
     public static List<Node> storages;
     public static List<Node> walls;
     public static List<GameObject> wallsList;
+    public static List<GameObject> spawnList;
+    public static List<GameObject> storageList;
     public GameObject wall;
     public GameObject scraps;
     public GameObject copper;
     public GameObject metal;
     public GameObject box;
+    public GameObject spawn;
     Camera cam;
     public static int wallCount = 500;
     public static int scrapsCount = 500;
     public static int copperCount = 500;
     public static int metalCount = 500;
+    
    
     private void Awake()
     {
@@ -41,10 +45,14 @@ public class TileMap : MonoBehaviour
         srapsList = new List<GameObject>();
         copperList = new List<GameObject>();
         metalList = new List<GameObject>();
+        spawnList = new List<GameObject>();
+        storageList = new List<GameObject>();
         ObjectPool.Instance.SetPooledObjects(wallsList, wall, 500);
         ObjectPool.Instance.SetPooledObjects(srapsList, scraps, 500);
         ObjectPool.Instance.SetPooledObjects(copperList, copper, 500);
         ObjectPool.Instance.SetPooledObjects(metalList, metal, 500);
+        ObjectPool.Instance.SetPooledObjects(spawnList, spawn, 20);
+
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
     
@@ -113,10 +121,40 @@ public class TileMap : MonoBehaviour
                         DeleteResource(metalList, x, y, metalCount);
                         node.isResource = false;
                     }
-                    
-                    
-                    
-                    node.isStorage = false;
+                    if (node.isSpawn)
+                    {
+                        Vector3 pos = map.GetPosition(x + 0.5f, y + 0.5f);
+                        foreach (GameObject spawn in spawnList)
+                        {
+                            if (spawn.transform.position.x == pos.x && spawn.transform.position.y == pos.y)
+                            {
+                                //Debug.Log(pos.x + "," + pos.y + "," + c.offset.x + "," + c.offset.y);
+
+                                
+                                spawn.SetActive(false);
+                            }
+                        }
+                        node.isSpawn = false;
+                    }
+                    if (node.isStorage)
+                    {
+                        Vector3 pos = map.GetPosition(x + 0.5f, y + 0.5f);
+                        foreach (GameObject storage in storageList)
+                        {
+                            if (storage.transform.position.x == pos.x && storage.transform.position.y == pos.y)
+                            {
+                                //Debug.Log(pos.x + "," + pos.y + "," + c.offset.x + "," + c.offset.y);
+
+
+                                storage.SetActive(false);
+                            }
+                        }
+                        node.isStorage = false;
+                    }
+
+
+
+                    //node.isStorage = false;
                     node.isAlive = false;
 
                 }
@@ -225,15 +263,37 @@ public class TileMap : MonoBehaviour
                 {
                     if (!node.isStorage)
                     {
-                        Instantiate(box, map.GetPosition(x + 0.5f, y + 0.5f), Quaternion.identity);
+                        GameObject st = Instantiate(box, map.GetPosition(x + 0.5f, y + 0.5f), Quaternion.identity);
                         storages.Add(node);
-                        
+                        storageList.Add(st);
 
 
                     }
                     node.isStorage = true;
                     //node.notWall = false;
                     node.hasCollider = false;
+                    //node.isStorage = true;
+                    node.isResource = false;
+                }
+                else if (nodeObject == Node.NodeObject.Spawn)
+                {
+                    GameObject tmpSpawn = ObjectPool.Instance.GetPooledObjects(spawnList, 20);
+                    if (!node.isSpawn)
+                    {
+                        if (tmpSpawn != null)
+                        {
+                            tmpSpawn.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
+                            tmpSpawn.transform.tag = "Spawn";
+                            copperCount--;
+                            tmpSpawn.SetActive(true);
+                        }
+
+                    }
+
+                    node.isSpawn = true;
+                    node.isStorage = false;
+                    //node.notWall = false;
+                    
                     //node.isStorage = true;
                     node.isResource = false;
                 }

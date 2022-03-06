@@ -47,7 +47,7 @@ public class AgentManager : SteerinBehaviours
     public GameObject sg;
     private bool isFollowing;
     public Animator anim;
-    AgentManager[] agents;
+    public AgentManager[] agents;
     bool meleeAtack = true;
     [Header("Cuerpo a Cuerpo")]
     public float attackSize = 0.5f;
@@ -64,7 +64,7 @@ public class AgentManager : SteerinBehaviours
     bool isShooting = false;
     public float maxScale = 15f;
     public float healthAmount = 150;
-    private bool isLeaderAlive;
+    public bool isLeaderAlive;
     private float fleeTime;
     bool startTime = false;
     bool isFloking;
@@ -563,8 +563,9 @@ public class AgentManager : SteerinBehaviours
 
         if (closest != null)
         {
-            if (ammo <= 0 && Vector2.Distance(transform.position, closest.transform.position) > 10 && closest.GetComponent<AgentManager>().team != team)
+            if (ammo <= 0 /*&& Vector2.Distance(transform.position, closest.transform.position) > 10*/ && closest.GetComponent<AgentManager>().team != team)
             {
+                isFollowing = false;
                 if (isArrive)
                 {
                     Arrive(closest.transform.position);
@@ -573,8 +574,8 @@ public class AgentManager : SteerinBehaviours
                     Seek(closest.transform.position);
                 }
             }
-
-            if ((transform.position - closest.transform.position).magnitude <= attackRange && closest.isTitan == false)
+            attackRange = mass * maxScale * 2;
+            if ((transform.position - closest.transform.position).magnitude <= attackRange && ammo<=0)
             {
                 
                 if (meleeAtack)
@@ -658,34 +659,7 @@ public class AgentManager : SteerinBehaviours
         rayVec[2].Normalize();
         rayVec[2] *= rayLength;
 
-        //rayVec[3] = Quaternion.AngleAxis(150f, Vector3.forward) * transform.right;
-        //rayVec[3].Normalize();
-        //rayVec[3] *= rayLength;
-
-        //rayVec[4] = Quaternion.AngleAxis(180f, Vector3.forward) * transform.right;
-        //rayVec[4].Normalize();
-        //rayVec[4] *= rayLength;
-
-        //rayVec[5] = Quaternion.AngleAxis(210f, Vector3.forward) * transform.right;
-        //rayVec[5].Normalize();
-        //rayVec[5] *= rayLength;
-
-        //rayVec[6] = Quaternion.AngleAxis(240f, Vector3.forward) * transform.right;
-        //rayVec[6].Normalize();
-        //rayVec[6] *= rayLength;
-
-
-        //rayVec[7] = Quaternion.AngleAxis(270f, Vector3.forward) * transform.right;
-        //rayVec[7].Normalize();
-        //rayVec[7] *= rayLength;
-
-        //rayVec[8] = Quaternion.AngleAxis(300f, Vector3.forward) * transform.right;
-        //rayVec[8].Normalize();
-        //rayVec[8] *= rayLength;
-
-        //rayVec[9] = Quaternion.AngleAxis(330f, Vector3.forward) * transform.right;
-        //rayVec[9].Normalize();
-        //rayVec[9] *= rayLength;
+       
 
         Debug.DrawRay(transform.position, rayVec[0], Color.blue);
         Debug.DrawRay(transform.position, rayVec[1], Color.red);
@@ -715,18 +689,19 @@ public class AgentManager : SteerinBehaviours
         GameObject closestLeader = GetClosestLeader(leaders);
         if (closestLeader != null)
         {
+            hasLeader = true;
             if (closestLeader.GetComponent<AgentManager>().healthAmount > 50 && !isLeader)
             {
                 fleeTime = 0;
                 startTime = false;
                 isLeaderAlive = true;
-                isFollowing = true;
+                //isFollowing = true;
             }
             if (closestLeader.GetComponent<AgentManager>().healthAmount <= 50 && !isLeader)
             {
                 startTime = true;
                 isLeaderAlive = false;
-                isFollowing = false;
+                //isFollowing = false;
             }
             
             StartCoroutine(CeheckMovement(closestLeader));
@@ -737,12 +712,12 @@ public class AgentManager : SteerinBehaviours
                 LeaderFollow(closestLeader);
                 DetectWall();
             }
-            else if(Vector2.Distance(transform.position, closestLeader.transform.position) > 30 && !isTitan && isFollowing && sg.activeInHierarchy == false)
+            else if(Vector2.Distance(transform.position, closestLeader.transform.position) > 30 && !isTitan  && sg.activeInHierarchy == false)
             {
                 Arrive(closestLeader.transform.position);
                 DetectWall();
             }
-            if(Vector2.Distance(transform.position, closestLeader.transform.position) > 100 && isTitan && isFollowing && sg.activeInHierarchy == false)
+            if(Vector2.Distance(transform.position, closestLeader.transform.position) > 100 && isTitan  && sg.activeInHierarchy == false)
             {
                 Arrive(closestLeader.transform.position);
             }
@@ -756,6 +731,10 @@ public class AgentManager : SteerinBehaviours
             }
 
 
+        }
+        else
+        {
+            hasLeader = false;
         }
 
         
@@ -916,14 +895,14 @@ public class AgentManager : SteerinBehaviours
                 {
                     nearestL = distanceToLeader;
                     closestLeader = agent;
-                    hasLeader = true;
+                    
                 }
                 
             }
         }
         if(closestLeader == null)
         {
-            hasLeader = false;
+            //hasLeader = false;
         }
         return closestLeader;
     }

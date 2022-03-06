@@ -215,6 +215,7 @@ public class CustomWindow : EditorWindow
                 TagLayerManager.CreateTag("Leader");
                 TagLayerManager.CreateTag("Wall");
                 TagLayerManager.CreateTag("Resource");
+                TagLayerManager.CreateTag("Spawn");
                 SaveObjectAsPrefab(agent);
                 
             }

@@ -162,11 +162,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vel: {x: 0, y: 0}
-  maxForce: 120
-  maxVel: 100
+  maxForce: 200
+  maxVel: 30
   mass: 0.3
   weight: 1
-  seekPerception: 200
+  seekPerception: 0
   fleePerception: 0
   ePerception: 30
   viewAngle: 60
@@ -181,7 +181,7 @@ MonoBehaviour:
   rayLength: 40
   isSeek: 0
   isFlee: 0
-  isPursue: 0
+  isPursue: 1
   isEvade: 0
   isArrive: 1
   isCohesion: 0
@@ -194,18 +194,18 @@ MonoBehaviour:
   squad: 0
   team: 0
   isShooter: 0
-  shootingRaange: 100
-  startTimeBtwShots: 0.1
-  bulletForce: 30
+  shootingRaange: 0
+  startTimeBtwShots: 0
+  bulletForce: 0
   ammo: 0
-  bulletDamage: 0
+  bulletDamage: 400
   sg: {fileID: 0}
   anim: {fileID: 0}
   attackSize: 0.5
-  attackRange: 0.5
+  attackRange: 40
   attackTime: 0.5
   isAtacker: 1
-  meleeDamage: 20
+  meleeDamage: 10
   agentsLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -214,6 +214,7 @@ MonoBehaviour:
     m_Bits: 0
   maxScale: 15
   healthAmount: 400
+  isLeaderAlive: 0
   bullets: []
   objectToPool: {fileID: 0}
 --- !u!95 &3847648278267936537

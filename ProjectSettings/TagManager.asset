@@ -12,6 +12,7 @@ TagManager:
   - Agent
   - Caca
   - Resource
+  - Spawn
   layers:
   - Default
   - TransparentFX

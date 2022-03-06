@@ -37,14 +37,45 @@ public class SaveAgent : MonoBehaviour
     public InputField bulletSpeedField;
     public InputField shootingRangField;
     public InputField hpField;
-
+    public InputField teamField;
     public InputField ammoField;
     public InputField damegeField;
+    public InputField squadField;
+    public InputField rankField;
+    public Toggle fleeToggle;
+    public Toggle seekToggle;
+    public Toggle arriveToggle;
+    public Toggle pursueToggle;
+    public Toggle titanToggle;
     int i = 0;
     private void Start()
     {
         agents = Resources.LoadAll<GameObject>("Agents");
-       
+        fleePerception.text = agents[i].GetComponent<AgentManager>().fleePerception.ToString();
+        pursuePerception.text = agents[i].GetComponent<AgentManager>().seekPerception.ToString();
+        forceField.text = agents[i].GetComponent<AgentManager>().maxForce.ToString();
+        teamField.text = agents[i].GetComponent<AgentManager>().team.ToString();
+        squadField.text = agents[i].GetComponent<AgentManager>().squad.ToString();
+        rankField.text = agents[i].GetComponent<AgentManager>().rank.ToString();
+        //forceField.text = "0";
+        velFied.text = agents[i].GetComponent<AgentManager>().maxVel.ToString();
+        massScollBar.value = agents[i].GetComponent<AgentManager>().mass;
+        meeleDamageField.text = agents[i].GetComponent<AgentManager>().meleeDamage.ToString();
+        capCarryField.text = agents[i].GetComponent<AgentManager>().resourcesCarryLimt.ToString();
+        rateFireField.text = agents[i].GetComponent<AgentManager>().startTimeBtwShots.ToString();
+        bulletSpeedField.text = agents[i].GetComponent<AgentManager>().bulletForce.ToString();
+        shootingRangField.text = agents[i].GetComponent<AgentManager>().shootingRaange.ToString();
+        hpField.text = agents[i].GetComponent<AgentManager>().healthAmount.ToString();
+        ammoField.text = agents[i].GetComponent<AgentManager>().ammo.ToString();
+        damegeField.text = agents[i].GetComponent<AgentManager>().bulletDamage.ToString();
+        collectorToggle.isOn = agents[i].GetComponent<AgentManager>().isCollector;
+        attackerToggle.isOn = agents[i].GetComponent<AgentManager>().isAtacker;
+        shooterToggle.isOn = agents[i].GetComponent<AgentManager>().isShooter;
+        pursueToggle.isOn = agents[i].GetComponent<AgentManager>().isPursue;
+        fleeToggle.isOn = agents[i].GetComponent<AgentManager>().isFlee;
+        seekToggle.isOn = agents[i].GetComponent<AgentManager>().isSeek;
+        arriveToggle.isOn = agents[i].GetComponent<AgentManager>().isArrive;
+        titanToggle.isOn = agents[i].GetComponent<AgentManager>().isTitan;
         for (int i = 0; i < agents.Length; i++)
         {
            
@@ -56,25 +87,40 @@ public class SaveAgent : MonoBehaviour
         {
 
             i = agentSelectD.value;
+            Debug.Log(i);
+            fleePerception.text = agents[i].GetComponent<AgentManager>().fleePerception.ToString();
+            pursuePerception.text = agents[i].GetComponent<AgentManager>().seekPerception.ToString();
+            forceField.text = agents[i].GetComponent<AgentManager>().maxForce.ToString();
+            teamField.text = agents[i].GetComponent<AgentManager>().team.ToString();
+            //forceField.text = "0";
+            squadField.text = agents[i].GetComponent<AgentManager>().squad.ToString();
+            rankField.text = agents[i].GetComponent<AgentManager>().rank.ToString();
+            velFied.text = agents[i].GetComponent<AgentManager>().maxVel.ToString();
+            massScollBar.value = agents[i].GetComponent<AgentManager>().mass;
+            meeleDamageField.text = agents[i].GetComponent<AgentManager>().meleeDamage.ToString();
+            capCarryField.text = agents[i].GetComponent<AgentManager>().resourcesCarryLimt.ToString();
+            rateFireField.text = agents[i].GetComponent<AgentManager>().startTimeBtwShots.ToString();
+            bulletSpeedField.text = agents[i].GetComponent<AgentManager>().bulletForce.ToString();
+            shootingRangField.text = agents[i].GetComponent<AgentManager>().shootingRaange.ToString();
+            hpField.text = agents[i].GetComponent<AgentManager>().healthAmount.ToString();
+            ammoField.text = agents[i].GetComponent<AgentManager>().ammo.ToString();
+            damegeField.text = agents[i].GetComponent<AgentManager>().bulletDamage.ToString();
+            collectorToggle.isOn = agents[i].GetComponent<AgentManager>().isCollector;
+            attackerToggle.isOn = agents[i].GetComponent<AgentManager>().isAtacker;
+            shooterToggle.isOn = agents[i].GetComponent<AgentManager>().isShooter;
+            pursueToggle.isOn = agents[i].GetComponent<AgentManager>().isPursue;
+            fleeToggle.isOn = agents[i].GetComponent<AgentManager>().isFlee;
+            seekToggle.isOn = agents[i].GetComponent<AgentManager>().isSeek;
+            arriveToggle.isOn = agents[i].GetComponent<AgentManager>().isArrive;
+            titanToggle.isOn = agents[i].GetComponent<AgentManager>().isTitan;
 
         });
         for (int i = 0; i < agents.Length; i++)
         {
             agentsP.Add(agents[i].GetComponent<AgentManager>());
         }
-        Debug.Log(agentsP.Count);
-        fleePerception.text = "0";
-        pursuePerception.text = "0";
-        forceField.text = "0";
-        velFied.text = "0";
-        meeleDamageField.text = "0";
-        capCarryField.text = "0";
-        rateFireField.text = "0";
-        bulletSpeedField.text = "0";
-        shootingRangField.text = "0";
-        hpField.text = "0";
-        ammoField.text = "0";
-        damegeField.text = "0";
+
+        
     }
     private void Update()
     {
@@ -103,15 +149,14 @@ public class SaveAgent : MonoBehaviour
             shooterStuff.SetActive(false);
         }
         
-        collectorToggle.isOn = agents[i].GetComponent<AgentManager>().isCollector;
-        attackerToggle.isOn = agents[i].GetComponent<AgentManager>().isAtacker;
-        shooterToggle.isOn = agents[i].GetComponent<AgentManager>().isShooter;
+        
         SetParametres();
         agentSelectedT.text = "Agent Selected: " + agents[i].name;
         scrollText.text = "Mass "+massScollBar.value;
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Load();
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Load(mousePos);
         }
         
     }
@@ -152,13 +197,13 @@ public class SaveAgent : MonoBehaviour
         }
     }
 
-    public void Load()
+    public void Load(Vector3 position)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/agent" + SceneManager.GetActiveScene().buildIndex;
         string countPath = Application.persistentDataPath + "/agent.count" + SceneManager.GetActiveScene().buildIndex;
         int agentCount = 0;
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+       
         if (File.Exists(countPath)){
             FileStream countStream = new FileStream(countPath, FileMode.Open);
             agentCount = (int)formatter.Deserialize(countStream);
@@ -177,16 +222,16 @@ public class SaveAgent : MonoBehaviour
 
             stream.Close();
             
-            AgentManager agent = Instantiate(agentsP[i], mousePos, Quaternion.identity);
+            AgentManager agent = Instantiate(agentsP[i], position, Quaternion.identity);
             agent.name = agents[i].name;
             agent.isSeek = data.isSeek;
             agent.isFlee = data.isFlee;
             agent.isPursue = data.isPursue;
             agent.isEvade = data.isEvade;
             agent.isArrive = data.isArrive;
-            agent.isCohesion = data.isCohesion;
+            agent.isAtacker = data.isAttacker;
             agent.isCollector = data.isCollector;
-            
+            agent.isTitan = data.isTitan;
             agent.resourcesCarryLimt = data.resourcesCarryLimt;
             agent.rank = data.type;
             agent.maxForce = data.maxForce;
@@ -232,5 +277,16 @@ public class SaveAgent : MonoBehaviour
         agents[i].GetComponent<AgentManager>().bulletDamage = float.Parse(damegeField.text);
         agents[i].GetComponent<AgentManager>().mass = massScollBar.value;
         agents[i].GetComponent<AgentManager>().bulletDamage = float.Parse(hpField.text);
+        agents[i].GetComponent<AgentManager>().team = int.Parse(teamField.text);
+        agents[i].GetComponent<AgentManager>().rank = int.Parse(rankField.text);
+        agents[i].GetComponent<AgentManager>().squad = int.Parse(squadField.text);
+        agents[i].GetComponent<AgentManager>().isCollector = collectorToggle.isOn;
+        agents[i].GetComponent<AgentManager>().isAtacker = attackerToggle.isOn;
+        agents[i].GetComponent<AgentManager>().isShooter = shooterToggle.isOn;
+        agents[i].GetComponent<AgentManager>().isPursue = pursueToggle.isOn;
+        agents[i].GetComponent<AgentManager>().isFlee = fleeToggle.isOn;
+        agents[i].GetComponent<AgentManager>().isSeek = seekToggle.isOn;
+        agents[i].GetComponent<AgentManager>().isArrive = arriveToggle.isOn;
+        agents[i].GetComponent<AgentManager>().isTitan = titanToggle.isOn;
     }
 }

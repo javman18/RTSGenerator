@@ -305,6 +305,10 @@ public class MapGenerator : MonoBehaviour
             nodeSprite = Node.NodeObject.Box;
 
         }
+        if(val == 8)
+        {
+            nodeSprite = Node.NodeObject.Spawn;
+        }
     }
     public void CreateRandomMap()
     {

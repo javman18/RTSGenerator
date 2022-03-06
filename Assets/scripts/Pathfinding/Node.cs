@@ -21,6 +21,7 @@ public class Node : IBinaryTree<Node> {
     public bool isResource;
     public bool isStorage;
     public bool isAlive;
+    public bool isSpawn;
     public Node parent;
     int value = 0;
     int binaryIndex;
@@ -33,7 +34,8 @@ public class Node : IBinaryTree<Node> {
         Scrap,
         Metal,
         Copper,
-        Box
+        Box,
+        Spawn
     }
     private NodeObject nodeObject;
     public Node(Map<Node> map, int x, int y) {
@@ -45,6 +47,7 @@ public class Node : IBinaryTree<Node> {
         isResource = false;
         isStorage = false;
         isAlive = false;
+        isSpawn = false;
         value = 0;
     }
     public void CalculateF()
