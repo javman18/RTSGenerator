@@ -7,9 +7,12 @@ public class DropDown : MonoBehaviour
 {
     public TMP_Dropdown dd;
     public MapGenerator mg;
+    public TMP_InputField basiIdInput;
+    public TMP_Dropdown baseDD;
     // Start is called before the first frame update
     void Start()
     {
+        baseDD.gameObject.SetActive(false);
         dd.onValueChanged.AddListener(delegate
         {
             valueChanged(dd);
@@ -17,10 +20,18 @@ public class DropDown : MonoBehaviour
             dd.options[1].text = "Wall " + TileMap.wallCount;
             dd.options[2].text = "Ground";
             dd.options[3].text = "Grass";
-            dd.options[4].text = "Scrap " + TileMap.scrapsCount;
-            dd.options[5].text = "Metal " + TileMap.metalCount;
-            dd.options[6].text = "Copper " + TileMap.copperCount;
+            dd.options[4].text = "Scrap " + TileMap.resource1Count;
+            dd.options[5].text = "Metal " + TileMap.resource2Count;
+            dd.options[6].text = "Copper " + TileMap.resource3Count;
             dd.options[7].text = "Storage";
+            if(dd.value == 10)
+            {
+                baseDD.gameObject.SetActive(true);
+            }
+            else
+            {
+                baseDD.gameObject.SetActive(false);
+            }
         });
     }
     public void valueChanged(TMP_Dropdown d)

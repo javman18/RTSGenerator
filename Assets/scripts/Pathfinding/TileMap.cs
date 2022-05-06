@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TileMap : MonoBehaviour
 {
@@ -11,29 +12,33 @@ public class TileMap : MonoBehaviour
     private Pathfinding path;
     private Mesh mesh;
     private bool updateTiles;
-    
+   
     BoxCollider2D col;
     public static BoxCollider2D[] cols;
     public static List<Node> resources;
-    public static List<GameObject> srapsList;
-    public static List<GameObject> copperList;
-    public static List<GameObject> metalList;
+    public static List<GameObject> resource1List;
+    public static List<GameObject> resource3List;
+    public static List<GameObject> resource2List;
     public static List<Node> storages;
     public static List<Node> walls;
     public static List<GameObject> wallsList;
     public static List<GameObject> spawnList;
     public static List<GameObject> storageList;
+    public static List<GameObject> brickList;
+    public static List<GameObject> baseList;
     public GameObject wall;
-    public GameObject scraps;
-    public GameObject copper;
-    public GameObject metal;
+    public GameObject resource1;
+    public GameObject resource3;
+    public GameObject resource2;
     public GameObject box;
     public GameObject spawn;
+    public GameObject brick;
+    public GameObject _base;
     Camera cam;
-    public static int wallCount = 500;
-    public static int scrapsCount = 500;
-    public static int copperCount = 500;
-    public static int metalCount = 500;
+    public static int wallCount = 1000;
+    public static int resource1Count = 500;
+    public static int resource3Count = 500;
+    public static int resource2Count = 500;
     
    
     private void Awake()
@@ -42,16 +47,20 @@ public class TileMap : MonoBehaviour
         resources = new List<Node>();
         storages = new List<Node>();
         wallsList = new List<GameObject>();
-        srapsList = new List<GameObject>();
-        copperList = new List<GameObject>();
-        metalList = new List<GameObject>();
+        resource1List = new List<GameObject>();
+        resource3List = new List<GameObject>();
+        resource2List = new List<GameObject>();
         spawnList = new List<GameObject>();
         storageList = new List<GameObject>();
-        ObjectPool.Instance.SetPooledObjects(wallsList, wall, 500);
-        ObjectPool.Instance.SetPooledObjects(srapsList, scraps, 500);
-        ObjectPool.Instance.SetPooledObjects(copperList, copper, 500);
-        ObjectPool.Instance.SetPooledObjects(metalList, metal, 500);
-        ObjectPool.Instance.SetPooledObjects(spawnList, spawn, 20);
+        brickList = new List<GameObject>();
+        baseList = new List<GameObject>();
+        //ObjectPool.Instance.SetPooledObjects(wallsList, wall, 500);
+        //ObjectPool.Instance.SetPooledObjects(resource1List, resource1, 500);
+        //ObjectPool.Instance.SetPooledObjects(resource3List, resource3, 500);
+        //ObjectPool.Instance.SetPooledObjects(resource2List, resource2, 500);
+        //ObjectPool.Instance.SetPooledObjects(spawnList, spawn, 20);
+        //ObjectPool.Instance.SetPooledObjects(brickList, brick, 100);
+        //ObjectPool.Instance.SetPooledObjects(baseList, _base, 100);
 
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
@@ -102,7 +111,7 @@ public class TileMap : MonoBehaviour
                     if (!node.notWall)
                     {
                         Vector3 pos = map.GetPosition(x + 0.5f, y + 0.5f);
-                        foreach (GameObject wall in wallsList)
+                        foreach (GameObject wall in ObjectPool.wallsList)
                         {
                             if (wall.transform.position.x == pos.x && wall.transform.position.y == pos.y)
                             {
@@ -116,15 +125,15 @@ public class TileMap : MonoBehaviour
                     }
                     if (node.isResource)
                     {
-                        DeleteResource(srapsList, x, y, scrapsCount);
-                        DeleteResource(copperList, x, y, copperCount);
-                        DeleteResource(metalList, x, y, metalCount);
+                        DeleteResource(ObjectPool.resource1List, x, y, resource1Count);
+                        DeleteResource(ObjectPool.resource3List, x, y, resource3Count);
+                        DeleteResource(ObjectPool.resource2List, x, y, resource2Count);
                         node.isResource = false;
                     }
                     if (node.isSpawn)
                     {
                         Vector3 pos = map.GetPosition(x + 0.5f, y + 0.5f);
-                        foreach (GameObject spawn in spawnList)
+                        foreach (GameObject spawn in ObjectPool.spawnList)
                         {
                             if (spawn.transform.position.x == pos.x && spawn.transform.position.y == pos.y)
                             {
@@ -139,7 +148,7 @@ public class TileMap : MonoBehaviour
                     if (node.isStorage)
                     {
                         Vector3 pos = map.GetPosition(x + 0.5f, y + 0.5f);
-                        foreach (GameObject storage in storageList)
+                        foreach (GameObject storage in ObjectPool.storageList)
                         {
                             if (storage.transform.position.x == pos.x && storage.transform.position.y == pos.y)
                             {
@@ -152,7 +161,21 @@ public class TileMap : MonoBehaviour
                         node.isStorage = false;
                     }
 
+                    if (node.isCeiling)
+                    {
+                        Vector3 pos = map.GetPosition(x + 0.5f, y + 0.5f);
+                        foreach (GameObject brick in ObjectPool.brickList)
+                        {
+                            if (brick.transform.position.x == pos.x && brick.transform.position.y == pos.y)
+                            {
+                                //Debug.Log(pos.x + "," + pos.y + "," + c.offset.x + "," + c.offset.y);
 
+
+                                brick.SetActive(false);
+                            }
+                        }
+                        node.isCeiling = false;
+                    }
 
                     //node.isStorage = false;
                     node.isAlive = false;
@@ -160,43 +183,46 @@ public class TileMap : MonoBehaviour
                 }
                 
 
-                else if (nodeObject == Node.NodeObject.Wall)
+                else if (nodeObject == Node.NodeObject.Wall /*&& wallCount > 0*/)
                 {
                     if (node.notWall)
                     {
-                        GameObject tmpWall = ObjectPool.Instance.GetPooledObjects(wallsList, 500);
+                        GameObject tmpWall = ObjectPool.Instance.GetPooledObjects(ObjectPool.wallsList, ObjectPool.Instance.wallAmount);
                         if (tmpWall != null)
                         {
                             tmpWall.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
                             tmpWall.transform.tag = "Wall";
                             wallCount--;
                             tmpWall.SetActive(true);
+                            tmpWall.transform.parent = this.transform;
                         }
                             
                         walls.Add(node);
+                        node.notWall = false;
+                        node.isAlive = true;
                         //wallsList.Add(tmpWall);
                     }
 
-                    node.notWall = false;
+                   
 
                     //Debug.Log(node.x + " , " + node.y + " , " + nodeSprite);
 
                     node.isResource = false;
                     node.isStorage = false;
-                    node.isAlive = true;
+                    
                 }
-                else if(nodeObject == Node.NodeObject.Scrap  )
+                else if(nodeObject == Node.NodeObject.Resource1 /*&& resource1Count > 0*/)
                 {
 
                     if (!node.isResource)
                     {
-                        GameObject tmpScrap = ObjectPool.Instance.GetPooledObjects(srapsList, 500);
-                        if (tmpScrap != null)
+                        GameObject tmpResource1 = ObjectPool.Instance.GetPooledObjects(ObjectPool.resource1List, ObjectPool.Instance.resource1Amount);
+                        if (tmpResource1 != null)
                         {
-                            tmpScrap.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
-                            tmpScrap.transform.tag = "Resource";
-                            scrapsCount--;
-                            tmpScrap.SetActive(true);
+                            tmpResource1.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
+                            tmpResource1.transform.tag = "Resource";
+                            resource1Count--;
+                            tmpResource1.SetActive(true);
                         }
                         
                         resources.Add(node);
@@ -206,17 +232,17 @@ public class TileMap : MonoBehaviour
                     //node.notWall = false;
                     node.isStorage = false;
                     
-                }else if (nodeObject == Node.NodeObject.Metal)
+                }else if (nodeObject == Node.NodeObject.Resource2 /*&& resource2Count > 0*/)
                 {
                     if (!node.isResource)
                     {
-                        GameObject tmpMetal = ObjectPool.Instance.GetPooledObjects(metalList, 500);
-                        if (tmpMetal != null)
+                        GameObject tmpResource2 = ObjectPool.Instance.GetPooledObjects(ObjectPool.resource2List, ObjectPool.Instance.resource2Amount);
+                        if (tmpResource2 != null)
                         {
-                            tmpMetal.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
-                            tmpMetal.transform.tag = "Resource";
-                            metalCount--;
-                            tmpMetal.SetActive(true);
+                            tmpResource2.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
+                            tmpResource2.transform.tag = "Resource";
+                            resource2Count--;
+                            tmpResource2.SetActive(true);
                         }
                         resources.Add(node);
                         
@@ -228,17 +254,17 @@ public class TileMap : MonoBehaviour
                     //node.notWall = false;
                     node.isStorage = false;
                 }
-                else if (nodeObject == Node.NodeObject.Copper)
+                else if (nodeObject == Node.NodeObject.Resource3 /*&& resource3Count > 0*/)
                 {
                     if (!node.isResource)
                     {
-                        GameObject tmpCopper = ObjectPool.Instance.GetPooledObjects(copperList, 500);
-                        if (tmpCopper != null)
+                        GameObject tmpResource3 = ObjectPool.Instance.GetPooledObjects(ObjectPool.resource3List, ObjectPool.Instance.resource3Amount);
+                        if (tmpResource3 != null)
                         {
-                            tmpCopper.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
-                            tmpCopper.transform.tag = "Resource";
-                            copperCount--;
-                            tmpCopper.SetActive(true);
+                            tmpResource3.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
+                            tmpResource3.transform.tag = "Resource";
+                            resource3Count--;
+                            tmpResource3.SetActive(true);
                         }
                         resources.Add(node);
                         
@@ -277,14 +303,14 @@ public class TileMap : MonoBehaviour
                 }
                 else if (nodeObject == Node.NodeObject.Spawn)
                 {
-                    GameObject tmpSpawn = ObjectPool.Instance.GetPooledObjects(spawnList, 20);
+                    GameObject tmpSpawn = ObjectPool.Instance.GetPooledObjects(ObjectPool.spawnList, ObjectPool.Instance.spawnAmount);
                     if (!node.isSpawn)
                     {
                         if (tmpSpawn != null)
                         {
                             tmpSpawn.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
                             tmpSpawn.transform.tag = "Spawn";
-                            copperCount--;
+                            resource3Count--;
                             tmpSpawn.SetActive(true);
                         }
 
@@ -294,6 +320,68 @@ public class TileMap : MonoBehaviour
                     node.isStorage = false;
                     //node.notWall = false;
                     
+                    //node.isStorage = true;
+                    node.isResource = false;
+                }
+                else if (nodeObject == Node.NodeObject.Brick)
+                {
+                    GameObject tmpBrick = ObjectPool.Instance.GetPooledObjects(ObjectPool.brickList, ObjectPool.Instance.brickAmount);
+                    if (!node.isCeiling)
+                    {
+                        if (tmpBrick != null)
+                        {
+                            tmpBrick.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
+                            tmpBrick.transform.tag = "Ceiling";
+                           
+                            tmpBrick.SetActive(true);
+                        }
+
+                    }
+
+                    node.isCeiling = true;
+                    node.isStorage = false;
+                    //node.notWall = false;
+                    
+                    //node.isStorage = true;
+                    node.isResource = false;
+                }
+                else if (nodeObject == Node.NodeObject.Base)
+                {
+                    GameObject tmpBase = ObjectPool.Instance.GetPooledObjects(ObjectPool.baseList, ObjectPool.Instance.baseAmount);
+                    if (!node.isBase)
+                    {
+                        if (tmpBase != null)
+                        {
+                            tmpBase.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
+
+                            tmpBase.transform.tag = "Base";
+                            tmpBase.SetActive(true);
+                            //if (baseIdInput.gameObject.activeInHierarchy)
+                            //{
+                            //    node.value = int.Parse(baseIdInput.text);
+                            //    Debug.Log("Hola");
+                            //}
+                            //Debug.Log(node.value);
+                            //tmpBase.GetComponent<HomeBase>().iD = node.value;
+                            
+                            //Debug.Log(node.value);
+                            tmpBase.GetComponent<HomeBase>().iD = node.value;
+                            tmpBase.GetComponent<HomeBase>().healthAmount = 200;
+                            if (tmpBase.GetComponent<HomeBase>().iD == 2)
+                            {
+                                tmpBase.GetComponent<SpriteRenderer>().color = Color.red;
+                                
+                            }
+                        }
+
+
+                    }
+
+                    node.isCeiling = true;
+                    node.isStorage = false;
+                    node.isBase = true;
+                    //node.notWall = false;
+
                     //node.isStorage = true;
                     node.isResource = false;
                 }

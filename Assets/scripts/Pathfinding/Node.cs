@@ -22,8 +22,10 @@ public class Node : IBinaryTree<Node> {
     public bool isStorage;
     public bool isAlive;
     public bool isSpawn;
+    public bool isCeiling;
+    public bool isBase;
     public Node parent;
-    int value = 0;
+    public int value = 0;
     int binaryIndex;
     public enum NodeObject
     {
@@ -31,11 +33,13 @@ public class Node : IBinaryTree<Node> {
         Wall,
         Ground,
         Grass,
-        Scrap,
-        Metal,
-        Copper,
+        Resource1,
+        Resource2,
+        Resource3,
         Box,
-        Spawn
+        Spawn,
+        Brick,
+        Base
     }
     private NodeObject nodeObject;
     public Node(Map<Node> map, int x, int y) {
@@ -48,7 +52,9 @@ public class Node : IBinaryTree<Node> {
         isStorage = false;
         isAlive = false;
         isSpawn = false;
-        value = 0;
+        isCeiling = false;
+        isBase = false;
+        this.value = 0;
     }
     public void CalculateF()
     {
@@ -107,6 +113,7 @@ public class Node : IBinaryTree<Node> {
         public NodeObject nodeSprite;
         public int x;
         public int y;
+        public int v;
     }
 
     public SaveNode Save()
@@ -116,13 +123,14 @@ public class Node : IBinaryTree<Node> {
             nodeSprite = nodeObject,
             x = x,
             y = y,
-
+            v = value
         };
     }
 
     public void Load(SaveNode saveNode)
     {
         nodeObject = saveNode.nodeSprite;
+        value = saveNode.v;
     }
 
     

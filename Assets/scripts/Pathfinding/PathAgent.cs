@@ -12,6 +12,7 @@ public class PathAgent : MonoBehaviour
     AgentManager agent;
     private Vector3 movePos;
     public static bool pathFindig2Pressed;
+    public bool stoppedMoving = true;
     
     private void Awake()
     {
@@ -20,6 +21,10 @@ public class PathAgent : MonoBehaviour
     void Start()
     {
         agent = GetComponent<AgentManager>();
+        //if(target != null)
+        //{
+        //    SetTarget(target.transform.position, Vector3.zero, MapGenerator.pathFind);
+        //}
         //vel = Vector2.zero;
     }
     // Update is called once per frame
@@ -64,10 +69,15 @@ public class PathAgent : MonoBehaviour
                 currentIndex++;
                 if (currentIndex >= path.Count)
                 {
-                    //Debug.Log("se detuvo");
+                    Debug.Log("se detuvo");
+                    //stoppedMoving = true;
                     pathFindig2Pressed = false;
                     path = null;
                     currentIndex = 0;
+                }
+                else
+                {
+                    //stoppedMoving = false;
                 }
                 
             }
@@ -90,6 +100,10 @@ public class PathAgent : MonoBehaviour
         {
             
             path.RemoveAt(0);
+        }
+        else
+        {
+            this.movePos = target;
         }
 
     }

@@ -38,9 +38,9 @@ public class CustomWindow : EditorWindow
     public int carryLimit = 0;
     //RTS behaviors
     public bool isCollector;
-    public bool colectScrap;
-    public bool colectMetal;
-    public bool colectCopper;
+    public bool collectR1;
+    public bool collectR2;
+    public bool collectR3;
     public bool canshoot;
     public bool isTitan;
     public bool isMelee;
@@ -82,6 +82,9 @@ public class CustomWindow : EditorWindow
     public bool enemyClose;
     GameObject createdAgent;
     Editor gameObjectEditor;
+    public int price1;
+    public int price2;
+    public int price3;
     GameObject agent;
     [MenuItem("Window/RTS Agent Designer")]
     public static void ShowWindow()
@@ -107,13 +110,18 @@ public class CustomWindow : EditorWindow
         GUILayout.EndHorizontal();
         if(toolbarSelection == 0)
         {
+            scrollView = EditorGUILayout.BeginScrollView(scrollView);
             objectName = EditorGUILayout.TextField("Agent name", objectName);
             agentSprite = EditorGUILayout.ObjectField("Agent aspect", agentSprite, typeof(Sprite), true);
             maxForce = EditorGUILayout.FloatField("Max force", maxForce);
             maxVel = EditorGUILayout.FloatField("Max velocity", maxVel);
             mass = EditorGUILayout.Slider("Mass", mass, 0.01f, 1f);
             healthAmount = EditorGUILayout.FloatField("hp", healthAmount);
-            
+            EditorGUILayout.HelpBox("Asigna el precio del agente", MessageType.Info, false);
+            price1 = EditorGUILayout.IntField("Recurso 1", price1);
+            price2 = EditorGUILayout.IntField("Recurso 2", price2);
+            price3 = EditorGUILayout.IntField("Recurso 3", price3);
+            EditorGUILayout.EndScrollView();
 
         }
         else if(toolbarSelection == 1){
@@ -143,9 +151,9 @@ public class CustomWindow : EditorWindow
                 
                 carryLimit = EditorGUILayout.IntField("Capacidad de carga", carryLimit);
                 EditorGUILayout.HelpBox("Recurso que recoge", MessageType.Info, false);
-                colectCopper = EditorGUILayout.Toggle("Copper", colectCopper);
-                colectMetal = EditorGUILayout.Toggle("Metal", colectMetal);
-                colectScrap = EditorGUILayout.Toggle("scrap", colectScrap);
+                collectR3 = EditorGUILayout.Toggle("Resource 3", collectR3);
+                collectR2 = EditorGUILayout.Toggle("Resource 2", collectR2);
+                collectR1 = EditorGUILayout.Toggle("Resource 1", collectR1);
             }
             if(isCollector && isFlee)
             {
@@ -216,6 +224,9 @@ public class CustomWindow : EditorWindow
                 TagLayerManager.CreateTag("Wall");
                 TagLayerManager.CreateTag("Resource");
                 TagLayerManager.CreateTag("Spawn");
+                TagLayerManager.CreateTag("Ceiling");
+                TagLayerManager.CreateTag("Bullet");
+                TagLayerManager.CreateTag("Base");
                 SaveObjectAsPrefab(agent);
                 
             }
@@ -340,6 +351,9 @@ public class CustomWindow : EditorWindow
         agentM.bulletDamage = bulletDamage;
         agentM.meleeDamage = meleeDamage;
         agentM.resourcesCarryLimt = carryLimit;
+        agentM.priceR1 = price1;
+        agentM.priceR2 = price2;
+        agentM.priceR3 = price3;
         agent.GetComponent<SpriteRenderer>().sortingLayerName = "Agents";
         agent.transform.localScale = new Vector3(7f, 7f, 1f);
         agent.transform.tag = "Agent";

@@ -188,17 +188,18 @@ MonoBehaviour:
   isCollector: 0
   isTitan: 0
   resourcesCarryLimt: 0
+  particle: {fileID: 0}
   hasLeader: 0
   isLeader: 0
   rank: 0
   squad: 0
   team: 0
   isShooter: 1
-  shootingRaange: 0
-  startTimeBtwShots: 0
-  bulletForce: 0
-  ammo: 0
-  bulletDamage: 400
+  shootingRaange: 400
+  startTimeBtwShots: 0.5
+  bulletForce: 100
+  ammo: 400
+  bulletDamage: 5
   sg: {fileID: 0}
   anim: {fileID: 0}
   agents: []
@@ -218,6 +219,12 @@ MonoBehaviour:
   isLeaderAlive: 0
   bullets: []
   objectToPool: {fileID: 0}
+  priceR1: 0
+  priceR2: 0
+  priceR3: 0
+  baseNodes: []
+  shotLight: {fileID: 0}
+  gunShot: {fileID: 0}
 --- !u!95 &2841183355188399583
 Animator:
   serializedVersion: 3

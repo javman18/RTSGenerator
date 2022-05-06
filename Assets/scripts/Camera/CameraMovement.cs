@@ -18,7 +18,7 @@ public class CameraMovement : MonoBehaviour
 
     private void Start()
     {
-        terrain = GameObject.Find("terrain").GetComponent<MeshRenderer>();
+        terrain = GameObject.Find("terrainR").GetComponent<MeshRenderer>();
         mapMinX = terrain.transform.position.x - terrain.bounds.size.x /2f;
         mapMaxX = terrain.transform.position.x + terrain.bounds.size.x /2f;
 
@@ -82,20 +82,20 @@ public class CameraMovement : MonoBehaviour
     public void ZoomIn()
     {
         float newSize = cam.orthographicSize - zoomSpeed;
-        Camera childCam = cam.transform.GetChild(0).gameObject.GetComponent<Camera>();
+        //Camera childCam = cam.transform.GetChild(0).gameObject.GetComponent<Camera>();
         cam.orthographicSize = Mathf.Clamp(newSize, minCamSize, maxCamSize);
         
-        childCam.orthographicSize = Mathf.Clamp(newSize, minCamSize, maxCamSize);
+        //childCam.orthographicSize = Mathf.Clamp(newSize, minCamSize, maxCamSize);
         cam.transform.position = ClampCam(cam.transform.position);
 
     }
 
     public void ZoomOut()
     {
-        Camera childCam = cam.transform.GetChild(0).gameObject.GetComponent<Camera>();
+        //Camera childCam = cam.transform.GetChild(0).gameObject.GetComponent<Camera>();
         float newSize = cam.orthographicSize + zoomSpeed;
         cam.orthographicSize = Mathf.Clamp(newSize, minCamSize, maxCamSize);
-        childCam.orthographicSize = Mathf.Clamp(newSize, minCamSize, maxCamSize);
+        //childCam.orthographicSize = Mathf.Clamp(newSize, minCamSize, maxCamSize);
         cam.transform.position = ClampCam(cam.transform.position);
     }
 

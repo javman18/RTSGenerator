@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\Bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_2020_3_4;UNITY_2020_3;UNITY_2020;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_2020_3_4;UNITY_2020_3;UNITY_2020;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;UNITY_POST_PROCESSING_STACK_V2;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -56,52 +56,72 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\scripts\BehaviourTree\Tree.cs" />
     <Compile Include="Assets\scripts\RTScontrollers\DropDown.cs" />
     <Compile Include="Assets\scripts\SaveLoad\SaveAgent.cs" />
-    <Compile Include="Assets\scripts\Pathfinding\PathAgent.cs" />
+    <Compile Include="Assets\scripts\RTScontrollers\DayNight.cs" />
     <Compile Include="Assets\scripts\Pathfinding\BinaryTree.cs" />
-    <Compile Include="Assets\scripts\SteeringBehaviours\AgentManager.cs" />
-    <Compile Include="Assets\scripts\RTScontrollers\RTSManager.cs" />
     <Compile Include="Assets\scripts\RTScontrollers\UIManager.cs" />
-    <Compile Include="Assets\SaveManager.cs" />
-    <Compile Include="Assets\scripts\Pathfinding\MapGenerator.cs" />
-    <Compile Include="Assets\scripts\SaveLoad\SaveSystem.cs" />
     <Compile Include="Assets\scripts\Camera\CameraMovement.cs" />
-    <Compile Include="Assets\scripts\SteeringBehaviours\Bullet.cs" />
+    <Compile Include="Assets\scripts\RTScontrollers\HomeBase.cs" />
     <Compile Include="Assets\scripts\SaveLoad\AgentData.cs" />
-    <Compile Include="Assets\scripts\SteeringBehaviours\ObjectPool.cs" />
     <Compile Include="Assets\Resources\GameHelpers\HealhBar.cs" />
-    <Compile Include="Assets\scripts\Pathfinding\Node.cs" />
+    <Compile Include="Assets\scripts\BehaviourTree\Sequence.cs" />
     <Compile Include="Assets\scripts\Pathfinding\Pathfinding.cs" />
     <Compile Include="Assets\Resources\GameHelpers\SpriteDrawer.cs" />
     <Compile Include="Assets\scripts\Pathfinding\Map.cs" />
-    <Compile Include="Assets\scripts\RTScontrollers\Player.cs" />
     <Compile Include="Assets\scripts\Pathfinding\PathRequestManager.cs" />
     <Compile Include="Assets\scripts\RTScontrollers\UnitSelection.cs" />
+    <Compile Include="Assets\scripts\RTScontrollers\Spawn.cs" />
+    <Compile Include="Assets\scripts\BehaviourTree\Selector.cs" />
+    <Compile Include="Assets\scripts\Pathfinding\PathAgent.cs" />
+    <Compile Include="Assets\scripts\SteeringBehaviours\AgentManager.cs" />
+    <Compile Include="Assets\scripts\RTScontrollers\RTSManager.cs" />
+    <Compile Include="Assets\scripts\SaveLoad\SaveManager.cs" />
+    <Compile Include="Assets\scripts\Pathfinding\MapGenerator.cs" />
+    <Compile Include="Assets\scripts\SaveLoad\SaveSystem.cs" />
+    <Compile Include="Assets\scripts\SteeringBehaviours\Bullet.cs" />
+    <Compile Include="Assets\scripts\SteeringBehaviours\ObjectPool.cs" />
+    <Compile Include="Assets\scripts\Pathfinding\Node.cs" />
+    <Compile Include="Assets\scripts\AI\EnemyAI.cs" />
+    <Compile Include="Assets\scripts\RTScontrollers\Player.cs" />
+    <Compile Include="Assets\scripts\BehaviourTree\BTNode.cs" />
     <Compile Include="Assets\scripts\Pathfinding\TileMap.cs" />
     <Compile Include="Assets\scripts\SteeringBehaviours\SteerinBehaviours.cs" />
-    <Compile Include="Assets\Spawn.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Saves\path3A_4.txt" />
+     <None Include="Assets\Saves\btest_1.txt" />
+     <None Include="Assets\Saves\test5_2.txt" />
+     <None Include="Assets\Saves\test7_3.txt" />
+     <None Include="Assets\Saves\test9_0.txt" />
      <None Include="Assets\Saves\savetest_3.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+     <None Include="Assets\Saves\_2_2.txt" />
      <None Include="Assets\Saves\rtest_2.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Saves\iils.txt" />
+     <None Include="Assets\Saves\bases_3.txt" />
      <None Include="Assets\Saves\skull_3.txt" />
      <None Include="Assets\Saves\laberinto.txt" />
      <None Include="Assets\Saves\lux.txt" />
      <None Include="Assets\Saves\kaka.txt" />
      <None Include="Assets\Saves\camp.txt" />
+     <None Include="Assets\Saves\test6_2.txt" />
      <None Include="Assets\Saves\laberintoRCF.txt" />
      <None Include="Assets\Saves\minerals.txt" />
      <None Include="Assets\Saves\patito_4.txt" />
      <None Include="Assets\Saves\laberintoRCF18_2.txt" />
+     <None Include="Assets\Saves\test10_1.txt" />
+     <None Include="Assets\Saves\elelel_2.txt" />
      <None Include="Assets\Saves\laberintoRCFF_2.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+     <None Include="Assets\Saves\bases2_3.txt" />
      <None Include="Assets\Saves\savetest_2.txt" />
+     <None Include="Assets\Saves\_3.txt" />
      <None Include="Assets\Saves\save_5.txt" />
+     <None Include="Assets\Saves\test5_0.txt" />
+     <None Include="Assets\Saves\test5_1.txt" />
      <None Include="Assets\Saves\savetest_5.txt" />
      <None Include="Assets\Saves\res.txt" />
      <None Include="Assets\Saves\laberintoRCF18_5.txt" />
@@ -110,35 +130,63 @@
      <None Include="Assets\Saves\path2_2.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
      <None Include="Assets\Saves\patito_3.txt" />
+     <None Include="Assets\Saves\spawn_2.txt" />
+     <None Include="Assets\Saves\elelel_0.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
      <None Include="Assets\Saves\save_3.txt" />
      <None Include="Assets\Saves\save_7.txt" />
      <None Include="Assets\Saves\savea_3.txt" />
      <None Include="Assets\Saves\skull_1.txt" />
+     <None Include="Assets\Saves\btest_3.txt" />
+     <None Include="Assets\Saves\basetestc_3.txt" />
      <None Include="Assets\Saves\laberintoRCFF.txt" />
      <None Include="Assets\Saves\automata.txt" />
      <None Include="Assets\Saves\lux3_2.txt" />
+     <None Include="Assets\Saves\bases_1.txt" />
      <None Include="Assets\Saves\_2.txt" />
+     <None Include="Assets\Saves\spawn_1.txt" />
      <None Include="Assets\Saves\laberintoRCF18.txt" />
+     <None Include="Assets\Saves\elelel_1.txt" />
      <None Include="Assets\Saves\save_4.txt" />
+     <None Include="Assets\Saves\test6_0.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Saves\rt.txt" />
      <None Include="Assets\Saves\lolo_2.txt" />
      <None Include="Assets\Saves\path2.txt" />
      <None Include="Assets\Saves\obstacle.txt" />
      <None Include="Assets\Saves\skull_0.txt" />
+     <None Include="Assets\Saves\bases_2.txt" />
      <None Include="Assets\Saves\enemy base.txt" />
+     <None Include="Assets\Saves\test10_2.txt" />
+     <None Include="Assets\Saves\_0.txt" />
+     <None Include="Assets\Saves\btest_2.txt" />
+     <None Include="Assets\Saves\test7_2.txt" />
+     <None Include="Assets\Saves\btes_1.txt" />
+     <None Include="Assets\Saves\basetestc_0.txt" />
      <None Include="Assets\Saves\skull_2.txt" />
+     <None Include="Assets\Saves\btesti_1.txt" />
+     <None Include="Assets\Saves\_1.txt" />
      <None Include="Assets\Saves\hola.txt" />
+     <None Include="Assets\Saves\btesti_2.txt" />
      <None Include="Assets\Saves\path3A_2.txt" />
      <None Include="Assets\Saves\save_2.txt" />
+     <None Include="Assets\Saves\test8_1.txt" />
+     <None Include="Assets\Saves\test10_3.txt" />
      <None Include="Assets\Saves\maptest.txt" />
+     <None Include="Assets\Saves\bases2_1.txt" />
      <None Include="Assets\Saves\laberintoRCF_3.txt" />
+     <None Include="Assets\Saves\test8_2.txt" />
+     <None Include="Assets\Saves\test9_3.txt" />
+     <None Include="Assets\Saves\btes_0.txt" />
+     <None Include="Assets\Saves\masterLevel_2.txt" />
      <None Include="Assets\Saves\loi.txt" />
      <None Include="Assets\Saves\dolo.txt" />
      <None Include="Assets\Saves\laberintoRC.txt" />
+     <None Include="Assets\Saves\bases2_0.txt" />
      <None Include="Assets\Saves\path3_3.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+     <None Include="Assets\Saves\elelel_3.txt" />
+     <None Include="Assets\Saves\test9_1.txt" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
      <None Include="Assets\Saves\save.txt" />
@@ -146,21 +194,28 @@
      <None Include="Assets\Saves\f_2.txt" />
      <None Include="Assets\Saves\path3_2.txt" />
      <None Include="Assets\Saves\path3A.txt" />
+     <None Include="Assets\Saves\test8_3.txt" />
      <None Include="Assets\Saves\rtest.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+     <None Include="Assets\Saves\btes_3.txt" />
      <None Include="Assets\Saves\path3_4.txt" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\Saves\lux_2.txt" />
+     <None Include="Assets\Saves\test8_0.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
      <None Include="Assets\Saves\path3A_3.txt" />
      <None Include="Assets\Saves\collectortest.txt" />
      <None Include="Assets\Saves\path4A_2.txt" />
      <None Include="Assets\Saves\lola.txt" />
+     <None Include="Assets\Saves\masterLevel_3.txt" />
      <None Include="Assets\Materials\FogOfWar.shader" />
      <None Include="Assets\Saves\lolo_3.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
      <None Include="Assets\Saves\save_6.txt" />
      <None Include="Assets\Saves\mmtest.txt" />
+     <None Include="Assets\Saves\spawn_0.txt" />
+     <None Include="Assets\Saves\bases_0.txt" />
+     <None Include="Assets\Saves\test6_1.txt" />
      <None Include="Assets\Saves\first.txt" />
      <None Include="Assets\Saves\savea.txt" />
      <None Include="Assets\Saves\savetest_4.txt" />
@@ -168,32 +223,48 @@
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\Saves\path4.txt" />
      <None Include="Assets\Saves\f_0.txt" />
+     <None Include="Assets\Saves\btesti_0.txt" />
+     <None Include="Assets\Saves\masterLevel_0.txt" />
      <None Include="Assets\Saves\laberintoRCF18_3.txt" />
      <None Include="Assets\Saves\patito_2.txt" />
      <None Include="Assets\Saves\laberintoRCF18_4.txt" />
+     <None Include="Assets\Saves\test9_2.txt" />
      <None Include="Assets\Saves\savea_2.txt" />
+     <None Include="Assets\Saves\spawn_3.txt" />
+     <None Include="Assets\Saves\bases2_2.txt" />
      <None Include="Assets\Saves\f_3.txt" />
      <None Include="Assets\Saves\savetest.txt" />
      <None Include="Assets\Saves\path4_2.txt" />
      <None Include="Assets\Saves\path3.txt" />
      <None Include="Assets\Saves\path3B.txt" />
+     <None Include="Assets\Saves\btest_0.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <None Include="Assets\Saves\basetestc_1.txt" />
+     <None Include="Assets\Saves\test5_3.txt" />
      <None Include="Assets\Saves\path4A_4.txt" />
      <None Include="Assets\Saves\patito.txt" />
+     <None Include="Assets\Saves\test7_1.txt" />
      <None Include="Assets\Saves\asa.txt" />
+     <None Include="Assets\Saves\basetestc_2.txt" />
      <None Include="Assets\Saves\bigworld.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\Saves\path4A_3.txt" />
+     <None Include="Assets\Saves\test10_0.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\Saves\laberintoRC_2.txt" />
+     <None Include="Assets\Saves\masterLevel_1.txt" />
      <None Include="Assets\Saves\lol.txt" />
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <None Include="Assets\Saves\lolo.txt" />
      <None Include="Assets\Saves\laberintoRCF_2.txt" />
      <None Include="Assets\Saves\bigworld_2.txt" />
      <None Include="Assets\Saves\path3B_2.txt" />
+     <None Include="Assets\Saves\test7_0.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+     <None Include="Assets\Saves\btes_2.txt" />
+     <None Include="Assets\Saves\btesti_3.txt" />
      <None Include="Assets\Saves\path4A.txt" />
+     <None Include="Assets\Saves\test6_3.txt" />
      <None Include="Assets\Saves\laberintoR.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
      <None Include="Assets\Saves\iils_2.txt" />
@@ -767,6 +838,9 @@
     <Reference Include="Unity.2D.Animation.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.InternalAPIEngineBridge.001">
       <HintPath>Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.001.dll</HintPath>
     </Reference>
@@ -776,11 +850,17 @@
     <Reference Include="Unity.2D.PixelPerfect">
       <HintPath>Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="PsdPlugin">
       <HintPath>Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
@@ -788,11 +868,17 @@
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Searcher.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.IK.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>
@@ -806,8 +892,8 @@
     <Reference Include="Unity.2D.Path.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Path.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.InternalAPIEditorBridge.001">
-      <HintPath>Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
@@ -815,14 +901,26 @@
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEditorBridge.001">
+      <HintPath>Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics">
       <HintPath>Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.IK.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Triangle.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
@@ -832,6 +930,12 @@
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.PixelPerfect.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
@@ -847,6 +951,9 @@
     </Reference>
     <Reference Include="Unity.2D.Common.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.SpriteShape.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>

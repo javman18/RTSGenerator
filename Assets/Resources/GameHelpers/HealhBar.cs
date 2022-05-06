@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealhBar : MonoBehaviour
 {
     AgentManager agent;
-    
+    HomeBase hb;
     float maxHp;
     public void Set(AgentManager agent, float mhp)
     {
@@ -13,6 +13,11 @@ public class HealhBar : MonoBehaviour
         maxHp = mhp;
     }
 
+    public void setHB(HomeBase hb, float mhp)
+    {
+        this.hb = hb;
+        maxHp = mhp;
+    }
     
 
     void LateUpdate()
@@ -27,7 +32,17 @@ public class HealhBar : MonoBehaviour
             }
            
         }
-        
+        if (hb != null)
+        {
+            transform.root.position = hb.transform.position + new Vector3(0, 5f, 0);
+            transform.localScale = new Vector3(hb.healthAmount / maxHp, transform.localScale.y, transform.localScale.z);
+            if (!hb.gameObject.activeSelf)
+            {
+                transform.root.gameObject.SetActive(false);
+            }
+
+        }
+
     }
 
 }

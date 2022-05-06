@@ -7,7 +7,8 @@ public class UnitSelection : MonoBehaviour
     [SerializeField] private Transform selectedAreaT;
     Vector3 startPos;
     private List<AgentManager> selectedAgents;
-    
+    public static float time = 0;
+    public static int random = 0;
     private void Awake()
     {
         selectedAgents = new List<AgentManager>();
@@ -46,8 +47,12 @@ public class UnitSelection : MonoBehaviour
                 {
                     if (agent != null)
                     {
-                        agent.SetSelected(true);
-                        selectedAgents.Add(agent);
+                        if (agent.team == 1)
+                        {
+                            agent.SetSelected(true);
+                            selectedAgents.Add(agent);
+                        }
+                        
                     }
                 }
             }
@@ -55,7 +60,8 @@ public class UnitSelection : MonoBehaviour
         Vector3 target = new Vector3();
         if (Input.GetMouseButtonDown(1))
         {
-           
+            time += Time.deltaTime;
+            random = Random.Range(0, 6);
             Vector3 movePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             foreach (AgentManager agent in selectedAgents)
             {
@@ -90,6 +96,7 @@ public class UnitSelection : MonoBehaviour
                     || MapGenerator.rect4.Contains(movePos) && (MapGenerator.rect1.Contains(agent.transform.position) || MapGenerator.rect2.Contains(agent.transform.position) || MapGenerator.rect3.Contains(agent.transform.position)))
                 {
                     PathAgent.pathFindig2Pressed = true;
+                    
                     agent.MoveArrive(movePos);
                     
                 }

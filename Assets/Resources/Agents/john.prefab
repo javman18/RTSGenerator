@@ -167,7 +167,7 @@ MonoBehaviour:
   mass: 0.3
   weight: 1
   seekPerception: 0
-  fleePerception: 500
+  fleePerception: 100
   ePerception: 10
   viewAngle: 60
   decayCoefficient: -25
@@ -188,6 +188,7 @@ MonoBehaviour:
   isCollector: 1
   isTitan: 0
   resourcesCarryLimt: 2
+  particle: {fileID: 0}
   hasLeader: 0
   isLeader: 0
   rank: 0
@@ -218,6 +219,12 @@ MonoBehaviour:
   isLeaderAlive: 0
   bullets: []
   objectToPool: {fileID: 0}
+  priceR1: 0
+  priceR2: 0
+  priceR3: 0
+  baseNodes: []
+  shotLight: {fileID: 0}
+  gunShot: {fileID: 0}
 --- !u!95 &4983918111486224649
 Animator:
   serializedVersion: 3

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class UIManager : MonoBehaviour
     public GameObject mainUI;
     public GameObject agentUI;
     public GameObject gameUI;
+    public GameObject economyUI;
     public GameObject fogOfWar;
     public Toggle fogT;
     // Start is called before the first frame update
@@ -28,6 +30,7 @@ public class UIManager : MonoBehaviour
         saveUI.SetActive(false);
         mainUI.SetActive(true);
         gameUI.SetActive(false);
+        economyUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -48,6 +51,31 @@ public class UIManager : MonoBehaviour
         {
             currentState = UIStates.AgentEdit;
         }
+        if (currentState == UIStates.MainMenu)
+        {
+            Time.timeScale = 0f;
+        }
+        else if(currentState == UIStates.Game)
+        {
+            Time.timeScale = 1f;
+        }
+        else if (currentState == UIStates.AgentEdit)
+        {
+            Time.timeScale = 0f;
+        }
+        else if (currentState == UIStates.Save)
+        {
+            Time.timeScale = 1f;
+        }
+        if (RTSManager.winGame || RTSManager.LooseGame)
+        {
+            fogOfWar.gameObject.SetActive(false);
+            saveUI.SetActive(false);
+            mainUI.SetActive(false);
+            agentUI.SetActive(false);
+            gameUI.SetActive(false);
+            economyUI.SetActive(false);
+        }
     }
     public void ActivateSaveUi()
     {
@@ -56,6 +84,7 @@ public class UIManager : MonoBehaviour
         mainUI.SetActive(false);
         agentUI.SetActive(false);
         gameUI.SetActive(false);
+        economyUI.SetActive(false);
     }
     public void ActivateAgentUI()
     {
@@ -65,6 +94,7 @@ public class UIManager : MonoBehaviour
         mainUI.SetActive(false);
         agentUI.SetActive(true);
         gameUI.SetActive(false);
+        economyUI.SetActive(false);
     }
     public void GoBack()
     {
@@ -73,6 +103,7 @@ public class UIManager : MonoBehaviour
         mainUI.SetActive(true);
         agentUI.SetActive(false);
         gameUI.SetActive(false);
+        economyUI.SetActive(false);
     }
     public void Done()
     {
@@ -85,5 +116,21 @@ public class UIManager : MonoBehaviour
         mainUI.SetActive(false);
         agentUI.SetActive(false);
         gameUI.SetActive(true);
+        economyUI.SetActive(false);
+    }
+
+    public void ActivateEconomyUI()
+    {
+        fogOfWar.gameObject.SetActive(false);
+        saveUI.SetActive(false);
+        mainUI.SetActive(false);
+        agentUI.SetActive(false);
+        gameUI.SetActive(false);
+        economyUI.SetActive(true);
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

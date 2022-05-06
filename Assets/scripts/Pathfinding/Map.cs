@@ -125,6 +125,18 @@ public class Map<T>
         }
     }
 
+    //public int GetMapNodeValue(int x, int y,  int vlue)
+    //{
+    //    if (x >= 0 && y >= 0 && x < width && y < height)
+    //    {
+    //        return vlue;
+    //    }
+    //    else
+    //    {
+    //        return default(int);
+    //    }
+    //}
+
     public T GetMapObject(Vector3 position)
     {
         int x, y;

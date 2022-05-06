@@ -56,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: -196101115
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f66e37308d244344689efc9bd1a6d871, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fe048d5fbaf184b44b1cc9961cd362b1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -188,6 +188,7 @@ MonoBehaviour:
   isCollector: 1
   isTitan: 1
   resourcesCarryLimt: 0
+  particle: {fileID: 0}
   hasLeader: 0
   isLeader: 0
   rank: 0
@@ -201,6 +202,7 @@ MonoBehaviour:
   bulletDamage: 150
   sg: {fileID: 0}
   anim: {fileID: 0}
+  agents: []
   attackSize: 0.5
   attackRange: 0.5
   attackTime: 0.5
@@ -214,8 +216,13 @@ MonoBehaviour:
     m_Bits: 0
   maxScale: 15
   healthAmount: 150
+  isLeaderAlive: 0
   bullets: []
   objectToPool: {fileID: 0}
+  priceR1: 0
+  priceR2: 0
+  priceR3: 0
+  gunShot: {fileID: 0}
 --- !u!95 &3863468675495421911
 Animator:
   serializedVersion: 3

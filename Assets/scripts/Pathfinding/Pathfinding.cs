@@ -8,6 +8,8 @@ using System.Diagnostics;
 
 public class Pathfinding {
 
+    
+
     public event EventHandler OnLoaded;
     private const int straightCost = 10;
     private const int diagonalCost = 14;
@@ -18,21 +20,22 @@ public class Pathfinding {
     private HashSet<Node> closedList;
     int infinity = 9999999;
     public Vector3 origin;
+    
     public Pathfinding(int width, int height, Vector3 o) {
         Instance = this;
         origin = o;
-        map = new Map<Node>(width, height, 10f, o, (Map<Node> g, int x, int y) => new Node(g, x, y));
+        map = new Map<Node>(width, height, 10f, o, (Map<Node> g, int x, int y ) => new Node(g, x, y));
         //SetNodeSpriteVisual(this, MapGenerator.tileMap);
     }
 
-    public void SetNodeObject(Vector3 worldPos, Node.NodeObject nodeSprite)
+    public void SetNodeObject(Vector3 worldPos, Node.NodeObject nodeSprite, int value)
     {
 
         Node nodeObject = map.GetMapObject(worldPos);
         if(nodeObject != null)
         {
             nodeObject.SetNodeObject(nodeSprite);
-
+            nodeObject.value = value;
             //nodeObject.SetWall(!nodeObject.notWall);
         }
     }
@@ -43,8 +46,11 @@ public class Pathfinding {
         
         
     }
-
-    public void Save(string saveName)
+    /*
+    * @param saveString: nombre del mapa que se quere guardar
+    * @brief función para guardar los atributos del nodo 
+   */
+    public void Save(string saveName, int value)
     {
         List<Node.SaveNode> nodeObjectSaveObjectList = new List<Node.SaveNode>();
         for (int x = 0; x < map.GetWidth(); x++)
@@ -52,6 +58,7 @@ public class Pathfinding {
             for (int y = 0; y < map.GetHeight(); y++)
             {
                 Node nodeObject = map.GetMapNode(x, y);
+                nodeObject.value = map.GetMapNode(x, y).value;
                 nodeObject.notWall = true;
                 nodeObjectSaveObjectList.Add(nodeObject.Save());
             }
@@ -61,13 +68,17 @@ public class Pathfinding {
         SaveSystem.SaveObject(saveName,saveObject);
 
     }
-
+    /*
+     * @param saveString: nombre del mapa que se quere cargar
+     * @brief función para cargar los atributos del nodo 
+    */
     public void Load(string saveString)
     {
         SaveObject saveObject = SaveSystem.LoadObject<SaveObject>(saveString);
         foreach (Node.SaveNode nodeObjectSaveObject in saveObject.nodeObjectSaveObjectArray)
         {
             Node nodeObject = map.GetMapNode(nodeObjectSaveObject.x, nodeObjectSaveObject.y);
+            nodeObject.value = map.GetMapNode(nodeObjectSaveObject.x, nodeObjectSaveObject.y).value;
             nodeObject.notWall = true;
 
             nodeObject.Load(nodeObjectSaveObject);
@@ -80,11 +91,17 @@ public class Pathfinding {
         public Node.SaveNode[] nodeObjectSaveObjectArray;
         
     }
-
+    //Codigo basado en el video https://www.youtube.com/watch?v=alU04hvz6L4
     public Map<Node> GetMap() {
         return map;
     }
-
+    /*
+    * @param start: inicio del camino que se quiere buscar en una posicion real
+    * @param end: final del camino que se quiere buscar en una posicion real
+    * @param helperPos: offset para poder crear multiples pathfindings
+    * @brief convierta los nodos encontrados con la función A* en vectores
+    * @return una lista de vectores para crear el camino 
+   */
     public List<Vector3> FindPath(Vector3 start, Vector3 end , Vector3 helperPos) {
         
         map.GetXY(start, out int startX, out int startY);
@@ -101,7 +118,12 @@ public class Pathfinding {
             return pathVec;
         }
     }
-
+    /*
+    * @param starX startY: inicio del camino que se quiere buscar
+    * @param endX endY: final del camino que se quiere buscar
+    * @brief función A* para encontrar el camino mas corto desde un inicio y un final
+    * @return una lista de nodos para crear el camino con la funcion BackTrack(end)
+   */
     public List<Node> AStar(int startX, int startY, int endX, int endY) {
         Stopwatch sw = new Stopwatch();
         sw.Start();
@@ -166,7 +188,11 @@ public class Pathfinding {
         }
         return null;
     }
-
+    /*
+    * @param currentNode: nodo que se esta revisando para obtener sus vecinos
+    * @brief recorre un nodo para obtener sus vecinos
+    * @return una lista de nodos 
+   */
     private List<Node> GetNeighbourList(Node currentNode) {
         List<Node> neighbourList = new List<Node>();
 

@@ -71,7 +71,7 @@ public class SteerinBehaviours : MonoBehaviour
                     return steering;
                 }
                 LookDirection();
-            //SteerVisual(desired);
+                SteerVisual(desired);
                 return steering;
 
             
@@ -112,6 +112,7 @@ public class SteerinBehaviours : MonoBehaviour
         {
             return steering;
         }
+
         LookDirection();
         return steering;
     }
@@ -141,7 +142,8 @@ public class SteerinBehaviours : MonoBehaviour
                     return steering;
                 }
                 LookDirection();
-                return steering;
+            SteerVisual(desired);
+            return steering;
             
         }
         return vel = Vector2.zero;

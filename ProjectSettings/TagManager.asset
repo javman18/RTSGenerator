@@ -13,6 +13,9 @@ TagManager:
   - Caca
   - Resource
   - Spawn
+  - Ceiling
+  - Bullet
+  - Base
   layers:
   - Default
   - TransparentFX
@@ -58,4 +61,10 @@ TagManager:
     locked: 0
   - name: hb
     uniqueID: 2724562545
+    locked: 0
+  - name: FogOfWar
+    uniqueID: 2493760317
+    locked: 0
+  - name: SelectionArea
+    uniqueID: 2552050125
     locked: 0

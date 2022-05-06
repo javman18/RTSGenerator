@@ -15,10 +15,36 @@ MonoBehaviour:
   SimpleSelectedItems:
     m_Keys:
     - Assets/Editor/CustomWindow.cs
+    - Assets/Materials/2D Renderer.asset
+    - Assets/Materials/2D Renderer.asset.meta
+    - Assets/Materials/FogOfWarMain.renderTexture
+    - Assets/Materials/FogOfWarSecondary.renderTexture
+    - Assets/Materials/New Render Texture.renderTexture
+    - Assets/Materials/New Render Texture.renderTexture.meta
+    - Assets/Materials/UniversalRenderPipelineAsset.asset
+    - Assets/Materials/UniversalRenderPipelineAsset.asset.meta
+    - Assets/Materials/UniversalRenderPipelineAsset_Renderer.asset
+    - Assets/Materials/UniversalRenderPipelineAsset_Renderer.asset.meta
+    - Assets/Materials/test.mat
+    - Assets/Materials/test.mat.meta
+    - Assets/Resources/AgentObjects/BasePart.prefab
+    - Assets/Resources/AgentObjects/BasePart.prefab.meta
+    - Assets/Resources/AgentObjects/Bullet.prefab
+    - Assets/Resources/AgentObjects/CustomPostProcessData.asset
+    - Assets/Resources/AgentObjects/CustomPostProcessData.asset.meta
+    - Assets/Resources/AgentObjects/FogOfWar 1.prefab
+    - Assets/Resources/AgentObjects/New Volume Profile.asset
+    - Assets/Resources/AgentObjects/New Volume Profile.asset.meta
+    - Assets/Resources/AgentObjects/Particle System.prefab
+    - Assets/Resources/AgentObjects/Particle System.prefab.meta
+    - Assets/Resources/AgentObjects/Point Light 2D.prefab
+    - Assets/Resources/AgentObjects/Point Light 2D.prefab.meta
     - Assets/Resources/Agents/Eljefe.prefab
     - Assets/Resources/Agents/attacker.prefab
     - Assets/Resources/Agents/attacker.prefab.meta
     - Assets/Resources/Agents/carl.prefab
+    - Assets/Resources/Agents/hank.prefab
+    - Assets/Resources/Agents/hank.prefab.meta
     - Assets/Resources/Agents/hunter.prefab
     - Assets/Resources/Agents/jim.prefab
     - Assets/Resources/Agents/john.prefab
@@ -26,6 +52,8 @@ MonoBehaviour:
     - Assets/Resources/Agents/lolo.prefab
     - Assets/Resources/Agents/lucas.prefab
     - Assets/Resources/Agents/mike.prefab
+    - Assets/Resources/Agents/testa.prefab
+    - Assets/Resources/Agents/testa.prefab.meta
     - Assets/Resources/Animation/attacker.controller
     - Assets/Resources/Animation/attacker.controller.meta
     - Assets/Resources/Animation/carl.controller
@@ -34,12 +62,472 @@ MonoBehaviour:
     - Assets/Resources/Animation/carl_idle.anim.meta
     - Assets/Resources/Animation/carl_walk.anim
     - Assets/Resources/Animation/carl_walk.anim.meta
+    - Assets/Resources/Animation/habdgun_walk.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_0.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_0.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_1.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_1.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_10.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_10.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_11.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_11.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_12.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_12.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_13.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_13.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_14.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_14.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_15.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_15.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_16.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_16.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_17.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_17.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_18.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_18.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_19.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_19.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_2.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_2.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_3.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_3.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_4.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_4.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_5.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_5.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_6.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_6.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_7.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_7.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_8.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_8.png.meta
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_9.png
+    - Assets/Resources/Animation/habdgun_walk/survivor-move_handgun_9.png.meta
+    - Assets/Resources/Animation/handgun_idle.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_0.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_0.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_1.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_1.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_10.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_10.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_11.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_11.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_12.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_12.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_13.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_13.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_14.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_14.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_15.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_15.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_16.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_16.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_17.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_17.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_18.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_18.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_19.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_19.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_2.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_2.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_3.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_3.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_4.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_4.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_5.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_5.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_6.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_6.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_7.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_7.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_8.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_8.png.meta
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_9.png
+    - Assets/Resources/Animation/handgun_idle/survivor-idle_handgun_9.png.meta
+    - Assets/Resources/Animation/handgun_melee.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_0.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_0.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_1.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_1.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_10.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_10.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_11.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_11.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_12.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_12.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_13.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_13.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_14.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_14.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_2.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_2.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_3.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_3.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_4.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_4.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_5.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_5.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_6.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_6.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_7.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_7.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_8.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_8.png.meta
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_9.png
+    - Assets/Resources/Animation/handgun_melee/survivor-meleeattack_handgun_9.png.meta
+    - Assets/Resources/Animation/hank.controller
+    - Assets/Resources/Animation/hank.controller.meta
+    - Assets/Resources/Animation/hank_idle.anim
+    - Assets/Resources/Animation/hank_idle.anim.meta
+    - Assets/Resources/Animation/hank_walk.anim
+    - Assets/Resources/Animation/hank_walk.anim.meta
     - Assets/Resources/Animation/idle_a.anim
     - Assets/Resources/Animation/idle_a.anim.meta
+    - Assets/Resources/Animation/knife_idle.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_0.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_0.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_1.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_1.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_10.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_10.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_11.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_11.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_12.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_12.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_13.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_13.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_14.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_14.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_15.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_15.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_16.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_16.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_17.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_17.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_18.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_18.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_19.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_19.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_2.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_2.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_3.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_3.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_4.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_4.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_5.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_5.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_6.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_6.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_7.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_7.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_8.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_8.png.meta
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_9.png
+    - Assets/Resources/Animation/knife_idle/survivor-idle_knife_9.png.meta
+    - Assets/Resources/Animation/knife_melee.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_0.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_0.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_1.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_1.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_10.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_10.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_11.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_11.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_12.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_12.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_13.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_13.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_14.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_14.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_2.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_2.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_3.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_3.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_4.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_4.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_5.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_5.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_6.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_6.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_7.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_7.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_8.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_8.png.meta
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_9.png
+    - Assets/Resources/Animation/knife_melee/survivor-meleeattack_knife_9.png.meta
+    - Assets/Resources/Animation/knife_walk.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_0.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_0.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_1.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_1.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_10.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_10.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_11.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_11.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_12.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_12.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_13.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_13.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_14.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_14.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_15.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_15.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_16.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_16.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_17.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_17.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_18.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_18.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_19.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_19.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_2.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_2.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_3.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_3.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_4.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_4.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_5.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_5.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_6.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_6.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_7.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_7.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_8.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_8.png.meta
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_9.png
+    - Assets/Resources/Animation/knife_walk/survivor-move_knife_9.png.meta
     - Assets/Resources/Animation/melee_a.anim
     - Assets/Resources/Animation/melee_a.anim.meta
+    - Assets/Resources/Animation/rifle_idle.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_0.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_0.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_1.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_1.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_10.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_10.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_11.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_11.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_12.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_12.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_13.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_13.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_14.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_14.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_15.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_15.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_16.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_16.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_17.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_17.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_18.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_18.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_19.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_19.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_2.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_2.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_3.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_3.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_4.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_4.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_5.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_5.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_6.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_6.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_7.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_7.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_8.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_8.png.meta
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_9.png
+    - Assets/Resources/Animation/rifle_idle/survivor-idle_rifle_9.png.meta
+    - Assets/Resources/Animation/rifle_melee.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_0.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_0.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_1.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_1.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_10.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_10.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_11.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_11.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_12.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_12.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_13.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_13.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_14.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_14.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_2.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_2.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_3.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_3.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_4.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_4.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_5.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_5.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_6.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_6.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_7.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_7.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_8.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_8.png.meta
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_9.png
+    - Assets/Resources/Animation/rifle_melee/survivor-meleeattack_rifle_9.png.meta
+    - Assets/Resources/Animation/rifle_walk.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_0.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_0.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_1.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_1.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_10.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_10.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_11.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_11.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_12.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_12.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_13.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_13.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_14.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_14.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_15.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_15.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_16.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_16.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_17.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_17.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_18.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_18.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_19.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_19.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_2.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_2.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_3.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_3.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_4.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_4.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_5.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_5.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_6.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_6.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_7.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_7.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_8.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_8.png.meta
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_9.png
+    - Assets/Resources/Animation/rifle_walk/survivor-move_rifle_9.png.meta
+    - Assets/Resources/Animation/shutgun_idle.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_0.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_0.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_1.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_1.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_10.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_10.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_11.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_11.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_12.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_12.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_13.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_13.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_14.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_14.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_15.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_15.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_16.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_16.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_17.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_17.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_18.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_18.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_19.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_19.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_2.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_2.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_3.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_3.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_4.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_4.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_5.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_5.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_6.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_6.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_7.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_7.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_8.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_8.png.meta
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_9.png
+    - Assets/Resources/Animation/shutgun_idle/survivor-idle_shotgun_9.png.meta
+    - Assets/Resources/Animation/shutgun_melee.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_0.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_0.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_1.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_1.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_10.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_10.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_11.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_11.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_12.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_12.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_13.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_13.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_14.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_14.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_2.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_2.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_3.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_3.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_4.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_4.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_5.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_5.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_6.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_6.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_7.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_7.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_8.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_8.png.meta
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_9.png
+    - Assets/Resources/Animation/shutgun_melee/survivor-meleeattack_shotgun_9.png.meta
+    - Assets/Resources/Animation/shutgun_walk.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_0.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_0.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_1.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_1.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_10.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_10.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_11.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_11.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_12.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_12.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_13.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_13.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_14.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_14.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_15.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_15.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_16.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_16.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_17.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_17.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_18.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_18.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_19.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_19.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_2.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_2.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_3.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_3.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_4.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_4.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_5.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_5.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_6.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_6.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_7.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_7.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_8.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_8.png.meta
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_9.png
+    - Assets/Resources/Animation/shutgun_walk/survivor-move_shotgun_9.png.meta
     - Assets/Resources/Animation/walk_a.anim
     - Assets/Resources/Animation/walk_a.anim.meta
+    - Assets/Resources/FogOfWar/FogOfWarMainCam.prefab
+    - Assets/Resources/FogOfWar/FogOfWarSecondaryCam.prefab
     - Assets/Resources/GameHelpers/HealhBar.cs
     - Assets/Resources/GameHelpers/HealhBar.cs.meta
     - Assets/Resources/GameHelpers/HealthBar.prefab
@@ -47,14 +535,58 @@ MonoBehaviour:
     - Assets/Resources/GameHelpers/SpriteDrawer.cs
     - Assets/Resources/GameHelpers/SpriteDrawer.cs.meta
     - Assets/Resources/GameHelpers/terrain.prefab
+    - Assets/Resources/GameHelpers/terrainR.prefab
+    - Assets/Resources/GameHelpers/terrainR.prefab.meta
+    - Assets/Resources/SFX.meta
+    - Assets/Resources/SFX/510953__theoter__cinematic-battle-song.wav
+    - Assets/Resources/SFX/510953__theoter__cinematic-battle-song.wav.meta
+    - Assets/Resources/SFX/Thunder.wav
+    - Assets/Resources/SFX/Thunder.wav.meta
+    - Assets/Resources/SFX/Wind.wav
+    - Assets/Resources/SFX/Wind.wav.meta
+    - Assets/Resources/SFX/shoot_sound.wav
+    - Assets/Resources/SFX/shoot_sound.wav.meta
+    - Assets/Resources/Tiles/Brick.prefab
+    - Assets/Resources/Tiles/Brick.prefab.meta
     - Assets/Resources/Tiles/Spawn.prefab
     - Assets/Resources/Tiles/Spawn.prefab.meta
+    - Assets/Resources/Tiles/base.prefab
+    - Assets/Resources/Tiles/base.prefab.meta
     - Assets/Resources/Tiles/box.prefab
     - Assets/Resources/Tiles/copper.prefab
     - Assets/Resources/Tiles/metal.prefab
     - Assets/Resources/Tiles/scraps.prefab
+    - Assets/Resources/Tiles/test.mat
+    - Assets/Resources/Tiles/test.mat.meta
     - Assets/Resources/Tiles/wall.prefab
     - Assets/Resources/Tiles/wall1.prefab
+    - Assets/Resources/Tiles/walls.mat
+    - Assets/Resources/Tiles/walls.mat.meta
+    - Assets/Resources/VFX.meta
+    - Assets/Resources/VFX/Fog.vfx
+    - Assets/Resources/VFX/Fog.vfx.meta
+    - Assets/Resources/sprites/normal.png
+    - Assets/Resources/sprites/normal.png.meta
+    - Assets/Resources/sprites/tiles_N.png
+    - Assets/Resources/sprites/tiles_N.png.meta
+    - Assets/Resources/sprites/tileset (1).png.meta
+    - Assets/Resources/sprites/wall.jpg.meta
+    - Assets/Saves/bases2_0.txt
+    - Assets/Saves/bases2_0.txt.meta
+    - Assets/Saves/bases2_1.txt
+    - Assets/Saves/bases2_1.txt.meta
+    - Assets/Saves/bases2_2.txt
+    - Assets/Saves/bases2_2.txt.meta
+    - Assets/Saves/bases2_3.txt
+    - Assets/Saves/bases2_3.txt.meta
+    - Assets/Saves/bases_0.txt
+    - Assets/Saves/bases_0.txt.meta
+    - Assets/Saves/bases_1.txt
+    - Assets/Saves/bases_1.txt.meta
+    - Assets/Saves/bases_2.txt
+    - Assets/Saves/bases_2.txt.meta
+    - Assets/Saves/bases_3.txt
+    - Assets/Saves/bases_3.txt.meta
     - Assets/Saves/f_0.txt
     - Assets/Saves/f_0.txt.meta
     - Assets/Saves/f_1.txt
@@ -63,9 +595,20 @@ MonoBehaviour:
     - Assets/Saves/f_2.txt.meta
     - Assets/Saves/f_3.txt
     - Assets/Saves/f_3.txt.meta
+    - Assets/Saves/spawn_0.txt
+    - Assets/Saves/spawn_0.txt.meta
+    - Assets/Saves/spawn_1.txt
+    - Assets/Saves/spawn_1.txt.meta
+    - Assets/Saves/spawn_2.txt
+    - Assets/Saves/spawn_2.txt.meta
+    - Assets/Saves/spawn_3.txt
+    - Assets/Saves/spawn_3.txt.meta
+    - Assets/Scenes/Test.meta
     - Assets/Scenes/Test.unity
-    - Assets/Spawn.cs
-    - Assets/Spawn.cs.meta
+    - Assets/Scenes/Test/Global Volume Profile 1.asset
+    - Assets/Scenes/Test/Global Volume Profile 1.asset.meta
+    - Assets/Scenes/Test/Global Volume Profile.asset
+    - Assets/Scenes/Test/Global Volume Profile.asset.meta
     - Assets/scripts/Camera/CameraMovement.cs
     - Assets/scripts/Pathfinding/Map.cs
     - Assets/scripts/Pathfinding/MapGenerator.cs
@@ -73,17 +616,34 @@ MonoBehaviour:
     - Assets/scripts/Pathfinding/PathAgent.cs
     - Assets/scripts/Pathfinding/Pathfinding.cs
     - Assets/scripts/Pathfinding/TileMap.cs
+    - Assets/scripts/RTScontrollers/DayNight.cs
+    - Assets/scripts/RTScontrollers/DayNight.cs.meta
     - Assets/scripts/RTScontrollers/DropDown.cs
+    - Assets/scripts/RTScontrollers/HomeBase.cs
+    - Assets/scripts/RTScontrollers/HomeBase.cs.meta
+    - Assets/scripts/RTScontrollers/Player.cs
     - Assets/scripts/RTScontrollers/RTSManager.cs
+    - Assets/scripts/RTScontrollers/Spawn.cs
+    - Assets/scripts/RTScontrollers/Spawn.cs.meta
+    - Assets/scripts/RTScontrollers/UIManager.cs
     - Assets/scripts/RTScontrollers/UnitSelection.cs
     - Assets/scripts/SaveLoad/AgentData.cs
     - Assets/scripts/SaveLoad/SaveAgent.cs
+    - Assets/scripts/SaveLoad/SaveManager.cs
+    - Assets/scripts/SaveLoad/SaveManager.cs.meta
     - Assets/scripts/SteeringBehaviours/AgentManager.cs
+    - Assets/scripts/SteeringBehaviours/Bullet.cs
     - Assets/scripts/SteeringBehaviours/ObjectPool.cs
     - Assets/scripts/SteeringBehaviours/SteerinBehaviours.cs
+    - Packages/manifest.json
+    - Packages/packages-lock.json
+    - ProjectSettings/GraphicsSettings.asset
+    - ProjectSettings/ProjectSettings.asset
+    - ProjectSettings/QualitySettings.asset
     - ProjectSettings/TagManager.asset
+    - ProjectSettings/VFXManager.asset
     - 
-    m_Values: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    m_Values: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 

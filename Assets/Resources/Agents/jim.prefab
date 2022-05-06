@@ -193,7 +193,7 @@ MonoBehaviour:
   rank: 0
   squad: 0
   team: 0
-  isShooter: 1
+  isShooter: 0
   shootingRaange: 0
   startTimeBtwShots: 0
   bulletForce: 0
@@ -201,6 +201,7 @@ MonoBehaviour:
   bulletDamage: 400
   sg: {fileID: 0}
   anim: {fileID: 0}
+  agents: []
   attackSize: 0.5
   attackRange: 0.5
   attackTime: 0.5
@@ -213,9 +214,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   maxScale: 15
-  healthAmount: 0
+  healthAmount: 500
+  isLeaderAlive: 0
   bullets: []
   objectToPool: {fileID: 0}
+  priceR1: 0
+  priceR2: 0
+  priceR3: 0
 --- !u!95 &871788567329250221
 Animator:
   serializedVersion: 3

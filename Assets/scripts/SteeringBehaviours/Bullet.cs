@@ -19,7 +19,12 @@ public class Bullet : MonoBehaviour
             collision.GetComponent<AgentManager>().healthAmount -= damage;
             gameObject.SetActive(false);
         }
-       
+        else if(collision.tag == "Base" && id != collision.GetComponent<HomeBase>().iD)
+        {
+            collision.GetComponent<HomeBase>().healthAmount -= damage;
+            gameObject.SetActive(false);
+        }
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

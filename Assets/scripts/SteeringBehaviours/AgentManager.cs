@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using TMPro;
+
 //using UnityEditor;
 
-public class AgentManager : SteerinBehaviours
+public class AgentManager : SteerinBehaviours /*Tree*/
 {
-    [Header ("Behaviors")]
+    [Header("Behaviors")]
     public bool isSeek;
     public bool isFlee;
     public bool isPursue;
@@ -14,16 +17,16 @@ public class AgentManager : SteerinBehaviours
     public bool isCohesion;
     public bool isCollector;
     public bool isTitan;
-    private int copperInv = 0;
-    private int metalInv = 0;
-    private int scrapsInv = 0;
+    private int resource3Inv = 0;
+    private int resource2Inv = 0;
+    private int resource1Inv = 0;
     private int inventory = 0;
     [Header("Capacidad de carga")]
     public int resourcesCarryLimt = 1;
     private float nearestResource = Mathf.Infinity;
     private Node closestResource = null;
     private float secondNearest = Mathf.Infinity;
-    
+    public GameObject particle;
     GameObject wall;
     private Node nextClosest = null;
     PathAgent pAgent;
@@ -40,12 +43,12 @@ public class AgentManager : SteerinBehaviours
     [Header("Bala")]
     public bool isShooter;
     public float shootingRaange;
-    public float startTimeBtwShots=0.1f;
+    public float startTimeBtwShots = 0.1f;
     public float bulletForce = 30;
     public int ammo = 50;
     public float bulletDamage;
     public GameObject sg;
-    private bool isFollowing;
+    public bool isFollowing;
     public Animator anim;
     public AgentManager[] agents;
     bool meleeAtack = true;
@@ -55,9 +58,9 @@ public class AgentManager : SteerinBehaviours
     public float attackTime = 0.5f;
     public bool isAtacker;
     public float meleeDamage;
-    
+
     GameObject tmpBullet;
-    bool isAgentMoving = false;
+    public bool isAgentMoving = false;
     public LayerMask agentsLayers;
     public LayerMask wallsLayer;
     bool isAttacking = false;
@@ -78,10 +81,22 @@ public class AgentManager : SteerinBehaviours
     float maxHP;
     GameObject hpb;
     CircleCollider2D attackCol;
+    public int priceR1;
+    public int priceR2;
+    public int priceR3;
+    public GameObject[] baseNodes;
+    GameObject[] agentsObjs;
+    GameObject[] newArray;
+    public GameObject shotLight;
+    AudioSource audioSource;
+    public AudioClip gunShot;
+
+    private GameObject dialogueBox;
+
     void Start()
     {
         bullets = new List<GameObject>();
-        
+
         anim = GetComponent<Animator>();
         transform.gameObject.tag = "Agent";
         if (showlifebar)
@@ -97,32 +112,50 @@ public class AgentManager : SteerinBehaviours
         wallsLayer = LayerMask.GetMask("Walls");
         InitAgentObjects();
         fogOfWar = GameObject.Find("fogofwarcanvas");
-        //SaveAgent.agentsP.Add(this);
+        SaveAgent.agentsP.Add(this);
         pAgent = GetComponent<PathAgent>();
         Awake();
         SetSelected(false);
         GetComponent<BoxCollider2D>().size = new Vector2(2f, 1.06f);
         anim.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/" + this.name);
+        if (rank > 0)
+        {
+            isLeader = true;
+            dialogueBox.SetActive(false);
+        }
         agents = FindObjectsOfType<AgentManager>();
         if (isCollector)
         {
             isCollecting = true;
         }
+        audioSource.volume = 0.01f;
+        if (team == 2)
+        {
+            gameObject.AddComponent<EnemyAI>();
+        }
+        
     }
 
     private void Update()
     {
-        if (sg.activeInHierarchy)
+        baseNodes = GameObject.FindGameObjectsWithTag("Base");
+        agentsObjs = GameObject.FindGameObjectsWithTag("Agent");
+        if (isLeader)
+        {
+            dialogueBox.transform.position = new Vector3(transform.position.x + 20, transform.position.y + 20, transform.position.z);
+        }
+
+        if (sg.activeInHierarchy && team == 1)
         {
             hpb.SetActive(true);
         }
-        else
+        else if (!sg.activeInHierarchy && team == 1)
         {
             hpb.SetActive(false);
         }
         agents = FindObjectsOfType<AgentManager>();
         targets = new Transform[agents.Length - 1];
-        
+
         StartCoroutine(CeheckMovement(gameObject));
         if (isAgentMoving == false)
         {
@@ -132,7 +165,7 @@ public class AgentManager : SteerinBehaviours
         {
             anim.SetFloat("Speed", 1.0f);
         }
-            int count = 0;
+        int count = 0;
         foreach (AgentManager agent in agents)
         {
             if (agent.gameObject != gameObject)
@@ -159,15 +192,17 @@ public class AgentManager : SteerinBehaviours
 
             }
         }
-       
+
         leaders = GameObject.FindGameObjectsWithTag("Leader");
         if (rank == 0)
         {
-            //DetectWall();
+            //squad = 0;
+            DetectWall();
         }
+
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, 10, 1990), Mathf.Clamp(transform.position.y, 10, 1990), 0);
         FollowClosestLeader();
-
+        SetLeaderText();
         if (team == 1)
         {
             transform.GetChild(1).GetComponent<SpriteRenderer>().color = Color.blue;
@@ -204,15 +239,18 @@ public class AgentManager : SteerinBehaviours
         }
         if (healthAmount <= 0)
         {
-           gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
-        //DetectWall();
-       
+        GetClosestObject(baseNodes);
+
+        DetectWall();
+
 
     }
+
     void LateUpdate()
     {
-       
+
 
     }
     private void OnDestroy()
@@ -229,16 +267,16 @@ public class AgentManager : SteerinBehaviours
     {
         AgentManager closestEnemy = null;
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
-       closestEnemy = GetClosestEnemy(agents);
-       
+
+        closestEnemy = GetClosestEnemy(agents);
+
         float d = 0;
         if (closestEnemy != null)
         {
             Vector2 desired = closestEnemy.transform.position - transform.position;
             d = desired.magnitude;
         }
-        else if(sg.gameObject.activeInHierarchy == false)
+        else if (sg.gameObject.activeInHierarchy == false)
         {
             //Wander();
         }
@@ -249,7 +287,7 @@ public class AgentManager : SteerinBehaviours
         //    {
         //        if (closestEnemy != null)
         //        {
-                   
+
         //            SetSteeringWeight(Seek(closestEnemy.transform.position), 1);
         //            Wander();
         //        }
@@ -271,7 +309,7 @@ public class AgentManager : SteerinBehaviours
                         isCollecting = false;
                         Flee(closestEnemy.transform.position);
                     }
-                    
+
                 }
             }
             else if (isCollector)
@@ -291,17 +329,17 @@ public class AgentManager : SteerinBehaviours
             }
 
         }
-        
+
         if (isEvade)
         {
             foreach (AgentManager agent in agents)
             {
-                if(agent != gameObject)
+                if (agent != gameObject)
                     Evade(agent.transform);
             }
-            
+
         }
-        
+
         if (isPursue || isPursue && isShooter && closestEnemy.isLeaderAlive == false && !closestEnemy.isLeader)
         {
             if (closestEnemy != null)
@@ -310,15 +348,15 @@ public class AgentManager : SteerinBehaviours
                 {
                     if (d < seekPerception && sg.activeInHierarchy == false)
                     {
-                    
+
                         Pursue(closestEnemy.transform);
                     }
                 }
             }
         }
-        
+
     }
-    
+
     public void Flocking()
     {
         Vector2 align = Align();
@@ -329,10 +367,10 @@ public class AgentManager : SteerinBehaviours
 
     public void Collect(Rect rect, Pathfinding p)
     {
-       
+
 
         int count = 0;
-        
+
         nearestResource = Mathf.Infinity;
         float nearestStorage = Mathf.Infinity;
         closestResource = null;
@@ -356,21 +394,21 @@ public class AgentManager : SteerinBehaviours
                 }
             }
         }
-        Node.NodeObject nodeSprite = Node.NodeObject.None ;
+        Node.NodeObject nodeSprite = Node.NodeObject.None;
         if (closestResource != null)
         {
             nodeSprite = closestResource.GetNodeObject();
-        
-           // Debug.DrawLine(this.transform.position, p.GetMap().GetPosition(closestResource.x + 0.5f, closestResource.y + 0.5f), Color.red);
+
+            // Debug.DrawLine(this.transform.position, p.GetMap().GetPosition(closestResource.x + 0.5f, closestResource.y + 0.5f), Color.red);
         }
-        if (nodeSprite == Node.NodeObject.Metal)
+        if (nodeSprite == Node.NodeObject.Resource2)
         {
             if ((transform.position - p.GetMap().GetPosition(closestResource.x + .5f, closestResource.y)).magnitude <= 1f && inventory <= resourcesCarryLimt && isCollector)
             {
-               
+
                 closestResource.SetNodeObject(Node.NodeObject.None);
                 //closestResource.isResource = false;
-                metalInv++;
+                resource2Inv++;
                 inventory++;
             }
             if (inventory < resourcesCarryLimt)
@@ -380,14 +418,14 @@ public class AgentManager : SteerinBehaviours
             }
 
         }
-        else if(nodeSprite == Node.NodeObject.Scrap)
+        else if (nodeSprite == Node.NodeObject.Resource1)
         {
             if ((transform.position - p.GetMap().GetPosition(closestResource.x + .5f, closestResource.y)).magnitude <= 1f && inventory <= resourcesCarryLimt && isCollector)
             {
 
                 closestResource.SetNodeObject(Node.NodeObject.None);
                 //closestResource.isResource = false;
-                scrapsInv++;
+                resource1Inv++;
                 inventory++;
             }
             if (inventory < resourcesCarryLimt)
@@ -395,14 +433,14 @@ public class AgentManager : SteerinBehaviours
                 Arrive(p.GetMap().GetPosition(closestResource.x + .5f, closestResource.y));
             }
         }
-        else if(nodeSprite == Node.NodeObject.Copper)
+        else if (nodeSprite == Node.NodeObject.Resource3)
         {
             if ((transform.position - p.GetMap().GetPosition(closestResource.x + .5f, closestResource.y)).magnitude <= 1f && inventory <= resourcesCarryLimt && isCollector)
             {
 
                 closestResource.SetNodeObject(Node.NodeObject.None);
                 //closestResource.isResource = false;
-                copperInv++;
+                resource3Inv++;
                 inventory++;
             }
             if (inventory < resourcesCarryLimt)
@@ -410,7 +448,7 @@ public class AgentManager : SteerinBehaviours
                 Arrive(p.GetMap().GetPosition(closestResource.x + .5f, closestResource.y));
             }
         }
-        
+
         foreach (Node storage in TileMap.storages)
         {
             if (rect.Contains(transform.position))
@@ -432,42 +470,52 @@ public class AgentManager : SteerinBehaviours
                 }
             }
             //float dist = (storage.transform.position - transform.position).sqrMagnitude;
-            
+
         }
         Node.NodeObject nodeSpriteS = Node.NodeObject.None;
         if (closestStorage != null)
         {
             nodeSpriteS = closestStorage.GetNodeObject();
 
-           // Debug.DrawLine(this.transform.position, p.GetMap().GetPosition(closestStorage.x + 0.5f, closestStorage.y + 0.5f), Color.red);
+            // Debug.DrawLine(this.transform.position, p.GetMap().GetPosition(closestStorage.x + 0.5f, closestStorage.y + 0.5f), Color.red);
         }
         if (nodeSpriteS == Node.NodeObject.Box)
         {
-            
+
             if (inventory >= resourcesCarryLimt)
             {
-                
+
                 //pAgent.SetTarget(MapGenerator.pathFind.GetMap().GetPosition(closestStorage.x, closestStorage.y));
                 Arrive(p.GetMap().GetPosition(closestStorage.x, closestStorage.y));
             }
             if ((transform.position - p.GetMap().GetPosition(closestStorage.x, closestStorage.y)).magnitude <= 10f)
             {
-                Player.copper += copperInv;
-                Player.metal += metalInv;
-                Player.scraps += scrapsInv;
-                copperInv = 0;
-                metalInv = 0;
-                scrapsInv = 0;
+                if (team == 1)
+                {
+                    RTSManager.resource3T1 += resource3Inv;
+                    RTSManager.resource2T1 += resource2Inv;
+                    RTSManager.resource1T1 += resource1Inv;
+                }
+                else if (team == 2)
+                {
+                    RTSManager.resource3T2 += resource3Inv;
+                    RTSManager.resource2T2 += resource2Inv;
+                    RTSManager.resource1T2 += resource1Inv;
+
+                }
+                resource3Inv = 0;
+                resource2Inv = 0;
+                resource1Inv = 0;
                 inventory = 0;
             }
         }
-        
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (isTitan)
         {
-            if(collision.gameObject.tag == "Wall")
+            if (collision.gameObject.tag == "Wall")
             {
                 collision.gameObject.SetActive(false);
             }
@@ -475,58 +523,59 @@ public class AgentManager : SteerinBehaviours
     }
     private void DestroyWall(Rect rect, Pathfinding p)
     {
-        
-            float nearestWall = Mathf.Infinity;
-            Node closestWall = null;
-            foreach (Node wall in TileMap.walls)
+
+        float nearestWall = Mathf.Infinity;
+        Node closestWall = null;
+        foreach (Node wall in TileMap.walls)
+        {
+
+            if (rect.Contains(transform.position))
             {
-
-                if (rect.Contains(transform.position))
+                float distance = (p.GetMap().GetPosition(wall.x, wall.y) - transform.position).sqrMagnitude;
+                if (distance < nearestWall)
                 {
-                    float distance = (p.GetMap().GetPosition(wall.x, wall.y) - transform.position).sqrMagnitude;
-                    if (distance < nearestWall)
+                    if (!p.GetMap().GetMapNode(wall.x, wall.y).notWall)
                     {
-                        if (!p.GetMap().GetMapNode(wall.x, wall.y).notWall)
-                        {
 
-                            nearestWall = distance;
-                            closestWall = p.GetMap().GetMapNode(wall.x, wall.y);
-                        }
+                        nearestWall = distance;
+                        closestWall = p.GetMap().GetMapNode(wall.x, wall.y);
                     }
                 }
-                
             }
-            Node.NodeObject nodeSprite = Node.NodeObject.None;
-            if (closestWall != null)
-            {
-                nodeSprite = closestWall.GetNodeObject();
-            }
-            
-            if (nodeSprite == Node.NodeObject.Wall )
-            {
-                Vector3 pos = p.GetMap().GetPosition(closestWall.x, closestWall.y);
-            ///Debug.DrawLine(new Vector3(transform.position.x + 15, transform.position.y), new Vector3(pos.x + 10, pos.y));
-                if (transform.position.x + (mass*15f) > pos.x && pos.x + 10f > transform.position.x - (mass * 15f) && transform.position.y + (mass * 15f) > pos.y && pos.y + 10f > transform.position.y - (mass * 15f))
-                {
 
-                    
-                    closestWall.SetNodeObject(Node.NodeObject.None);
+        }
+        Node.NodeObject nodeSprite = Node.NodeObject.None;
+        if (closestWall != null)
+        {
+            nodeSprite = closestWall.GetNodeObject();
+        }
+
+        if (nodeSprite == Node.NodeObject.Wall)
+        {
+            Vector3 pos = p.GetMap().GetPosition(closestWall.x, closestWall.y);
+            ///Debug.DrawLine(new Vector3(transform.position.x + 15, transform.position.y), new Vector3(pos.x + 10, pos.y));
+            if (transform.position.x + (mass * 15f) > pos.x && pos.x + 10f > transform.position.x - (mass * 15f) && transform.position.y + (mass * 15f) > pos.y && pos.y + 10f > transform.position.y - (mass * 15f))
+            {
+
+
+                closestWall.SetNodeObject(Node.NodeObject.None);
                 closestWall.notWall = true;
-                    
-                   
-                }
-                
+
+
             }
-        
+
+        }
+
     }
     public void SetRTSBehaviours()
     {
-        AgentManager closestEnemy = GetClosestEnemy(agents);
-        float distance = 0;
-        if (closestEnemy != null)
-        {
-            distance = (closestEnemy.transform.position - transform.position).magnitude;
-        }
+        GameObject agentA = GetClosestObject(agentsObjs);
+        GameObject hBase = GetClosestObject(baseNodes);
+        GameObject leadersClosest = GetClosestObject(leaders);
+        List<GameObject> objects = new List<GameObject>();
+        objects.Add(agentA);
+        objects.Add(hBase);
+        objects.Add(leadersClosest);
         if (isCollector && sg.activeInHierarchy == false)
         {
             if (isCollecting)
@@ -536,11 +585,31 @@ public class AgentManager : SteerinBehaviours
                 Collect(MapGenerator.rect3, MapGenerator.pathfind3);
                 Collect(MapGenerator.rect4, MapGenerator.pathfind4);
             }
-            
+
         }
-        if (isAtacker && sg.activeInHierarchy == false  && isLeaderAlive == true || isLeader && isAtacker || isAtacker && squad == 0)
+        if (isAtacker && sg.activeInHierarchy == false && isLeaderAlive == true || isLeader && isAtacker || isAtacker && squad == 0)
         {
-            Attack();
+            float nearestObject = Mathf.Infinity;
+            GameObject closestObject = null;
+            foreach (GameObject obj in objects)
+            {
+                if (obj)
+                {
+                    float distanceToBase = (obj.transform.position - transform.position).sqrMagnitude;
+                    if (distanceToBase < nearestObject)
+                    {
+                        nearestObject = distanceToBase;
+                        closestObject = obj;
+                    }
+                }
+            }
+            if (closestObject)
+            {
+                AttackBehavior(closestObject);
+                //Debug.Log(closestObject.name +" "+this.name);
+                Debug.DrawLine(this.transform.position, closestObject.transform.position);
+            }
+           
         }
         if (isTitan)
         {
@@ -550,64 +619,97 @@ public class AgentManager : SteerinBehaviours
             DestroyWall(MapGenerator.rect4, MapGenerator.pathfind4);
 
         }
-        if (isShooter && sg.activeInHierarchy == false && this.GetComponent<AgentManager>().isFollowing == false && isLeaderAlive == true || isLeader && isShooter || isPursue && isShooter)
+        if (isShooter && sg.activeInHierarchy == false && this.GetComponent<AgentManager>().isFollowing == false && isLeaderAlive == true || isLeader && isShooter || isPursue && isShooter || isShooter && isAtacker || isShooter && rank == 0)
         {
-            ShootBehavior();
-        }
-        
-    }
-    public void Attack()
-    {
-        
-        AgentManager closest = GetClosestEnemy(agents);
-
-        if (closest != null)
-        {
-            if (ammo <= 0 /*&& Vector2.Distance(transform.position, closest.transform.position) > 10*/ && closest.GetComponent<AgentManager>().team != team)
+            
+            float nearestObject = Mathf.Infinity;
+            GameObject closestObject = null;
+            foreach (GameObject obj in objects)
             {
-                isFollowing = false;
+                if (obj)
+                {
+                    float distanceToBase = (obj.transform.position - transform.position).sqrMagnitude;
+                    if (distanceToBase < nearestObject)
+                    {
+                        nearestObject = distanceToBase;
+                        closestObject = obj;
+                    }
+                }
+            }
+            if (closestObject)
+            {
+                ShootBehavior(closestObject);
+                //Debug.Log(closestObject.name +" "+this.name);
+                Debug.DrawLine(this.transform.position, closestObject.transform.position);
+            }
+            else
+            {
+                shotLight.SetActive(false);
+            }
+
+        }
+
+    }
+    public void AttackBehavior(GameObject objectType)
+    {
+
+        if (ammo <= 0 && !isFollowing)
+        {
+            //isFollowing = false;
+            if ((transform.position - objectType.transform.position).magnitude <= 100)
+            {
                 if (isArrive)
                 {
-                    Arrive(closest.transform.position);
-                }else if (isSeek)
+                    Arrive(objectType.transform.position);
+                }
+                else if (isSeek)
                 {
-                    Seek(closest.transform.position);
+                    Seek(objectType.transform.position);
                 }
             }
-            attackRange = mass * maxScale * 2;
-            if ((transform.position - closest.transform.position).magnitude <= attackRange && ammo<=0)
-            {
-                
-                if (meleeAtack)
-                {
-                    isAttacking = true;
-                    attackCol.enabled = true;
-                    anim.SetTrigger("Attack");
-                    closest.agentsLayers = LayerMask.GetMask("Agents");
-                    StartCoroutine("AttackTime");
-                    
-                    Vector2 direction = closest.transform.position - transform.position;
-                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                    transform.rotation = Quaternion.Euler(0f, 0f, angle - 90);
-                    Quaternion neededRotation = Quaternion.LookRotation(direction);
-                    Quaternion.RotateTowards(transform.rotation, neededRotation, Time.deltaTime * 10f);
-                    
-                    if (attackCol.IsTouching(closest.GetComponent<BoxCollider2D>()))
-                    {
-                        Debug.Log("Pelea");
-                        closest.healthAmount -= meleeDamage;
-                    }
-                    
-                }
-                else
-                {
-                    //attackCol.enabled = false;
-                    isAttacking = false;
-                }
+        }
+        attackRange = mass * maxScale * 2;
+        if ((transform.position - objectType.transform.position).magnitude <= attackRange && ammo <= 0 && isFollowing == false)
+        {
+
+           if (meleeAtack)
+           {
+               isAttacking = true;
+               attackCol.enabled = true;
+               anim.SetTrigger("Attack");
+               //objectType.agentsLayers = LayerMask.GetMask("Agents");
+               StartCoroutine("AttackTime");
+
+               Vector2 direction = objectType.transform.position - transform.position;
+               float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+               transform.rotation = Quaternion.Euler(0f, 0f, angle - 90);
+               Quaternion neededRotation = Quaternion.LookRotation(direction);
+               Quaternion.RotateTowards(transform.rotation, neededRotation, Time.deltaTime * 10f);
+
+               if (attackCol.IsTouching(objectType.GetComponent<BoxCollider2D>()))
+               {
+                   if (objectType.tag == "Agent")
+                   {
+                       Debug.Log("Pelea");
+                       GameObject part = Instantiate(particle, transform.position, Quaternion.identity);
+                       Destroy(part, 1);
+                       objectType.GetComponent<AgentManager>().healthAmount -= meleeDamage;
+                   }
+                   else if (objectType.tag == "Base")
+                   {
+                       objectType.GetComponent<HomeBase>().healthAmount -= meleeDamage;
+                   }
+               }
+
+           }
+           else
+           {
+               //attackCol.enabled = false;
+               isAttacking = false;
+           }
 
 
-            }
-        } 
+        }
     }
     public void SetSelected(bool isVisible)
     {
@@ -615,56 +717,73 @@ public class AgentManager : SteerinBehaviours
     }
     public void MoveTo(Vector3 target, Pathfinding pathf, Vector3 helperPos)
     {
-        
-            pAgent.SetTarget(target, helperPos, pathf);
-        
-      
+
+        pAgent.SetTarget(target, helperPos, pathf);
+
+
     }
     public void MoveArrive(Vector3 target)
     {
         pAgent.SetMovePos(target);
+        //Arrive(target);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "storeage")
+        if (GetComponent<Collider2D>() is BoxCollider2D)
         {
-            copperInv = 0;
-        }
-        if (isCollecting)
-        {
-            if (collision.tag == "Resource")
+            if (collision.tag == "storeage")
             {
-                if (inventory < resourcesCarryLimt)
-                {
-                    //collision.gameObject.transform.position = transform.position;
-                    collision.gameObject.SetActive(false);
-                }
-
+                resource3Inv = 0;
             }
+            if (collision.tag == "Ceiling")
+            {
+                Color tmp = collision.GetComponent<SpriteRenderer>().color;
+                tmp.a = 0.5f;
+                collision.GetComponent<SpriteRenderer>().color = tmp;
+            }
+            if (isCollecting)
+            {
+                if (collision.tag == "Resource")
+                {
+                    if (inventory < resourcesCarryLimt)
+                    {
+                        //collision.gameObject.transform.position = transform.position;
+                        collision.gameObject.SetActive(false);
+                    }
+
+                }
+            }
+        }
+        if (collision.tag == "Bullet" && collision.GetComponent<Bullet>().id != team)
+        {
+            GameObject part = Instantiate(particle, transform.position, Quaternion.identity);
+            Destroy(part, 1);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Ceiling")
+        {
+            Color tmp = collision.GetComponent<SpriteRenderer>().color;
+            tmp.a = 1f;
+            collision.GetComponent<SpriteRenderer>().color = tmp;
         }
     }
     void DetectWall()
     {
-
         Vector3[] rayVec = new Vector3[3];
         rayVec[0] = vel;
         rayVec[0].Normalize();
         rayVec[0] *= rayLength;
-       
         rayVec[1] = Quaternion.AngleAxis(60f, Vector3.forward) * transform.right;
         rayVec[1].Normalize();
         rayVec[1] *= rayLength;
-
         rayVec[2] = Quaternion.AngleAxis(120f, Vector3.forward) * transform.right;
         rayVec[2].Normalize();
         rayVec[2] *= rayLength;
-
-       
-
         Debug.DrawRay(transform.position, rayVec[0], Color.blue);
         Debug.DrawRay(transform.position, rayVec[1], Color.red);
         Debug.DrawRay(transform.position, rayVec[2], Color.black);
-       
         for (int i = 0; i < rayVec.Length; i++)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, rayVec[i], rayLength);
@@ -677,15 +796,12 @@ public class AgentManager : SteerinBehaviours
                     Flee(hit.collider.transform.position);
                 }
             }
-            
-
         }
-
     }
 
     void FollowClosestLeader()
     {
-       
+
         GameObject closestLeader = GetClosestLeader(leaders);
         if (closestLeader != null)
         {
@@ -695,32 +811,17 @@ public class AgentManager : SteerinBehaviours
                 fleeTime = 0;
                 startTime = false;
                 isLeaderAlive = true;
-                //isFollowing = true;
+                isFollowing = true;
             }
             if (closestLeader.GetComponent<AgentManager>().healthAmount <= 50 && !isLeader)
             {
                 startTime = true;
                 isLeaderAlive = false;
-                //isFollowing = false;
+                isFollowing = false;
             }
-            
+           
             StartCoroutine(CeheckMovement(closestLeader));
             
-            if (closestLeader.GetComponent<AgentManager>().isAgentMoving && sg.activeInHierarchy == false)
-            {
-
-                LeaderFollow(closestLeader);
-                DetectWall();
-            }
-            else if(Vector2.Distance(transform.position, closestLeader.transform.position) > 30 && !isTitan  && sg.activeInHierarchy == false)
-            {
-                Arrive(closestLeader.transform.position);
-                DetectWall();
-            }
-            if(Vector2.Distance(transform.position, closestLeader.transform.position) > 100 && isTitan  && sg.activeInHierarchy == false)
-            {
-                Arrive(closestLeader.transform.position);
-            }
             if (closestLeader.GetComponent<AgentManager>().isAgentMoving == false)
             {
                 isFollowing = false;
@@ -729,6 +830,22 @@ public class AgentManager : SteerinBehaviours
             {
                 isFollowing = true;
             }
+            if (closestLeader.GetComponent<AgentManager>().isAgentMoving && sg.activeInHierarchy == false && isFollowing)
+            {
+
+                LeaderFollow(closestLeader);
+                DetectWall();
+            }
+            else if (Vector2.Distance(transform.position, closestLeader.transform.position) > 30 && !isTitan && sg.activeInHierarchy == false && isFollowing)
+            {
+                Arrive(closestLeader.transform.position);
+                DetectWall();
+            }
+            if (Vector2.Distance(transform.position, closestLeader.transform.position) > 100 && isTitan && sg.activeInHierarchy == false && isFollowing)
+            {
+                Arrive(closestLeader.transform.position);
+            }
+           
 
 
         }
@@ -737,7 +854,7 @@ public class AgentManager : SteerinBehaviours
             hasLeader = false;
         }
 
-        
+
     }
 
     IEnumerator CeheckMovement(GameObject go)
@@ -757,61 +874,77 @@ public class AgentManager : SteerinBehaviours
     }
     IEnumerator ShootTime()
     {
+        shotLight.SetActive(false);
         yield return new WaitForSeconds(startTimeBtwShots);
+        shotLight.SetActive(true);
+
         canShoot = true;
     }
-    public void ShootBehavior()
+    public void ShootBehavior(GameObject objectType)
     {
-        
-        AgentManager closest = GetClosestEnemy(agents);
 
-        if (closest != null)
+        if ((transform.position - objectType.transform.position).magnitude <= shootingRaange && ammo > 0)
         {
 
-            if ((transform.position - closest.transform.position).magnitude <= shootingRaange && ammo > 0)
+            if (canShoot)
             {
-                
-                if (canShoot)
+                canShoot = false;
+                StartCoroutine("ShootTime");
+                target = objectType.gameObject;
+                Vector2 direction = target.transform.position - transform.position;
+                GameObject newTarget;
+                //audioSource.PlayOneShot(gunShot);
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0f, 0f, angle - 90);
+                Quaternion neededRotation = Quaternion.LookRotation(direction);
+                Quaternion.RotateTowards(transform.rotation, neededRotation, Time.deltaTime * 10f);
+
+                tmpBullet = ObjectPool.Instance.GetPooledObjects(bullets, 20);
+                if (tmpBullet != null)
                 {
-                    canShoot = false;
-                    StartCoroutine("ShootTime");
-                    target = closest.gameObject;
-                    Vector2 direction = target.transform.position - transform.position;
-                    GameObject newTarget;
-                    
-                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                    transform.rotation = Quaternion.Euler(0f, 0f, angle - 90);
-                    Quaternion neededRotation = Quaternion.LookRotation(direction);
-                    Quaternion.RotateTowards(transform.rotation, neededRotation, Time.deltaTime * 10f);
+                    tmpBullet.transform.position = firePoint.transform.position;
+                    tmpBullet.SetActive(true);
+                    tmpBullet.GetComponent<Bullet>().id = team;
+                    tmpBullet.GetComponent<Bullet>().damage = bulletDamage;
+                    ammo--;
 
-                    tmpBullet = ObjectPool.Instance.GetPooledObjects(bullets, 20);
-                    if(tmpBullet != null)
-                    {
-                        tmpBullet.transform.position = firePoint.transform.position;
-                        tmpBullet.SetActive(true);
-                        tmpBullet.GetComponent<Bullet>().id = team;
-                        tmpBullet.GetComponent<Bullet>().damage = bulletDamage;
-                        ammo--;
-                       
-                        tmpBullet.transform.localScale = new Vector3(mass * 5f, mass * 5f, 0f);
-                        
-                        tmpBullet.transform.right = direction;
-                        tmpBullet.GetComponent<Rigidbody2D>().velocity = direction.normalized * bulletForce;
-                    }
-                    
+                    tmpBullet.transform.localScale = new Vector3(mass * 5f, mass * 5f, 0f);
 
+                    tmpBullet.transform.right = direction;
+                    tmpBullet.GetComponent<Rigidbody2D>().velocity = direction.normalized * bulletForce;
                 }
-
-                
             }
-            
-            
-
         }
-        
-        
+        shotLight.SetActive(false);
     }
 
+    void SetLeaderText()
+    {
+
+        string[] dialogueMoving = { "Siganme los buenos", "Por aqui", "A la carga", "Sin piedad", "Destrozenlos", "Avancen" };
+        string[] dialogueCritical = { "Retirada", "Salvense", "Hay mama", "no resistire mas", "Porque a mi", "cubranme" };
+        
+        if (isLeader && team == 1)
+        {
+            if (isAgentMoving)
+            {
+
+
+                dialogueBox.transform.GetChild(0).GetComponent<TextMeshPro>().text = dialogueMoving[UnitSelection.random];
+                dialogueBox.SetActive(true);
+            }
+            else if(healthAmount<=150 && healthAmount > 50)
+            {
+                dialogueBox.transform.GetChild(0).GetComponent<TextMeshPro>().text = dialogueCritical[UnitSelection.random];
+                dialogueBox.SetActive(true);
+                
+            }
+            else
+            {
+                dialogueBox.SetActive(false);
+            }
+        }
+    }
     void InitAgentObjects()
     {
         GameObject selectedGo = Resources.Load("AgentObjects/selected") as GameObject;
@@ -836,12 +969,21 @@ public class AgentManager : SteerinBehaviours
         firePoint = Instantiate(fp, new Vector2(transform.position.x + 3, transform.position.y + 15f), Quaternion.identity);
         firePoint.transform.parent = this.transform;
 
+        particle = Resources.Load("AgentObjects/Particle System") as GameObject;
         bullet = Resources.Load("AgentObjects/Bullet") as GameObject;
         GameObject tmp;
+        audioSource = gameObject.AddComponent<AudioSource>();
+        gunShot = Resources.Load("SFX/shoot_sound") as AudioClip;
+
+        GameObject sl = Resources.Load("AgentObjects/shotLight") as GameObject;
+        shotLight = Instantiate(sl, firePoint.transform.position, Quaternion.identity);
+        shotLight.transform.parent = this.transform;
+        shotLight.SetActive(false);
         if (isShooter)
         {
             ObjectPool.Instance.SetPooledObjects(bullets, bullet, 50);
-            
+            bullet.transform.tag = "Bullet";
+
         }
         if (isAtacker)
         {
@@ -855,13 +997,23 @@ public class AgentManager : SteerinBehaviours
         if (this.mass == 1)
         {
             firePoint.transform.position = new Vector2(transform.position.x + 1.2f, transform.position.y + 20f);
-            
-        }
 
+        }
+        if (rank > 0)
+        {
+            GameObject pl = Resources.Load("AgentObjects/Point Light 2D") as GameObject;
+            GameObject pl2d = Instantiate(pl, transform.position, Quaternion.identity);
+            pl2d.transform.parent = this.transform;
+            pl2d.transform.localScale = new Vector2(1.7f, 1.7f);
+            GameObject db = Resources.Load("AgentObjects/DialogueBox") as GameObject;
+            dialogueBox = Instantiate(db, transform.position, Quaternion.identity);
+        }
+        
+        //dialogueBox.transform.parent = this.transform;
 
     }
 
-    
+
 
     public AgentManager GetClosestEnemy(AgentManager[] agentArr)
     {
@@ -881,9 +1033,9 @@ public class AgentManager : SteerinBehaviours
         }
         return closestEnemy;
     }
-    public GameObject  GetClosestLeader(GameObject[] agentArr)
+    public GameObject GetClosestLeader(GameObject[] agentArr)
     {
-        float nearestL= Mathf.Infinity;
+        float nearestL = Mathf.Infinity;
         GameObject closestLeader = null;
         foreach (GameObject agent in agentArr)
         {
@@ -895,12 +1047,12 @@ public class AgentManager : SteerinBehaviours
                 {
                     nearestL = distanceToLeader;
                     closestLeader = agent;
-                    
+
                 }
-                
+
             }
         }
-        if(closestLeader == null)
+        if (closestLeader == null)
         {
             //hasLeader = false;
         }
@@ -924,4 +1076,245 @@ public class AgentManager : SteerinBehaviours
         }
         return closestEnemy;
     }
+    public GameObject GetClosestObject(GameObject[] objects)
+    {
+        float nearestObject = Mathf.Infinity;
+        GameObject closestObject = null;
+
+
+        foreach (GameObject obj in objects)
+        {
+            float distanceToBase = (obj.transform.position - transform.position).sqrMagnitude;
+            if (distanceToBase < nearestObject)
+            {
+                if (obj.tag == "Agent")
+                {
+                    if (obj.GetComponent<AgentManager>().team != this.team)
+                    {
+                        nearestObject = distanceToBase;
+                        closestObject = obj;
+                    }
+                }
+                else if (obj.tag == "Base")
+                {
+                    if (obj.GetComponent<HomeBase>().iD != this.team)
+                    {
+                        nearestObject = distanceToBase;
+                        closestObject = obj;
+                    }
+                }
+                if (obj.tag == "Leader")
+                {
+                    if (obj.GetComponent<AgentManager>().team != this.team)
+                    {
+                        nearestObject = distanceToBase;
+                        closestObject = obj;
+                    }
+                }
+
+            }
+        }
+
+        if (closestObject)
+        {
+
+            //Debug.Log(closestObject.name +" "+this.name);
+            //Debug.DrawLine(this.transform.position, closestObject.transform.position);
+            return closestObject;
+
+
+
+        }
+        return null;
+    }
+
+    
+
+    //void OnGUI()
+    //{
+    //    Vector3 characterPos = Camera.main.WorldToScreenPoint(transform.position);
+    //    characterPos = new Vector3(Mathf.Clamp(characterPos.x,40, 100),
+    //                                       Mathf.Clamp(characterPos.y, 50, Screen.height),
+    //                                       characterPos.z);
+    //    GUILayout.BeginArea(new Rect(characterPos.x + 30 , Screen.height - characterPos.y + 30, 30,30));
+    //    // GUI CODE GOES HERE
+
+    //    GUILayout.EndArea();
+    //}
+    //protected override BTNode SetUpTree()
+    //{
+    //    transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+    //    bullets = new List<GameObject>();
+
+    //    anim = GetComponent<Animator>();
+    //    transform.gameObject.tag = "Agent";
+    //    foreach (AgentManager agent in agents)
+    //    {
+    //        if (agent.GetComponent<AgentManager>().rank > 0)
+    //        {
+    //            agent.transform.gameObject.tag = "Leader";
+    //            agent.GetComponent<AgentManager>().isLeader = true;
+
+    //        }
+    //        else
+    //        {
+    //            agent.GetComponent<AgentManager>().isLeader = false;
+
+    //        }
+    //    }
+    //    if (showlifebar)
+    //    {
+
+    //        hpb = Instantiate(Resources.Load<GameObject>("GameHelpers/HealthBar"));
+
+    //        hpb.transform.GetChild(0).gameObject.GetComponent<HealhBar>().Set(this, healthAmount);
+    //    }
+    //    maxHP = healthAmount;
+    //    transform.gameObject.layer = LayerMask.NameToLayer("Agents");
+    //    agentsLayers = LayerMask.GetMask("Agents");
+    //    wallsLayer = LayerMask.GetMask("Walls");
+    //    InitAgentObjects();
+    //    fogOfWar = GameObject.Find("fogofwarcanvas");
+    //    SaveAgent.agentsP.Add(this);
+    //    pAgent = GetComponent<PathAgent>();
+    //    Awake();
+    //    SetSelected(false);
+    //    GetComponent<BoxCollider2D>().size = new Vector2(2f, 1.06f);
+    //    anim.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/" + this.name);
+    //    if (rank > 0)
+    //    {
+    //        isLeader = true;
+    //    }
+    //    agents = FindObjectsOfType<AgentManager>();
+    //    if (isCollector)
+    //    {
+    //        isCollecting = true;
+    //    }
+    //    audioSource.volume = 0.01f;
+    //    if (team == 2)
+    //    {
+    //        gameObject.AddComponent<EnemyAI>();
+    //    }
+    //    //Debug.Log("SI tiene objetivo");
+    //    BTNode root = new Selector(new List<BTNode>
+    //    {
+    //        //new Sequence(new List<Node>
+    //        //{
+    //        //    new CheckEnemyInAttackRange(transform),
+    //        //    new TaskAttack(transform),
+    //        //}),
+    //        new Sequence(new List<BTNode>
+    //        {
+    //            new CheckEnemyInFOVRange(transform),
+    //            new TaskGoToTarget(transform),
+    //        }),
+
+    //    });
+
+    //    return  root;
+    //}
+
+    //public class CheckEnemyInFOVRange : BTNode
+    //{
+    //    private static int _enemyLayerMask = 1 << 6;
+
+    //    private Transform _transform;
+    //    private AgentManager aM;
+    //    GameObject[] agentsObjs;
+    //    GameObject[] baseNodes;
+    //    GameObject[] leaders;
+    //    public CheckEnemyInFOVRange(Transform transform)
+    //    {
+    //        _transform = transform;
+    //        aM = transform.GetComponent<AgentManager>();
+    //    }
+
+    //    public override NodeState Evaluate()
+    //    {
+    //        object t = GetData("target");
+    //        if (t == null)
+    //        {
+    //            agentsObjs = GameObject.FindGameObjectsWithTag("Agent");
+    //            baseNodes = GameObject.FindGameObjectsWithTag("Base");
+    //            leaders = GameObject.FindGameObjectsWithTag("Leader");
+    //            GameObject targetAgent = aM.GetClosestObject(agentsObjs);
+    //            GameObject agentA = aM.GetClosestObject(agentsObjs);
+    //            GameObject hBase = aM.GetClosestObject(baseNodes);
+    //            GameObject leadersClosest = aM.GetClosestObject(leaders);
+    //            List<GameObject> objects = new List<GameObject>();
+    //            objects.Add(agentA);
+    //            objects.Add(hBase);
+    //            objects.Add(leadersClosest);
+
+
+    //            float nearestObject = Mathf.Infinity;
+    //            GameObject closestObject = null;
+    //            foreach (GameObject obj in objects)
+    //            {
+    //                if (obj)
+    //                {
+    //                    float distanceToBase = (obj.transform.position - _transform.position).sqrMagnitude;
+    //                    if (distanceToBase < nearestObject)
+    //                    {
+    //                        nearestObject = distanceToBase;
+    //                        closestObject = obj;
+    //                    }
+    //                }
+    //            }
+
+    //            if (closestObject)
+    //            {
+
+    //                    parent.parent.SetData("target", closestObject);
+    //                    Debug.Log("SI tiene objetivo");
+    //                    state = NodeState.SUCCESS;
+    //                    return state;
+
+    //            }
+    //            else
+    //            {
+    //                Debug.Log("NO tiene objetivo");
+    //            }
+
+    //            state = NodeState.FAILURE;
+    //            return state;
+    //        }
+
+    //        state = NodeState.SUCCESS;
+    //        return state;
+    //    }
+
+    //}
+    //public class TaskGoToTarget : BTNode
+    //{
+    //    private Transform _transform;
+    //    private AgentManager aM;
+    //    public TaskGoToTarget(Transform transform)
+    //    {
+    //        _transform = transform;
+    //        aM = transform.GetComponent<AgentManager>();
+    //    }
+
+    //    public override NodeState Evaluate()
+
+    //    {
+
+    //        GameObject target = (GameObject)GetData("target");
+
+    //        if (Vector3.Distance(_transform.position, target.transform.position) < 500 && !aM.sg.activeInHierarchy)
+    //        {
+    //            aM.Arrive(target.transform.position);
+    //            Debug.Log("Cerca");
+    //        }
+
+    //        state = NodeState.RUNNING;
+    //        return state;
+    //    }
+    //}
 }
+
+
+
+
+
+
