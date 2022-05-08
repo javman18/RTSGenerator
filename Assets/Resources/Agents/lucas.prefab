@@ -149,6 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   target: {fileID: 0}
+  stoppedMoving: 1
 --- !u!114 &7556610005323740806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +210,8 @@ MonoBehaviour:
   attackTime: 0.5
   isAtacker: 1
   meleeDamage: 0
+  hasTarget: 0
+  isAgentMoving: 0
   agentsLayers:
     serializedVersion: 2
     m_Bits: 0

@@ -58,7 +58,7 @@ public class AgentManager : SteerinBehaviours /*Tree*/
     public float attackTime = 0.5f;
     public bool isAtacker;
     public float meleeDamage;
-
+    public bool hasTarget = false;
     GameObject tmpBullet;
     public bool isAgentMoving = false;
     public LayerMask agentsLayers;
@@ -96,7 +96,7 @@ public class AgentManager : SteerinBehaviours /*Tree*/
     void Start()
     {
         bullets = new List<GameObject>();
-
+        isAttacking = false;
         anim = GetComponent<Animator>();
         transform.gameObject.tag = "Agent";
         if (showlifebar)
@@ -638,12 +638,20 @@ public class AgentManager : SteerinBehaviours /*Tree*/
             }
             if (closestObject)
             {
-                ShootBehavior(closestObject);
-                //Debug.Log(closestObject.name +" "+this.name);
-                Debug.DrawLine(this.transform.position, closestObject.transform.position);
+                float distanceToObject = (closestObject.transform.position - transform.position).sqrMagnitude;
+                
+                    ShootBehavior(closestObject);
+                    //Debug.Log(closestObject.name +" "+this.name);
+                    Debug.DrawLine(this.transform.position, closestObject.transform.position);
+                   
+                
+                    
+                    
+                
             }
             else
             {
+               
                 shotLight.SetActive(false);
             }
 
@@ -655,6 +663,7 @@ public class AgentManager : SteerinBehaviours /*Tree*/
 
         if (ammo <= 0 && !isFollowing)
         {
+            isAttacking = true;
             //isFollowing = false;
             if ((transform.position - objectType.transform.position).magnitude <= 100)
             {
@@ -667,6 +676,10 @@ public class AgentManager : SteerinBehaviours /*Tree*/
                     Seek(objectType.transform.position);
                 }
             }
+        }
+        else
+        {
+            isAttacking = false;
         }
         attackRange = mass * maxScale * 2;
         if ((transform.position - objectType.transform.position).magnitude <= attackRange && ammo <= 0 && isFollowing == false)
@@ -836,12 +849,12 @@ public class AgentManager : SteerinBehaviours /*Tree*/
                 LeaderFollow(closestLeader);
                 DetectWall();
             }
-            else if (Vector2.Distance(transform.position, closestLeader.transform.position) > 30 && !isTitan && sg.activeInHierarchy == false && isFollowing)
+            else if (Vector2.Distance(transform.position, closestLeader.transform.position) > 30 && !isTitan && sg.activeInHierarchy == false /*&& isFollowing*/ && !isAttacking)
             {
                 Arrive(closestLeader.transform.position);
                 DetectWall();
             }
-            if (Vector2.Distance(transform.position, closestLeader.transform.position) > 100 && isTitan && sg.activeInHierarchy == false && isFollowing)
+            else if (Vector2.Distance(transform.position, closestLeader.transform.position) > 100 && isTitan && sg.activeInHierarchy == false /*&& isFollowing*/)
             {
                 Arrive(closestLeader.transform.position);
             }
@@ -882,10 +895,24 @@ public class AgentManager : SteerinBehaviours /*Tree*/
     }
     public void ShootBehavior(GameObject objectType)
     {
-
+        //if (!isFollowing && !isLeader)
+        //{
+        //    //isFollowing = false;
+        //    if ((transform.position - objectType.transform.position).magnitude >= shootingRaange)
+        //    {
+        //        if (isArrive)
+        //        {
+        //            Arrive(objectType.transform.position);
+        //        }
+        //        else if (isSeek)
+        //        {
+        //            Seek(objectType.transform.position);
+        //        }
+        //    }
+        //}
         if ((transform.position - objectType.transform.position).magnitude <= shootingRaange && ammo > 0)
         {
-
+            hasTarget = true;
             if (canShoot)
             {
                 canShoot = false;
@@ -915,13 +942,17 @@ public class AgentManager : SteerinBehaviours /*Tree*/
                 }
             }
         }
+        else
+        {
+            hasTarget = false;
+        }
         shotLight.SetActive(false);
     }
 
     void SetLeaderText()
     {
 
-        string[] dialogueMoving = { "Siganme los buenos", "Por aqui", "A la carga", "Sin piedad", "Destrozenlos", "Avancen" };
+        string[] dialogueMoving = { "Siganme los buenos", "Por aqui", "A la carga", "Sin piedad", "Destrocenlos", "Avancen" };
         string[] dialogueCritical = { "Retirada", "Salvense", "Hay mama", "no resistire mas", "Porque a mi", "cubranme" };
         
         if (isLeader && team == 1)

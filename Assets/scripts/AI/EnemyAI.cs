@@ -30,15 +30,18 @@ public class EnemyAI : MonoBehaviour
         {
             if (nBase)
             {
-                if (MapGenerator.rect1.Contains(nBase.transform.position) && (MapGenerator.rect2.Contains(transform.position) || MapGenerator.rect3.Contains(transform.position) || MapGenerator.rect4.Contains(transform.position))
-                 || MapGenerator.rect2.Contains(nBase.transform.position) && (MapGenerator.rect1.Contains(transform.position) || MapGenerator.rect3.Contains(transform.position) || MapGenerator.rect4.Contains(transform.position))
-                 || MapGenerator.rect3.Contains(nBase.transform.position) && (MapGenerator.rect1.Contains(transform.position) || MapGenerator.rect2.Contains(transform.position) || MapGenerator.rect4.Contains(transform.position))
-                 || MapGenerator.rect4.Contains(nBase.transform.position) && (MapGenerator.rect1.Contains(transform.position) || MapGenerator.rect2.Contains(transform.position) || MapGenerator.rect3.Contains(transform.position)))
+                if (!GetComponent<AgentManager>().hasTarget)
                 {
-                    //PathAgent.pathFindig2Pressed = true;
-                    Debug.Log("si esta en diferente mapa");
-                    GetComponent<AgentManager>().Arrive(nBase.transform.position);
+                    if (MapGenerator.rect1.Contains(nBase.transform.position) && (MapGenerator.rect2.Contains(transform.position) || MapGenerator.rect3.Contains(transform.position) || MapGenerator.rect4.Contains(transform.position))
+                     || MapGenerator.rect2.Contains(nBase.transform.position) && (MapGenerator.rect1.Contains(transform.position) || MapGenerator.rect3.Contains(transform.position) || MapGenerator.rect4.Contains(transform.position))
+                     || MapGenerator.rect3.Contains(nBase.transform.position) && (MapGenerator.rect1.Contains(transform.position) || MapGenerator.rect2.Contains(transform.position) || MapGenerator.rect4.Contains(transform.position))
+                     || MapGenerator.rect4.Contains(nBase.transform.position) && (MapGenerator.rect1.Contains(transform.position) || MapGenerator.rect2.Contains(transform.position) || MapGenerator.rect3.Contains(transform.position)))
+                    {
+                        //PathAgent.pathFindig2Pressed = true;
+                        Debug.Log("si esta en diferente mapa");
+                        GetComponent<AgentManager>().Arrive(nBase.transform.position);
 
+                    }
                 }
             }
         }
@@ -83,29 +86,31 @@ public class EnemyAI : MonoBehaviour
 
             if (nBase)
             {
-                if (MapGenerator.rect1.Contains(nBase.transform.position) && MapGenerator.rect1.Contains(transform.position))
+                if (!GetComponent<AgentManager>().hasTarget)
                 {
-                    GetComponent<AgentManager>().MoveTo(nBase.transform.position, MapGenerator.pathFind, Vector3.zero);
-                }
-                else if (MapGenerator.rect2.Contains(nBase.transform.position) && MapGenerator.rect2.Contains(transform.position))
-                {
+                    if (MapGenerator.rect1.Contains(nBase.transform.position) && MapGenerator.rect1.Contains(transform.position))
+                    {
+                        GetComponent<AgentManager>().MoveTo(nBase.transform.position, MapGenerator.pathFind, Vector3.zero);
+                    }
+                    else if (MapGenerator.rect2.Contains(nBase.transform.position) && MapGenerator.rect2.Contains(transform.position))
+                    {
 
-                    //Debug.Log("si esta dentro en el 2");
-                    GetComponent<AgentManager>().MoveTo(nBase.transform.position, MapGenerator.pathfind2, new Vector3(200, 0, 0));
-                }
-                else if (MapGenerator.rect3.Contains(nBase.transform.position) && MapGenerator.rect3.Contains(transform.position))
-                {
+                        //Debug.Log("si esta dentro en el 2");
+                        GetComponent<AgentManager>().MoveTo(nBase.transform.position, MapGenerator.pathfind2, new Vector3(200, 0, 0));
+                    }
+                    else if (MapGenerator.rect3.Contains(nBase.transform.position) && MapGenerator.rect3.Contains(transform.position))
+                    {
 
-                    //Debug.Log("si esta dentro en el 2");
-                    GetComponent<AgentManager>().MoveTo(nBase.transform.position, MapGenerator.pathfind3, new Vector3(0, 200, 0));
-                }
-                else if (MapGenerator.rect4.Contains(nBase.transform.position) && MapGenerator.rect4.Contains(transform.position))
-                {
+                        //Debug.Log("si esta dentro en el 2");
+                        GetComponent<AgentManager>().MoveTo(nBase.transform.position, MapGenerator.pathfind3, new Vector3(0, 200, 0));
+                    }
+                    else if (MapGenerator.rect4.Contains(nBase.transform.position) && MapGenerator.rect4.Contains(transform.position))
+                    {
 
-                    //Debug.Log("si esta dentro en el 2");
-                    GetComponent<AgentManager>().MoveTo(nBase.transform.position, MapGenerator.pathfind4, new Vector3(200, 200, 0));
+                        //Debug.Log("si esta dentro en el 2");
+                        GetComponent<AgentManager>().MoveTo(nBase.transform.position, MapGenerator.pathfind4, new Vector3(200, 200, 0));
+                    }
                 }
-                
             }
 
 
