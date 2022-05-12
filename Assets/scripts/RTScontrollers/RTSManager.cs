@@ -9,7 +9,7 @@ public class RTSManager : MonoBehaviour
     // Start is called before the first frame update
     GameObject[] agents;
     GameObject selectedSpawn;
-    public Dropdown agentSelectD;
+    public TMP_Dropdown agentSelectD;
     public Dropdown team2;
     public InputField squadInput;
     int i=0;
@@ -56,15 +56,15 @@ public class RTSManager : MonoBehaviour
         agentSelectD.onValueChanged.AddListener(delegate
         {
 
-            i = agentSelectD.value;   
-            
+            i = agentSelectD.value;
+
         });
         for (int i = 0; i < agents.Length; i++)
         {
-            agentSelectD.options.Add(new Dropdown.OptionData(agents[i].name + " " + r1Input.text[0] + ":" + agents[i].GetComponent<AgentManager>().priceR1 + " " + r2Input.text[0] + ":" + agents[i].GetComponent<AgentManager>().priceR2 + " " + r3Input.text[0] + ":" + agents[i].GetComponent<AgentManager>().priceR3));
+            agentSelectD.options.Add(new TMP_Dropdown.OptionData(agents[i].name + " " + r1Input.text + ":" + agents[i].GetComponent<AgentManager>().priceR1 + " " + r2Input.text + ":" + agents[i].GetComponent<AgentManager>().priceR2 + " " + r3Input.text + ":" + agents[i].GetComponent<AgentManager>().priceR3));
 
         }
-        
+        //agentSelectD.transform.GetChild(0).GetComponent<TextMeshPro>().text = agents[0].name;
         //for (int i = 0; i < basesInGame.Length; i++)
         //{
         //    if (basesInGame[i].GetComponent<HomeBase>().iD == 1)
@@ -94,7 +94,7 @@ public class RTSManager : MonoBehaviour
         r1Text.text = r1Input.text + " " + resource1T1.ToString();
         for (int i = 0; i < agentSelectD.options.Count; i++)
         {
-            agentSelectD.options[i] = (new Dropdown.OptionData(agents[i].name + " " + r1Input.text[0] + ":" + agents[i].GetComponent<AgentManager>().priceR1 + " " + r2Input.text[0] + ":" + agents[i].GetComponent<AgentManager>().priceR2 + " " + r3Input.text[0] + ":" + agents[i].GetComponent<AgentManager>().priceR3));
+            agentSelectD.options[i] = (new TMP_Dropdown.OptionData(agents[i].name + "    " + r1Input.text + ":" + agents[i].GetComponent<AgentManager>().priceR1 + " " + r2Input.text + ":" + agents[i].GetComponent<AgentManager>().priceR2 + " " + r3Input.text + ":" + agents[i].GetComponent<AgentManager>().priceR3));
 
         }
         if (Input.GetMouseButtonDown(0))

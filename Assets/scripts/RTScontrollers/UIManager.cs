@@ -11,8 +11,8 @@ public class UIManager : MonoBehaviour
         Game,
         AgentEdit,
         Save,
-        MainMenu
-        //GameMenu
+        MainMenu,
+        GameMenu
     }
     public static UIStates currentState;
     public GameObject saveUI;
@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
     public GameObject agentUI;
     public GameObject gameUI;
     public GameObject economyUI;
-    //public GameObject gameMenuUI;
+    public GameObject gameMenuUI;
     public GameObject fogOfWar;
     public Toggle fogT;
     // Start is called before the first frame update
@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour
         mainUI.SetActive(true);
         gameUI.SetActive(false);
         economyUI.SetActive(false);
-        //gameMenuUI.SetActive(false);
+        gameMenuUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -54,10 +54,10 @@ public class UIManager : MonoBehaviour
         {
             currentState = UIStates.AgentEdit;
         }
-        //else if (gameMenuUI.activeInHierarchy == true)
-        //{
-        //    currentState = UIStates.GameMenu;
-        //}
+        else if (gameMenuUI.activeInHierarchy == true)
+        {
+            currentState = UIStates.GameMenu;
+        }
         if (currentState == UIStates.MainMenu)
         {
             Time.timeScale = 0f;
@@ -74,10 +74,10 @@ public class UIManager : MonoBehaviour
         {
             Time.timeScale = 1f;
         }
-        //else if (currentState == UIStates.GameMenu)
-        //{
-        //    Time.timeScale = 1f;
-        //}
+        else if (currentState == UIStates.GameMenu)
+        {
+            Time.timeScale = 1f;
+        }
         if (RTSManager.winGame || RTSManager.LooseGame)
         {
             fogOfWar.gameObject.SetActive(false);
@@ -86,7 +86,7 @@ public class UIManager : MonoBehaviour
             agentUI.SetActive(false);
             gameUI.SetActive(false);
             economyUI.SetActive(false);
-            //gameMenuUI.SetActive(false);
+            gameMenuUI.SetActive(false);
         }
     }
     public void ActivateSaveUi()
@@ -97,7 +97,7 @@ public class UIManager : MonoBehaviour
         agentUI.SetActive(false);
         gameUI.SetActive(false);
         economyUI.SetActive(false);
-        //gameMenuUI.SetActive(false);
+        gameMenuUI.SetActive(false);
     }
     public void ActivateAgentUI()
     {
@@ -108,7 +108,7 @@ public class UIManager : MonoBehaviour
         agentUI.SetActive(true);
         gameUI.SetActive(false);
         economyUI.SetActive(false);
-        //gameMenuUI.SetActive(false);
+        gameMenuUI.SetActive(false);
     }
     public void GoBack()
     {
@@ -118,7 +118,7 @@ public class UIManager : MonoBehaviour
         agentUI.SetActive(false);
         gameUI.SetActive(false);
         economyUI.SetActive(false);
-        //gameMenuUI.SetActive(false);
+        gameMenuUI.SetActive(false);
     }
     public void Done()
     {
@@ -130,9 +130,9 @@ public class UIManager : MonoBehaviour
         saveUI.SetActive(false);
         mainUI.SetActive(false);
         agentUI.SetActive(false);
-        gameUI.SetActive(true);
+        gameUI.SetActive(false);
         economyUI.SetActive(false);
-        //gameMenuUI.SetActive(true);
+        gameMenuUI.SetActive(true);
     }
 
     public void ActivateEconomyUI()
@@ -143,7 +143,7 @@ public class UIManager : MonoBehaviour
         agentUI.SetActive(false);
         gameUI.SetActive(false);
         economyUI.SetActive(true);
-        //gameMenuUI.SetActive(false);
+        gameMenuUI.SetActive(false);
     }
 
     public void StartGame()
@@ -154,7 +154,7 @@ public class UIManager : MonoBehaviour
         agentUI.SetActive(false);
         gameUI.SetActive(true);
         economyUI.SetActive(false);
-        //gameMenuUI.SetActive(false);
+        gameMenuUI.SetActive(false);
     }
     public void MainMenu()
     {
