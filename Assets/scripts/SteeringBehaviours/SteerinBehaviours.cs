@@ -25,9 +25,9 @@ public class SteerinBehaviours : MonoBehaviour
     public float decayCoefficient = -25f;
     public float alignDist = 8f;
     private float radius = 10;
-    private float circleDistance = 200;
+    private float circleDistance = 50;
     private float wanderAngle;
-    private float angleChange = .3f;
+    private float angleChange = 2f;
     public int maxSeparation = 2;
     public float alignmentWeight = 1;
     public float separationWeigh = 2;

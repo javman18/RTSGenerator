@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     public int id = 0;
     public float damage = 0;
     public float destroyTime;
+    public GameObject damagepp;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,11 +18,13 @@ public class Bullet : MonoBehaviour
         if(collision.tag == "Agent" && id != collision.GetComponent<AgentManager>().team || collision.tag == "Leader" && id != collision.GetComponent<AgentManager>().team)
         {
             collision.GetComponent<AgentManager>().healthAmount -= damage;
+            DamagePopup.Create(collision.transform.position, damage, damagepp);
             gameObject.SetActive(false);
         }
         else if(collision.tag == "Base" && id != collision.GetComponent<HomeBase>().iD)
         {
             collision.GetComponent<HomeBase>().healthAmount -= damage;
+            DamagePopup.Create(collision.transform.position, damage, damagepp);
             gameObject.SetActive(false);
         }
 

@@ -310,8 +310,17 @@ public class TileMap : MonoBehaviour
                         {
                             tmpSpawn.transform.position = map.GetPosition(x + 0.5f, y + 0.5f);
                             tmpSpawn.transform.tag = "Spawn";
-                            resource3Count--;
+                            //resource3Count--;
                             tmpSpawn.SetActive(true);
+
+
+                            tmpSpawn.GetComponent<Spawn>().iD = node.value;
+                            
+                            if (tmpSpawn.GetComponent<Spawn>().iD == 2)
+                            {
+                                tmpSpawn.GetComponent<SpriteRenderer>().color = Color.red;
+
+                            }
                         }
 
                     }

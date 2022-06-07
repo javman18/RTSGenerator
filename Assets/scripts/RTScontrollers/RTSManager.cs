@@ -15,7 +15,8 @@ public class RTSManager : MonoBehaviour
     int i=0;
     int j = 0;
     bool selected = false;
-    List<Spawn> spawns;
+    public static List<Spawn> goodSpawns;
+    public static List<Spawn> badSpawns;
     public static int resource3T1 = 0;
     public static int resource2T1 = 0;
     public static int resource1T1 = 0;
@@ -31,28 +32,47 @@ public class RTSManager : MonoBehaviour
     GameObject[] basesInGame;
     public static List<GameObject> goodBases;
     public static List<GameObject> badBases;
+    Spawn[] spawns;
     public TMP_Dropdown squadDD;
     public float counter = 0;
     public GameObject winUI;
     public GameObject looseUI;
     public static bool winGame;
     public static bool LooseGame;
+    bool isDone;
+    public int armyLimit = 20;
+    public static int spawnedSoldier = 0;
+    public TextMeshProUGUI armyText;
+    public static List<AgentManager> enemyLeaders;
+    public static List<AgentManager> minions;
+    public static List<AgentManager> hunters;
+    public static List<AgentManager> tanks;
+    public static List<AgentManager> attackers;
     //List<GameObject> agents;
     void Start()
     {
+        resource1T1 = 30;
+        resource2T1 = 20;
+        resource3T1 = 50;
         winGame = false;
         LooseGame = false;
         winUI.SetActive(false);
         looseUI.SetActive(false);
         goodBases = new List<GameObject>();
         badBases = new List<GameObject>();
-        spawns = new List<Spawn>();
+        goodSpawns = new List<Spawn>();
+        badSpawns = new List<Spawn>();
+        enemyLeaders = new List<AgentManager>();
         agents = Resources.LoadAll<GameObject>("Agents");
         r3Input.text = "Copper";
         r2Input.text = "Metal";
         r1Input.text = "Scraps";
         squadInput.text = "0";
-        Invoke("FindBases", 0.2f);
+        minions = new List<AgentManager>();
+        hunters = new List<AgentManager>();
+        tanks = new List<AgentManager>();
+        attackers = new List<AgentManager>();
+        //Invoke("FindBases", 0.2f);
         agentSelectD.onValueChanged.AddListener(delegate
         {
 
@@ -82,7 +102,7 @@ public class RTSManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (counter <= 5)
         {
@@ -102,31 +122,40 @@ public class RTSManager : MonoBehaviour
            
             selectedSpawn = ClickSelect();
         }
-       
+        armyText.text = spawnedSoldier + " / " + armyLimit + " Soldiers";
         if (Input.GetKeyDown(KeyCode.F1))
         {
             
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             GameObject go;
-
-            if (selectedSpawn != null && resource1T1 >= agents[i].GetComponent<AgentManager>().priceR1 && resource2T1 >= agents[i].GetComponent<AgentManager>().priceR2 && resource3T1 >= agents[i].GetComponent<AgentManager>().priceR3)
+            if (spawnedSoldier < armyLimit)
             {
-                go = selectedSpawn.GetComponent<Spawn>().SpawnObject(agents[i]);
-                go.name = agents[i].name;
-                go.GetComponent<AgentManager>().team = 1;
-                go.GetComponent<AgentManager>().squad = squadDD.value;
-                resource1T1 -= agents[i].GetComponent<AgentManager>().priceR1;
-                resource2T1 -= agents[i].GetComponent<AgentManager>().priceR2;
-                resource3T1 -= agents[i].GetComponent<AgentManager>().priceR3;
+                if (selectedSpawn != null && resource1T1 >= agents[i].GetComponent<AgentManager>().priceR1 && resource2T1 >= agents[i].GetComponent<AgentManager>().priceR2 && resource3T1 >= agents[i].GetComponent<AgentManager>().priceR3)
+                {
+                    go = selectedSpawn.GetComponent<Spawn>().SpawnObject(agents[i]);
+                    go.name = agents[i].name;
+                    go.GetComponent<AgentManager>().team = 1;
+                    //set army squad
+                    if(go.GetComponent<AgentManager>().rank > 0 || (go.GetComponent<AgentManager>().isAtacker && go.GetComponent<AgentManager>().isShooter))
+                    {
+                        go.GetComponent<AgentManager>().squad = 1;
+                    }
+                   
+                    resource1T1 -= agents[i].GetComponent<AgentManager>().priceR1;
+                    resource2T1 -= agents[i].GetComponent<AgentManager>().priceR2;
+                    resource3T1 -= agents[i].GetComponent<AgentManager>().priceR3;
+                    spawnedSoldier++;
 
 
-            }
-            else
-            {
-                go = Instantiate(agents[i], mousePos, Quaternion.identity);
-                go.name = agents[i].name;
-                go.GetComponent<AgentManager>().team = 1;
-                go.GetComponent<AgentManager>().squad = squadDD.value;
+                }
+                else
+                {
+                    go = Instantiate(agents[i], mousePos, Quaternion.identity);
+                    go.name = agents[i].name;
+                    go.GetComponent<AgentManager>().team = 1;
+                    go.GetComponent<AgentManager>().squad = squadDD.value;
+                    spawnedSoldier++;
+                }
             }
             
         }
@@ -139,49 +168,77 @@ public class RTSManager : MonoBehaviour
             go.GetComponent<AgentManager>().team = 2;
             go.GetComponent<AgentManager>().squad = squadDD.value;
         }
-
+        FindBases();
         //Debug.Log(goodBases.Count);
-        if (counter > 1f)
+        if (UIManager.currentState == UIManager.UIStates.Game)
         {
-            if (badBases.Count <= 0)
+            if (counter > 1f)
             {
-                winGame = true;
-                winUI.SetActive(true);
+                if (badBases.Count <= 0)
+                {
+                    winGame = true;
+                    winUI.SetActive(true);
+                }
+                if (goodBases.Count <= 0)
+                {
+                    LooseGame = true;
+                    looseUI.SetActive(true);
+                    //Debug.Log("Perdiste!");
+                }
             }
-            if (goodBases.Count <= 0)
-            {
-                LooseGame = true;
-                looseUI.SetActive(true);
-                //Debug.Log("Perdiste!");
-            }
+            SpawnEnemies();
+            Debug.Log(enemyLeaders.Count);
         }
+       
+        
     }
 
     void FindBases()
     {
-        basesInGame = GameObject.FindGameObjectsWithTag("Base");
-        Debug.Log(basesInGame.Length);
-        for (int i = 0; i < basesInGame.Length; i++)
+        if (UIManager.currentState == UIManager.UIStates.Game)
         {
-            if (basesInGame[i].GetComponent<HomeBase>().iD == 1)
+            if (!isDone)
             {
-                goodBases.Add(basesInGame[i]);
+                basesInGame = GameObject.FindGameObjectsWithTag("Base");
+                spawns = GameObject.FindObjectsOfType<Spawn>();
+                Debug.Log(spawns.Length);
+                for (int i = 0; i < basesInGame.Length; i++)
+                {
+                    if (basesInGame[i].GetComponent<HomeBase>().iD == 1)
+                    {
+                        goodBases.Add(basesInGame[i]);
 
-            }
-            else if (basesInGame[i].GetComponent<HomeBase>().iD == 2)
-            {
-                badBases.Add(basesInGame[i]);
+                    }
+                    else if (basesInGame[i].GetComponent<HomeBase>().iD == 2)
+                    {
+                        badBases.Add(basesInGame[i]);
 
+                    }
+                }
+                for (int i = 0; i < spawns.Length; i++)
+                {
+                    if (spawns[i].GetComponent<Spawn>().iD == 2)
+                    {
+                        badSpawns.Add(spawns[i]);
+
+                    }
+                    //else if (basesInGame[i].GetComponent<HomeBase>().iD == 2)
+                    //{
+                    //    badBases.Add(basesInGame[i]);
+
+                    //}
+                }
+                Debug.Log("bases buenas " + goodBases.Count);
+                Debug.Log("spawns malos " + badSpawns.Count);
+                isDone = true;
             }
         }
-        Debug.Log("bases buenas "+goodBases.Count);
-        Debug.Log("bases malas "+badBases.Count);
     }
     GameObject ClickSelect()
     {
         Collider2D hit = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         Spawn spawn;
-        foreach(Spawn s in spawns)
+        foreach(Spawn s in goodSpawns)
         {
             s.SetSelected(false,new Color(1,1,1));
         }
@@ -190,16 +247,53 @@ public class RTSManager : MonoBehaviour
             
             if (hit.gameObject.CompareTag("Spawn"))
             {
-                spawn = hit.GetComponent<Spawn>();
-                spawn.SetSelected(true, new Color(170f / 255f, 241f / 255f, 158f / 255f));
-                spawns.Add(spawn);
-                //selected = true;
-                //Debug.Log("se eligio: " + hit.name);
-                return hit.gameObject;
+                if (hit.gameObject.GetComponent<Spawn>().iD == 1)
+                {
+                    spawn = hit.GetComponent<Spawn>();
+                    spawn.SetSelected(true, new Color(170f / 255f, 241f / 255f, 158f / 255f));
+                    goodSpawns.Add(spawn);
+                    //selected = true;
+                    //Debug.Log("se eligio: " + hit.name);
+                    return hit.gameObject;
+                }
             }
             
         }
 
         return null;
+    }
+
+    void SpawnEnemies()
+    {
+        if (enemyLeaders.Count == 0)
+        {
+            GameObject leader = Instantiate(agents[0], badSpawns[1].transform.position, Quaternion.identity);
+            leader.GetComponent<AgentManager>().team = 2;
+            leader.GetComponent<AgentManager>().squad = 1;
+        }
+        if (minions.Count <= 6)
+        {
+            GameObject soldier = Instantiate(agents[5], badSpawns[1].transform.position, Quaternion.identity);
+            soldier.GetComponent<AgentManager>().team = 2;
+            soldier.GetComponent<AgentManager>().squad = 1;
+        }
+        if (tanks.Count == 0)
+        {
+            GameObject tank = Instantiate(agents[4], badSpawns[2].transform.position, Quaternion.identity);
+            tank.GetComponent<AgentManager>().team = 2;
+            tank.GetComponent<AgentManager>().squad = 1;
+        }
+        if (hunters.Count <= 2)
+        {
+            GameObject hunter = Instantiate(agents[1], badSpawns[0].transform.position, Quaternion.identity);
+            hunter.GetComponent<AgentManager>().team = 2;
+            hunter.GetComponent<AgentManager>().squad = 0;
+        }
+        if (attackers.Count <= 2)
+        {
+            GameObject attacker = Instantiate(agents[3], badSpawns[3].transform.position, Quaternion.identity);
+            attacker.GetComponent<AgentManager>().team = 2;
+            attacker.GetComponent<AgentManager>().squad = 0;
+        }
     }
 }

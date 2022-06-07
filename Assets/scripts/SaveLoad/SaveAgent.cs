@@ -276,7 +276,7 @@ public class SaveAgent : MonoBehaviour
         agents[i].GetComponent<AgentManager>().ammo = int.Parse(ammoField.text);
         agents[i].GetComponent<AgentManager>().bulletDamage = float.Parse(damegeField.text);
         agents[i].GetComponent<AgentManager>().mass = massScollBar.value;
-        agents[i].GetComponent<AgentManager>().bulletDamage = float.Parse(hpField.text);
+        agents[i].GetComponent<AgentManager>().healthAmount = float.Parse(hpField.text);
         agents[i].GetComponent<AgentManager>().team = int.Parse(teamField.text);
         agents[i].GetComponent<AgentManager>().rank = int.Parse(rankField.text);
         agents[i].GetComponent<AgentManager>().squad = int.Parse(squadField.text);

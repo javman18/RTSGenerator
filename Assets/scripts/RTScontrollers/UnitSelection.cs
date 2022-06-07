@@ -63,6 +63,11 @@ public class UnitSelection : MonoBehaviour
             time += Time.deltaTime;
             random = Random.Range(0, 6);
             Vector3 movePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Debug.DrawLine(new Vector3(movePos.x, 2000), new Vector3(movePos.x, 0));
+            Debug.DrawLine(new Vector3(2000, movePos.y), new Vector3(0, movePos.y));
+            Debug.Log(new Vector3(MapGenerator.rect2.xMin, MapGenerator.rect2.yMin));
+            Debug.DrawLine(new Vector3(MapGenerator.rect2.xMin, MapGenerator.rect2.yMin), new Vector3(MapGenerator.rect2.width, MapGenerator.rect2.height), Color.red);
+            Debug.DrawLine(new Vector3(MapGenerator.rect3.xMin, MapGenerator.rect3.yMin), new Vector3(MapGenerator.rect2.width, MapGenerator.rect2.height), Color.red);
             foreach (AgentManager agent in selectedAgents)
             {
                 

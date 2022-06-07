@@ -137,3 +137,4 @@ MonoBehaviour:
   id: 0
   damage: 0
   destroyTime: 0
+  damagepp: {fileID: 7953328010690835883, guid: 07c379c939f7ebf4289d6c63391185e9, type: 3}

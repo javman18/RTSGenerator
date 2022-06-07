@@ -122,17 +122,15 @@ public class UIManager : MonoBehaviour
     }
     public void Done()
     {
-        if (fogT.isOn)
-        {
-            fogOfWar.gameObject.SetActive(true);
-        }
-        
+
+        fogOfWar.gameObject.SetActive(false);
         saveUI.SetActive(false);
         mainUI.SetActive(false);
         agentUI.SetActive(false);
         gameUI.SetActive(false);
         economyUI.SetActive(false);
         gameMenuUI.SetActive(true);
+        GetComponent<MapGenerator>().InitLevel("Master02");
     }
 
     public void ActivateEconomyUI()
@@ -148,7 +146,10 @@ public class UIManager : MonoBehaviour
 
     public void StartGame()
     {
-        fogOfWar.gameObject.SetActive(false);
+        if (fogT.isOn)
+        {
+            fogOfWar.gameObject.SetActive(true);
+        }
         saveUI.SetActive(false);
         mainUI.SetActive(false);
         agentUI.SetActive(false);

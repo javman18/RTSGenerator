@@ -79,7 +79,7 @@ public class DayNight : MonoBehaviour
             moon.SetActive(false);
             isDay = true;
             isNight = false;
-            gloabalLight2D.GetComponent<Light2D>().intensity = sunIntensity.Evaluate(percent);
+            gloabalLight2D.GetComponent<Light2D>().intensity = sunIntensity.Evaluate(percent) + .5f;
             sun.GetComponent<Light2D>().intensity = sunIntensity.Evaluate(percent);
             if(sun.transform.position.x >= 4000)
             {
@@ -100,7 +100,7 @@ public class DayNight : MonoBehaviour
             sun.SetActive(false);
             isNight = true;
             isDay = false;
-            gloabalLight2D.GetComponent<Light2D>().intensity = moonIntensity.Evaluate(percent);
+            gloabalLight2D.GetComponent<Light2D>().intensity = moonIntensity.Evaluate(percent) +.5f;
             moon.GetComponent<Light2D>().intensity = moonIntensity.Evaluate(percent);
             if (moon.transform.position.x >= 4000)
             {

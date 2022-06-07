@@ -63,7 +63,7 @@ public class AgentManager : SteerinBehaviours /*Tree*/
     public bool isAgentMoving = false;
     public LayerMask agentsLayers;
     public LayerMask wallsLayer;
-    bool isAttacking = false;
+    public bool isAttacking = false;
     bool isShooting = false;
     public float maxScale = 15f;
     public float healthAmount = 150;
@@ -92,7 +92,7 @@ public class AgentManager : SteerinBehaviours /*Tree*/
     public AudioClip gunShot;
 
     private GameObject dialogueBox;
-
+    GameObject damagepp;
     void Start()
     {
         bullets = new List<GameObject>();
@@ -132,8 +132,28 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         if (team == 2)
         {
             gameObject.AddComponent<EnemyAI>();
+
         }
-        
+        if(rank > 0 && team == 2)
+        {
+            RTSManager.enemyLeaders.Add(this);
+        }
+        if (squad > 0 && team == 2)
+        {
+            RTSManager.minions.Add(this);
+        }
+        if (isPursue && team == 2)
+        {
+            RTSManager.hunters.Add(this);
+        }
+        if (isTitan && team == 2)
+        {
+            RTSManager.tanks.Add(this);
+        }
+        if (isAtacker && !isShooter && team == 2)
+        {
+            RTSManager.attackers.Add(this);
+        }
     }
 
     private void Update()
@@ -194,7 +214,7 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         }
 
         leaders = GameObject.FindGameObjectsWithTag("Leader");
-        if (rank == 0)
+        if (rank == 0 && !isTitan)
         {
             //squad = 0;
             DetectWall();
@@ -239,13 +259,38 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         }
         if (healthAmount <= 0)
         {
+            if(team == 1)
+            {
+                RTSManager.spawnedSoldier--;
+            }
+            if (rank > 0 && team == 2)
+            {
+                RTSManager.enemyLeaders.Remove(this);
+            }
+            if (squad > 0 && team == 2)
+            {
+                RTSManager.minions.Remove(this);
+            }
+            if (isPursue && team == 2)
+            {
+                RTSManager.hunters.Remove(this);
+            }
+            if (isTitan && team == 2)
+            {
+                RTSManager.tanks.Remove(this);
+            }
+            if (isAtacker && !isShooter && team == 2)
+            {
+                RTSManager.attackers.Remove(this);
+            }
             gameObject.SetActive(false);
         }
         GetClosestObject(baseNodes);
 
-        DetectWall();
 
-
+        audioSource.volume = 0.20f;
+        audioSource.spatialBlend = 1;
+        audioSource.rolloffMode = AudioRolloffMode.Linear;
     }
 
     void LateUpdate()
@@ -262,7 +307,9 @@ public class AgentManager : SteerinBehaviours /*Tree*/
     {
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
-
+    /// <summary>
+    /// Updates the Steering Behaviors that can be used
+    /// </summary>
     public void SetBehaviors()
     {
         AgentManager closestEnemy = null;
@@ -276,28 +323,6 @@ public class AgentManager : SteerinBehaviours /*Tree*/
             Vector2 desired = closestEnemy.transform.position - transform.position;
             d = desired.magnitude;
         }
-        else if (sg.gameObject.activeInHierarchy == false)
-        {
-            //Wander();
-        }
-        //if (isSeek)
-        //{
-
-        //    if (d < seekPerception && d>shootingRaange)
-        //    {
-        //        if (closestEnemy != null)
-        //        {
-
-        //            SetSteeringWeight(Seek(closestEnemy.transform.position), 1);
-        //            Wander();
-        //        }
-
-        //    }
-        //    else
-        //    {
-        //        pAgent.enabled = true;
-        //    }
-        //}
         if (isFlee)
         {
             if (d < fleePerception && sg.activeInHierarchy == false)
@@ -348,15 +373,20 @@ public class AgentManager : SteerinBehaviours /*Tree*/
                 {
                     if (d < seekPerception && sg.activeInHierarchy == false)
                     {
-
+                        hasTarget = true;
                         Pursue(closestEnemy.transform);
+                    }else if(d > seekPerception && sg.activeInHierarchy == false)
+                    {
+                        hasTarget = false;
                     }
                 }
             }
         }
 
     }
-
+    /// <summary>
+    /// SB to move simulating a bird flock
+    /// </summary>
     public void Flocking()
     {
         Vector2 align = Align();
@@ -364,13 +394,14 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         Vector2 cohesion = Cohesion();
         vel += separate * separationWeigh + cohesion * cohesionWeight;
     }
-
+    /// <summary>
+    /// function to collect the nearest resource on the tilemap (three resource types)
+    /// </summary>
+    /// <param name="rect">tilemap where the resource is (the game contains four tilemaps)</param>
+    /// <param name="p">pathfinding system of the tilemap (optimization purpose)</param>
     public void Collect(Rect rect, Pathfinding p)
     {
-
-
         int count = 0;
-
         nearestResource = Mathf.Infinity;
         float nearestStorage = Mathf.Infinity;
         closestResource = null;
@@ -511,6 +542,10 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         }
 
     }
+    /// <summary>
+    /// Titan behaviour collision detection 
+    /// </summary>
+    /// <param name="collision">collided object</param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (isTitan)
@@ -521,6 +556,11 @@ public class AgentManager : SteerinBehaviours /*Tree*/
             }
         }
     }
+    /// <summary>
+    /// function to clear the wall after a collision
+    /// </summary>
+    /// <param name="rect">tilemap where the wall is</param>
+    /// <param name="p">tilemap pathfinding system </param>
     private void DestroyWall(Rect rect, Pathfinding p)
     {
 
@@ -567,6 +607,9 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         }
 
     }
+    /// <summary>
+    /// function to update de RTS behaviors: collector, shooter, attacker
+    /// </summary>
     public void SetRTSBehaviours()
     {
         GameObject agentA = GetClosestObject(agentsObjs);
@@ -658,13 +701,16 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         }
 
     }
+    /// <summary>
+    /// melee combat
+    /// </summary>
+    /// <param name="objectType">object to attack</param>
     public void AttackBehavior(GameObject objectType)
     {
-
+        
         if (ammo <= 0 && !isFollowing)
         {
             isAttacking = true;
-            //isFollowing = false;
             if ((transform.position - objectType.transform.position).magnitude <= 100)
             {
                 if (isArrive)
@@ -707,10 +753,12 @@ public class AgentManager : SteerinBehaviours /*Tree*/
                        GameObject part = Instantiate(particle, transform.position, Quaternion.identity);
                        Destroy(part, 1);
                        objectType.GetComponent<AgentManager>().healthAmount -= meleeDamage;
+                       DamagePopup.Create(objectType.transform.position, meleeDamage, damagepp);
                    }
                    else if (objectType.tag == "Base")
                    {
                        objectType.GetComponent<HomeBase>().healthAmount -= meleeDamage;
+                       DamagePopup.Create(objectType.transform.position, meleeDamage, damagepp);
                    }
                }
 
@@ -724,10 +772,20 @@ public class AgentManager : SteerinBehaviours /*Tree*/
 
         }
     }
+    /// <summary>
+    /// function to set the selected agente
+    /// </summary>
+    /// <param name="isVisible">change if the selected object is active</param>
     public void SetSelected(bool isVisible)
     {
         sg.SetActive(isVisible);
     }
+    /// <summary>
+    /// function to move the agent with pathfinding
+    /// </summary>
+    /// <param name="target">position to move</param>
+    /// <param name="pathf">pathfinding system to use</param>
+    /// <param name="helperPos">pathfindig offset</param>
     public void MoveTo(Vector3 target, Pathfinding pathf, Vector3 helperPos)
     {
 
@@ -735,6 +793,10 @@ public class AgentManager : SteerinBehaviours /*Tree*/
 
 
     }
+    /// <summary>
+    /// finction to arrive to the location
+    /// </summary>
+    /// <param name="target">position to move with arrive</param>
     public void MoveArrive(Vector3 target)
     {
         pAgent.SetMovePos(target);
@@ -782,6 +844,9 @@ public class AgentManager : SteerinBehaviours /*Tree*/
             collision.GetComponent<SpriteRenderer>().color = tmp;
         }
     }
+    /// <summary>
+    /// wall avoidance
+    /// </summary>
     void DetectWall()
     {
         Vector3[] rayVec = new Vector3[3];
@@ -811,7 +876,9 @@ public class AgentManager : SteerinBehaviours /*Tree*/
             }
         }
     }
-
+    /// <summary>
+    /// leader behaviour
+    /// </summary>
     void FollowClosestLeader()
     {
 
@@ -869,7 +936,11 @@ public class AgentManager : SteerinBehaviours /*Tree*/
 
 
     }
-
+    /// <summary>
+    /// check if an object is moving
+    /// </summary>
+    /// <param name="go">object to check</param>
+    /// <returns>movement time</returns>
     IEnumerator CeheckMovement(GameObject go)
     {
         Vector2 prevPos = go.transform.position;
@@ -879,12 +950,20 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         if (prevPos == actualPos) go.GetComponent<AgentManager>().isAgentMoving = false;
         if (prevPos != actualPos) go.GetComponent<AgentManager>().isAgentMoving = true;
     }
+    /// <summary>
+    /// time between attacks
+    /// </summary>
+    /// <returns>attack time</returns>
     IEnumerator AttackTime()
     {
         meleeAtack = false;
         yield return new WaitForSeconds(attackTime);
         meleeAtack = true;
     }
+    /// <summary>
+    /// time between shots
+    /// </summary>
+    /// <returns>shot time</returns>
     IEnumerator ShootTime()
     {
         shotLight.SetActive(false);
@@ -893,23 +972,13 @@ public class AgentManager : SteerinBehaviours /*Tree*/
 
         canShoot = true;
     }
+    /// <summary>
+    /// shoot behaviour
+    /// </summary>
+    /// <param name="objectType">object to shoot</param>
     public void ShootBehavior(GameObject objectType)
     {
-        //if (!isFollowing && !isLeader)
-        //{
-        //    //isFollowing = false;
-        //    if ((transform.position - objectType.transform.position).magnitude >= shootingRaange)
-        //    {
-        //        if (isArrive)
-        //        {
-        //            Arrive(objectType.transform.position);
-        //        }
-        //        else if (isSeek)
-        //        {
-        //            Seek(objectType.transform.position);
-        //        }
-        //    }
-        //}
+        
         if ((transform.position - objectType.transform.position).magnitude <= shootingRaange && ammo > 0)
         {
             hasTarget = true;
@@ -920,7 +989,7 @@ public class AgentManager : SteerinBehaviours /*Tree*/
                 target = objectType.gameObject;
                 Vector2 direction = target.transform.position - transform.position;
                 GameObject newTarget;
-                //audioSource.PlayOneShot(gunShot);
+                audioSource.PlayOneShot(gunShot);
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(0f, 0f, angle - 90);
                 Quaternion neededRotation = Quaternion.LookRotation(direction);
@@ -948,7 +1017,9 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         }
         shotLight.SetActive(false);
     }
-
+    /// <summary>
+    /// leader dialog
+    /// </summary>
     void SetLeaderText()
     {
 
@@ -976,26 +1047,30 @@ public class AgentManager : SteerinBehaviours /*Tree*/
             }
         }
     }
+    /// <summary>
+    /// set agent objects to use in the game
+    /// </summary>
     void InitAgentObjects()
     {
+        //GameObject to set agent as selected
         GameObject selectedGo = Resources.Load("AgentObjects/selected") as GameObject;
         sg = Instantiate(selectedGo, transform.position, Quaternion.identity);
         sg.transform.parent = this.transform;
         sg.transform.localScale = new Vector3(1.7f, 1.7f, 1);
-
+        //GameObject to show in the minimap
         GameObject miniMapIcon = Resources.Load("AgentObjects/Minimap Icon") as GameObject;
         GameObject mmi = Instantiate(miniMapIcon, transform.position, Quaternion.identity);
         mmi.transform.parent = this.transform;
         mmi.transform.localScale = new Vector2(1.7f, 1.7f);
-
+        //GameObject to show on hide ahent on the fog of war
         GameObject spriteMask = Resources.Load("AgentObjects/Sprite Mask") as GameObject;
         GameObject sp = Instantiate(spriteMask, transform.position, Quaternion.identity);
         sp.transform.parent = this.transform;
-
+        //fog of war object
         GameObject fogOfWar = Resources.Load("AgentObjects/FogOfWar 1") as GameObject;
         GameObject fow = Instantiate(fogOfWar, transform.position, Quaternion.identity);
         fow.transform.parent = this.transform;
-
+        //fire point
         GameObject fp = Resources.Load("AgentObjects/FirePoint") as GameObject;
         firePoint = Instantiate(fp, new Vector2(transform.position.x + 3, transform.position.y + 15f), Quaternion.identity);
         firePoint.transform.parent = this.transform;
@@ -1004,8 +1079,10 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         bullet = Resources.Load("AgentObjects/Bullet") as GameObject;
         GameObject tmp;
         audioSource = gameObject.AddComponent<AudioSource>();
-        gunShot = Resources.Load("SFX/shoot_sound") as AudioClip;
-
+        gunShot = Resources.Load("SFX/FeelTacticalRifle") as AudioClip;
+        audioSource.clip = gunShot;
+        audioSource.priority = 0;
+        audioSource.volume = 0.30f;
         GameObject sl = Resources.Load("AgentObjects/shotLight") as GameObject;
         shotLight = Instantiate(sl, firePoint.transform.position, Quaternion.identity);
         shotLight.transform.parent = this.transform;
@@ -1039,13 +1116,17 @@ public class AgentManager : SteerinBehaviours /*Tree*/
             GameObject db = Resources.Load("AgentObjects/DialogueBox") as GameObject;
             dialogueBox = Instantiate(db, transform.position, Quaternion.identity);
         }
-        
+        damagepp = Resources.Load("AgentObjects/DamagePopup") as GameObject;
         //dialogueBox.transform.parent = this.transform;
 
     }
 
 
-
+    /// <summary>
+    /// find closest enemy
+    /// </summary>
+    /// <param name="agentArr">array to search object</param>
+    /// <returns>closet enemy</returns>
     public AgentManager GetClosestEnemy(AgentManager[] agentArr)
     {
         float nearestE = Mathf.Infinity;
@@ -1064,6 +1145,11 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         }
         return closestEnemy;
     }
+    /// <summary>
+    /// find closet leader
+    /// </summary>
+    /// <param name="agentArr">array to search object</param>
+    /// <returns>closet leader</returns>
     public GameObject GetClosestLeader(GameObject[] agentArr)
     {
         float nearestL = Mathf.Infinity;
@@ -1089,6 +1175,11 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         }
         return closestLeader;
     }
+    /// <summary>
+    /// find closes agent of the same team
+    /// </summary>
+    /// <param name="agentArr">array to search object</param>
+    /// <returns>closes agent</returns>
     public AgentManager GetClosestFriend(AgentManager[] agentArr)
     {
         float nearestE = Mathf.Infinity;
@@ -1107,6 +1198,11 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         }
         return closestEnemy;
     }
+    /// <summary>
+    /// find closet object of different team
+    /// </summary>
+    /// <param name="objects">array to search object</param>
+    /// <returns>closest object</returns>
     public GameObject GetClosestObject(GameObject[] objects)
     {
         float nearestObject = Mathf.Infinity;
@@ -1149,8 +1245,7 @@ public class AgentManager : SteerinBehaviours /*Tree*/
         if (closestObject)
         {
 
-            //Debug.Log(closestObject.name +" "+this.name);
-            //Debug.DrawLine(this.transform.position, closestObject.transform.position);
+           
             return closestObject;
 
 
@@ -1161,187 +1256,7 @@ public class AgentManager : SteerinBehaviours /*Tree*/
 
     
 
-    //void OnGUI()
-    //{
-    //    Vector3 characterPos = Camera.main.WorldToScreenPoint(transform.position);
-    //    characterPos = new Vector3(Mathf.Clamp(characterPos.x,40, 100),
-    //                                       Mathf.Clamp(characterPos.y, 50, Screen.height),
-    //                                       characterPos.z);
-    //    GUILayout.BeginArea(new Rect(characterPos.x + 30 , Screen.height - characterPos.y + 30, 30,30));
-    //    // GUI CODE GOES HERE
-
-    //    GUILayout.EndArea();
-    //}
-    //protected override BTNode SetUpTree()
-    //{
-    //    transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-    //    bullets = new List<GameObject>();
-
-    //    anim = GetComponent<Animator>();
-    //    transform.gameObject.tag = "Agent";
-    //    foreach (AgentManager agent in agents)
-    //    {
-    //        if (agent.GetComponent<AgentManager>().rank > 0)
-    //        {
-    //            agent.transform.gameObject.tag = "Leader";
-    //            agent.GetComponent<AgentManager>().isLeader = true;
-
-    //        }
-    //        else
-    //        {
-    //            agent.GetComponent<AgentManager>().isLeader = false;
-
-    //        }
-    //    }
-    //    if (showlifebar)
-    //    {
-
-    //        hpb = Instantiate(Resources.Load<GameObject>("GameHelpers/HealthBar"));
-
-    //        hpb.transform.GetChild(0).gameObject.GetComponent<HealhBar>().Set(this, healthAmount);
-    //    }
-    //    maxHP = healthAmount;
-    //    transform.gameObject.layer = LayerMask.NameToLayer("Agents");
-    //    agentsLayers = LayerMask.GetMask("Agents");
-    //    wallsLayer = LayerMask.GetMask("Walls");
-    //    InitAgentObjects();
-    //    fogOfWar = GameObject.Find("fogofwarcanvas");
-    //    SaveAgent.agentsP.Add(this);
-    //    pAgent = GetComponent<PathAgent>();
-    //    Awake();
-    //    SetSelected(false);
-    //    GetComponent<BoxCollider2D>().size = new Vector2(2f, 1.06f);
-    //    anim.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/" + this.name);
-    //    if (rank > 0)
-    //    {
-    //        isLeader = true;
-    //    }
-    //    agents = FindObjectsOfType<AgentManager>();
-    //    if (isCollector)
-    //    {
-    //        isCollecting = true;
-    //    }
-    //    audioSource.volume = 0.01f;
-    //    if (team == 2)
-    //    {
-    //        gameObject.AddComponent<EnemyAI>();
-    //    }
-    //    //Debug.Log("SI tiene objetivo");
-    //    BTNode root = new Selector(new List<BTNode>
-    //    {
-    //        //new Sequence(new List<Node>
-    //        //{
-    //        //    new CheckEnemyInAttackRange(transform),
-    //        //    new TaskAttack(transform),
-    //        //}),
-    //        new Sequence(new List<BTNode>
-    //        {
-    //            new CheckEnemyInFOVRange(transform),
-    //            new TaskGoToTarget(transform),
-    //        }),
-
-    //    });
-
-    //    return  root;
-    //}
-
-    //public class CheckEnemyInFOVRange : BTNode
-    //{
-    //    private static int _enemyLayerMask = 1 << 6;
-
-    //    private Transform _transform;
-    //    private AgentManager aM;
-    //    GameObject[] agentsObjs;
-    //    GameObject[] baseNodes;
-    //    GameObject[] leaders;
-    //    public CheckEnemyInFOVRange(Transform transform)
-    //    {
-    //        _transform = transform;
-    //        aM = transform.GetComponent<AgentManager>();
-    //    }
-
-    //    public override NodeState Evaluate()
-    //    {
-    //        object t = GetData("target");
-    //        if (t == null)
-    //        {
-    //            agentsObjs = GameObject.FindGameObjectsWithTag("Agent");
-    //            baseNodes = GameObject.FindGameObjectsWithTag("Base");
-    //            leaders = GameObject.FindGameObjectsWithTag("Leader");
-    //            GameObject targetAgent = aM.GetClosestObject(agentsObjs);
-    //            GameObject agentA = aM.GetClosestObject(agentsObjs);
-    //            GameObject hBase = aM.GetClosestObject(baseNodes);
-    //            GameObject leadersClosest = aM.GetClosestObject(leaders);
-    //            List<GameObject> objects = new List<GameObject>();
-    //            objects.Add(agentA);
-    //            objects.Add(hBase);
-    //            objects.Add(leadersClosest);
-
-
-    //            float nearestObject = Mathf.Infinity;
-    //            GameObject closestObject = null;
-    //            foreach (GameObject obj in objects)
-    //            {
-    //                if (obj)
-    //                {
-    //                    float distanceToBase = (obj.transform.position - _transform.position).sqrMagnitude;
-    //                    if (distanceToBase < nearestObject)
-    //                    {
-    //                        nearestObject = distanceToBase;
-    //                        closestObject = obj;
-    //                    }
-    //                }
-    //            }
-
-    //            if (closestObject)
-    //            {
-
-    //                    parent.parent.SetData("target", closestObject);
-    //                    Debug.Log("SI tiene objetivo");
-    //                    state = NodeState.SUCCESS;
-    //                    return state;
-
-    //            }
-    //            else
-    //            {
-    //                Debug.Log("NO tiene objetivo");
-    //            }
-
-    //            state = NodeState.FAILURE;
-    //            return state;
-    //        }
-
-    //        state = NodeState.SUCCESS;
-    //        return state;
-    //    }
-
-    //}
-    //public class TaskGoToTarget : BTNode
-    //{
-    //    private Transform _transform;
-    //    private AgentManager aM;
-    //    public TaskGoToTarget(Transform transform)
-    //    {
-    //        _transform = transform;
-    //        aM = transform.GetComponent<AgentManager>();
-    //    }
-
-    //    public override NodeState Evaluate()
-
-    //    {
-
-    //        GameObject target = (GameObject)GetData("target");
-
-    //        if (Vector3.Distance(_transform.position, target.transform.position) < 500 && !aM.sg.activeInHierarchy)
-    //        {
-    //            aM.Arrive(target.transform.position);
-    //            Debug.Log("Cerca");
-    //        }
-
-    //        state = NodeState.RUNNING;
-    //        return state;
-    //    }
-    //}
+   
 }
 
 

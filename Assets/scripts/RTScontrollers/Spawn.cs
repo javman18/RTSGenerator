@@ -5,6 +5,7 @@ using UnityEngine;
 public class Spawn : MonoBehaviour
 {
     public bool selectedSpawn = false;
+    public int iD = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,15 +20,18 @@ public class Spawn : MonoBehaviour
 
     public void SetSelected(bool selected, Color color)
     {
-        if (selected)
+        if (iD == 1 || iD==0)
         {
-            GetComponent<SpriteRenderer>().color = color;
-            selectedSpawn = true;
-        }
-        else
-        {
-            GetComponent<SpriteRenderer>().color = new Color(1,1,1);
-            selectedSpawn = false;
+            if (selected)
+            {
+                GetComponent<SpriteRenderer>().color = color;
+                selectedSpawn = true;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
+                selectedSpawn = false;
+            }
         }
     }
     public GameObject SpawnObject(GameObject obj)

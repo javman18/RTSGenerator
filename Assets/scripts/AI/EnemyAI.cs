@@ -9,16 +9,8 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
 
-        //if (GetComponent<AgentManager>().rank > 0)
-        //{
-        //    GameObject nBase = GetComponent<AgentManager>().GetClosestObject(GetComponent<AgentManager>().baseNodes);
-
-
-        //    GetComponent<AgentManager>().MoveTo(nBase.transform.position, MapGenerator.pathFind, Vector3.zero);
-
-        //}
-        //GetComponent<PathAgent>().SetTarget()
-        InvokeRepeating("GoToBase", 4f, 0.1f);
+        
+        InvokeRepeating("GoToBase", 0.1f, 4f);
     }
 
     // Update is called once per frame
@@ -44,6 +36,14 @@ public class EnemyAI : MonoBehaviour
                     }
                 }
             }
+        }
+        if (GetComponent<AgentManager>().isPursue&& !GetComponent<AgentManager>().hasTarget)
+        {
+            GetComponent<AgentManager>().Wander();
+        }
+        if (GetComponent<AgentManager>().isAtacker && !GetComponent<AgentManager>().isShooter)
+        {
+            GetComponent<AgentManager>().Wander();
         }
     }
 
@@ -76,7 +76,9 @@ public class EnemyAI : MonoBehaviour
             //Debug.DrawLine(this.transform.position, closestObject.transform.position);
             return closestObject;  
     }
-
+    /// <summary>
+    /// use pathfindig if the unit and the base are on the same cuadrant
+    /// </summary>
     void GoToBase()
     {
         baseNodes = GameObject.FindGameObjectsWithTag("Base");

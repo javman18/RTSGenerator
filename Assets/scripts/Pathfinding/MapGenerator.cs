@@ -88,7 +88,7 @@ public class MapGenerator : MonoBehaviour
         //pathfind2.Load("path2");
         //pathfind3.Load("path3B");
         //pathfind4.Load("path4A");
-        InitLevel("masterLevel");
+        //InitLevel("Master02");
 
         //terrain.gameObject.transform.localScale = new Vector3((size * width)*2, (size * height)*2, 1);
         //GameObject terr =  Instantiate(terrain, new Vector2(1000, 1000), Quaternion.identity);
@@ -205,7 +205,7 @@ public class MapGenerator : MonoBehaviour
         
     }
 
-    void InitLevel(string levelName)
+    public void InitLevel(string levelName)
     {
         string[] sName = new string[4];
         for (int i = 0; i < maps.Count; i++)
